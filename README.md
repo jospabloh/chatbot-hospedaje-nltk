@@ -5,8 +5,8 @@ Autor: José Pablo Herrera · Matrícula 07317961
 
 > ⚠️ **Todos los datos del hospedaje (nombre, dirección, tarifas, teléfono, Wi-Fi, fechas ocupadas, códigos) son DATOS DE EJEMPLO / FICTICIOS.** No corresponden a ningún hospedaje, cliente ni persona real.
 
-- Repositorio: [PENDIENTE: URL del repo]
-- Notebook en Colab: [PENDIENTE: link de Colab]
+- Repositorio: https://github.com/jospabloh/chatbot-hospedaje-nltk
+- Notebook en Colab: https://colab.research.google.com/drive/17jvLqa5cBCtA13wjWYAhjcBPQ9rNwuk3
 
 ## Datos
 Todos los datos del hospedaje son **ficticios** (datos de ejemplo creados para este trabajo académico).
@@ -37,7 +37,7 @@ pip install -r requirements.txt
 python chatbot_hospedaje.py          # ejecuta las conversaciones de prueba
 python chatbot_hospedaje.py --chat   # modo interactivo
 ```
-**Colab:** abre `chatbot_hospedaje.ipynb` en Google Colab y ejecuta *Entorno de ejecución → Ejecutar todas*. El notebook es autocontenido (no necesita otros archivos) y su penúltima celda verifica la intención esperada en los 26 turnos; el modo interactivo es opcional (`MODO_INTERACTIVO = True`) ([PENDIENTE: link de Colab]).
+**Colab:** abre `chatbot_hospedaje.ipynb` en Google Colab y ejecuta *Entorno de ejecución → Ejecutar todas*. El notebook es autocontenido (no necesita otros archivos) y su penúltima celda verifica la intención esperada en los 26 turnos; el modo interactivo es opcional (`MODO_INTERACTIVO = True`) (https://colab.research.google.com/drive/17jvLqa5cBCtA13wjWYAhjcBPQ9rNwuk3).
 
 ## Resultados de pruebas
 La salida completa está en `evidencias_pruebas.txt` (Python 3.13.5, NLTK 3.10.3):
