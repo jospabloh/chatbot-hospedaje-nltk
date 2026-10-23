@@ -6,7 +6,7 @@ Conversación 1: Saludo y tarifas
 ------------------------------------------------------------------------------
 Usuario  : Hola, buenas tardes
 Intención: saludo
-Bot      : ¡Hola! 👋 Bienvenido a Casa Lore (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Lore.
+Bot      : ¡Hola! 👋 Bienvenido a Casa Almendro (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Marina.
 
 Usuario  : ¿Cuánto cuesta la noche?
 Intención: tarifas
@@ -21,37 +21,37 @@ Conversación 2: Disponibilidad libre
 ------------------------------------------------------------------------------
 Usuario  : Hola
 Intención: saludo
-Bot      : ¡Hola! 👋 Bienvenido a Casa Lore (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Lore.
+Bot      : ¡Hola! 👋 Bienvenido a Casa Almendro (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Marina.
 
 Usuario  : ¿Está disponible el 14 de diciembre?
 Intención: disponibilidad
-Bot      : ¡Sí! La noche del 14/12/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Lore'.
+Bot      : ¡Sí! La noche del 14/12/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Marina'.
 
-Usuario  : Perfecto, quiero reservar, hablar con Lore
+Usuario  : Perfecto, quiero reservar, hablar con Marina
 Intención: contactar_anfitrion
-Bot      : Te comunico con Lore. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
+Bot      : Te comunico con Marina. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
 
 ==============================================================================
 Conversación 3: Disponibilidad ocupada
 ------------------------------------------------------------------------------
 Usuario  : ¿Tienen libre el 31 de octubre?
 Intención: disponibilidad
-Bot      : Lo siento, la noche del 31/10/2026 ya está ocupada. ¿Quieres revisar otra fecha o que Lore te proponga opciones?
+Bot      : Lo siento, la noche del 31/10/2026 ya está ocupada. ¿Quieres revisar otra fecha o que Marina te proponga opciones?
 
 Usuario  : ¿y el 7 de noviembre está disponible?
 Intención: disponibilidad
-Bot      : ¡Sí! La noche del 07/11/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Lore'.
+Bot      : ¡Sí! La noche del 07/11/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Marina'.
 
 ==============================================================================
 Conversación 4: Ubicación
 ------------------------------------------------------------------------------
 Usuario  : ¿Dónde están ubicados?
 Intención: ubicacion
-Bot      : 📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-lore
+Bot      : 📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-almendro
 
 Usuario  : ¿Me pasas la dirección?
 Intención: ubicacion
-Bot      : 📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-lore
+Bot      : 📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-almendro
 
 ==============================================================================
 Conversación 5: Llegada / check-in
@@ -69,7 +69,7 @@ Conversación 6: Acceso al fraccionamiento
 ------------------------------------------------------------------------------
 Usuario  : Ya estoy en la caseta del fraccionamiento, ¿qué le digo al guardia?
 Intención: acceso_fraccionamiento
-Bot      : 🛂 En la caseta de vigilancia del fraccionamiento indica que vas a Casa Lore, lote 12, y muestra tu identificación. El guardia registrará tu placa.
+Bot      : 🛂 En la caseta de vigilancia del fraccionamiento indica que vas a Casa Almendro, lote 12, y muestra tu identificación. El guardia registrará tu placa.
 
 ==============================================================================
 Conversación 7: Cerradura electrónica
@@ -98,7 +98,7 @@ Conversación 9: Servicios y reglas
 ------------------------------------------------------------------------------
 Usuario  : ¿Tienen wifi?
 Intención: servicios
-Bot      : Servicios incluidos: Wi-Fi (red: CasaLore_Ejemplo, clave: ejemplo2026), A/C, cocina equipada, alberca, asador.
+Bot      : Servicios incluidos: Wi-Fi (red: CasaAlmendro_Ejemplo, clave: ejemplo2026), A/C, cocina equipada, alberca, asador.
 
 Usuario  : ¿Aceptan mascotas?
 Intención: reglas
@@ -124,22 +124,22 @@ Conversación 11: Transferencia directa a la anfitriona
 ------------------------------------------------------------------------------
 Usuario  : Tengo una emergencia, quiero hablar con la anfitriona
 Intención: contactar_anfitrion
-Bot      : Te comunico con Lore. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
+Bot      : Te comunico con Marina. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
 
 ==============================================================================
 Conversación 12: Mensajes no reconocidos → escalamiento
 ------------------------------------------------------------------------------
 Usuario  : ¿Eres un bot?
 Intención: regex_chat
-Bot      : Soy el asistente virtual de Casa Lore (bot de ejemplo). Respondo dudas sobre tarifas, disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Lore'.
+Bot      : Soy el asistente virtual de Casa Almendro (bot de ejemplo). Respondo dudas sobre tarifas, disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Marina'.
 
 Usuario  : asdfgh
 Intención: fallback
-Bot      : Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, disponibilidad, ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Lore.
+Bot      : Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, disponibilidad, ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Marina.
 
 Usuario  : ¿venden boletos para el concierto?
 Intención: fallback→contactar_anfitrion
-Bot      : No logro entender tu consulta. Para no hacerte esperar: Te comunico con Lore. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
+Bot      : No logro entender tu consulta. Para no hacerte esperar: Te comunico con Marina. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
 
 ==============================================================================
 Resumen: 12 conversaciones, 26 turnos, 2 turnos en fallback.

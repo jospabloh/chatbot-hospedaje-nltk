@@ -1,4 +1,4 @@
-# Chatbot de hospedaje vacacional "Casa Lore" (basado en reglas con NLTK)
+# Chatbot de hospedaje vacacional "Casa Almendro" (basado en reglas con NLTK)
 
 **Avance de proyecto 1 · Desarrollo de aplicaciones con IA · Maestría en Inteligencia Artificial, Tecmilenio**
 Autor: José Pablo Herrera · Matrícula 07317961
@@ -12,20 +12,20 @@ Autor: José Pablo Herrera · Matrícula 07317961
 Todos los datos del hospedaje son **ficticios** (datos de ejemplo creados para este trabajo académico).
 
 ## Descripción
-Chatbot conversacional basado en reglas que atiende a los huéspedes de un hospedaje vacacional cuya anfitriona es Lore. Responde dudas frecuentes (tarifas, disponibilidad, ubicación, check-in/check-out, servicios y reglas) y transfiere la conversación a la anfitriona cuando el huésped lo pide o cuando el bot no entiende.
+Chatbot conversacional basado en reglas que atiende a los huéspedes de un hospedaje vacacional cuya anfitriona es Marina. Responde dudas frecuentes (tarifas, disponibilidad, ubicación, check-in/check-out, servicios y reglas) y transfiere la conversación a la anfitriona cuando el huésped lo pide o cuando el bot no entiende.
 
 ## Funcionalidades
 - **Preprocesamiento con NLTK:** normalización (minúsculas, sin acentos, conserva la ñ) y tokenización con `wordpunct_tokenize`. No requiere descargar corpus.
 - **14 intenciones por palabras clave:** `contactar_anfitrion`, `porton_estacionamiento`, `cerradura`, `acceso_fraccionamiento`, `checkout`, `checkin_llegada`, `disponibilidad`, `tarifas`, `ubicacion`, `servicios`, `reglas`, `agradecimiento`, `despedida`, `saludo`. Ante empate se usa el orden de la lista como prioridad; si un mensaje agradece y se despide, gana `despedida`.
 - **Respaldo con expresiones regulares** (`nltk.chat.util.Chat`) para frases como "¿eres un bot?" o "ok / de acuerdo".
 - **Consulta de disponibilidad por fecha:** extrae la fecha del mensaje y la compara con las noches ocupadas de ejemplo.
-- **Transferencia a Lore (humano):** cuando el huésped la solicita o tras 2 mensajes no entendidos seguidos.
+- **Transferencia a Marina (humano):** cuando el huésped la solicita o tras 2 mensajes no entendidos seguidos.
 - **Modo pruebas y modo interactivo.**
 
 ## Arquitectura
 ![Arquitectura del chatbot](arquitectura_chatbot.png)
 
-Flujo: mensaje del usuario → preprocesamiento (NLTK) → identificación de intención por palabras clave → respaldo regex → fallback / escalamiento a Lore → respuesta generada desde la base de conocimiento (ficticia).
+Flujo: mensaje del usuario → preprocesamiento (NLTK) → identificación de intención por palabras clave → respaldo regex → fallback / escalamiento a Marina → respuesta generada desde la base de conocimiento (ficticia).
 
 ## Requisitos
 - Python 3.10 o superior
@@ -37,13 +37,13 @@ pip install -r requirements.txt
 python chatbot_hospedaje.py          # ejecuta las conversaciones de prueba
 python chatbot_hospedaje.py --chat   # modo interactivo
 ```
-**Colab:** abre `chatbot_hospedaje.ipynb` en Google Colab y ejecuta *Entorno de ejecución → Ejecutar todas*. El notebook es autocontenido (no necesita otros archivos) y su penúltima celda verifica la intención esperada en los 26 turnos; el modo interactivo es opcional (`MODO_INTERACTIVO = True`) (https://colab.research.google.com/drive/17jvLqa5cBCtA13wjWYAhjcBPQ9rNwuk3).
+**Colab:** abre `chatbot_hospedaje.ipynb` en Google Colab y ejecuta *Entorno de ejecución → Ejecutar todas*. El notebook es autocontenido (no necesita otros archivos) y su penúltima celda verifica la intención esperada en los 26 turnos; el modo interactivo es opcional (`MODO_INTERACTIVO = True`).
 
 ## Resultados de pruebas
 La salida completa está en `evidencias_pruebas.txt` (Python 3.13.5, NLTK 3.10.3):
 - 12 conversaciones, 26 turnos.
 - **26 de 26 turnos con la intención correcta.**
-- 2 turnos cayeron en fallback (mensajes fuera de dominio, a propósito); el segundo activó la transferencia a Lore como estaba previsto.
+- 2 turnos cayeron en fallback (mensajes fuera de dominio, a propósito); el segundo activó la transferencia a Marina como estaba previsto.
 
 ## Limitaciones conocidas y mejoras
 - **Sin manejo de sinónimos:** solo reconoce las palabras clave definidas. En una prueba adicional, "¿tienen red inalámbrica?" cayó en fallback y "¿dónde aparco?" se clasificó como `ubicacion`. *Mejora:* lematización y sinónimos de WordNet (Open Multilingual WordNet en NLTK) para ampliar el vocabulario.
@@ -63,7 +63,7 @@ Adamopoulou, E., & Moussiades, L. (2020). Chatbots: History, technology, and app
 
 Bird, S., Klein, E., & Loper, E. (2009). *Natural language processing with Python: Analyzing text with the Natural Language Toolkit*. O'Reilly Media. https://www.nltk.org/book/
 
-Jurafsky, D., & Martin, J. H. (2024). *Speech and language processing* (3.ª ed., borrador). Stanford University. https://web.stanford.edu/~jurafsky/slp3/
+Jurafsky, D., & Martin, J. H. (2024). *Speech and language processing* (3.ª ed., versión preliminar). Stanford University. https://web.stanford.edu/~jurafsky/slp3/
 
 NLTK Project. (s. f.). *nltk.chat.util module*. NLTK documentation. Recuperado el 20 de octubre de 2026, de https://www.nltk.org/api/nltk.chat.util.html
 

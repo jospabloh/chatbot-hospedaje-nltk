@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Chatbot basado en reglas para un anfitrión de hospedaje vacacional ("Casa Lore").
+Chatbot basado en reglas para un anfitrión de hospedaje vacacional ("Casa Almendro").
 Avance de proyecto 1 - Desarrollo de aplicaciones con inteligencia artificial (Tecmilenio)
 Autor: José Pablo Herrera (07317961)
 
@@ -20,8 +20,8 @@ from nltk.chat.util import Chat, reflections
 # 1. Base de conocimiento (DATOS DE EJEMPLO / FICTICIOS)
 # ----------------------------------------------------------------------------
 BASE_CONOCIMIENTO = {
-    "nombre": "Casa Lore (datos de ejemplo)",
-    "anfitriona": "Lore",
+    "nombre": "Casa Almendro (datos de ejemplo)",
+    "anfitriona": "Marina",
     "telefono_anfitriona": "+52 000 000 0000 (ficticio)",
     "tarifas": {
         "entre_semana": 1200,   # MXN por noche, domingo a jueves
@@ -36,14 +36,14 @@ BASE_CONOCIMIENTO = {
                         date(2026, 11, 1), date(2026, 11, 2), date(2026, 11, 14),
                         date(2026, 11, 15), date(2026, 12, 24), date(2026, 12, 25)],
     "ubicacion": ("Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, "
-                  "a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-lore"),
+                  "a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-almendro"),
     "checkin": {
         "hora_entrada": "15:00",
         "hora_salida": "11:00",
         "llegada": ("Al llegar, avisa por este chat 30 minutos antes. Recibirás la "
                     "confirmación con tu código de acceso del día."),
         "fraccionamiento": ("En la caseta de vigilancia del fraccionamiento indica que vas a "
-                            "Casa Lore, lote 12, y muestra tu identificación. El guardia "
+                            "Casa Almendro, lote 12, y muestra tu identificación. El guardia "
                             "registrará tu placa."),
         "cerradura": ("La puerta tiene cerradura electrónica: marca el código de 4 dígitos que "
                       "te enviamos el día de llegada (ejemplo: 1234) y presiona la palomita ✓."),
@@ -52,7 +52,7 @@ BASE_CONOCIMIENTO = {
         "salida": ("Para el check-out deja las llaves/controles en la caja, apaga el aire "
                    "acondicionado y cierra el portón. ¡Gracias!"),
     },
-    "servicios": "Wi-Fi (red: CasaLore_Ejemplo, clave: ejemplo2026), A/C, cocina equipada, alberca, asador.",
+    "servicios": "Wi-Fi (red: CasaAlmendro_Ejemplo, clave: ejemplo2026), A/C, cocina equipada, alberca, asador.",
     "reglas": "No se permiten fiestas ni fumar dentro. Mascotas pequeñas con aviso previo. Silencio después de las 22:00.",
 }
 
@@ -76,7 +76,7 @@ def tokenizar(texto: str) -> list[str]:
 # 3. Reglas de intención (palabras clave). Prioridad: orden de la lista ante empate.
 # ----------------------------------------------------------------------------
 INTENCIONES = [
-    ("contactar_anfitrion", {"anfitrion", "anfitriona", "lore", "humano", "persona", "hablar", "dueña", "dueño", "agente", "llamar", "queja", "urgente", "emergencia"}),
+    ("contactar_anfitrion", {"anfitrion", "anfitriona", "marina", "humano", "persona", "hablar", "dueña", "dueño", "agente", "llamar", "queja", "urgente", "emergencia"}),
     ("porton_estacionamiento", {"porton", "estacionamiento", "estacionar", "cochera", "auto", "carro", "coche", "control"}),
     ("cerradura", {"cerradura", "codigo", "puerta", "chapa", "llave", "llaves", "abrir", "contraseña"}),
     ("acceso_fraccionamiento", {"fraccionamiento", "caseta", "vigilancia", "guardia", "privada", "residencial", "pluma"}),
@@ -98,8 +98,8 @@ DESPEDIDA_FUERTE = {"adios", "bye", "vemos", "salu2"}
 # Patrones de respaldo con nltk.chat.util.Chat (expresiones regulares)
 PARES_CHAT = [
     (r"(.*)(quien eres|que eres|eres un bot|eres robot)(.*)",
-     ["Soy el asistente virtual de Casa Lore (bot de ejemplo). Respondo dudas sobre tarifas, "
-      "disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Lore'."]),
+     ["Soy el asistente virtual de Casa Almendro (bot de ejemplo). Respondo dudas sobre tarifas, "
+      "disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Marina'."]),
     (r"(.*)(ok|va|sale|de acuerdo|entendido)(.*)",
      ["¡Perfecto! ¿Te ayudo con algo más? (tarifas, disponibilidad, ubicación, check-in)"]),
 ]
@@ -145,14 +145,14 @@ def responder_disponibilidad(texto: str) -> str:
                 f"Estancia mínima: {BASE_CONOCIMIENTO['tarifas']['minimo_noches']} noches.")
     if f in BASE_CONOCIMIENTO["fechas_ocupadas"]:
         return (f"Lo siento, la noche del {f.strftime('%d/%m/%Y')} ya está ocupada. "
-                "¿Quieres revisar otra fecha o que Lore te proponga opciones?")
+                "¿Quieres revisar otra fecha o que Marina te proponga opciones?")
     return (f"¡Sí! La noche del {f.strftime('%d/%m/%Y')} está disponible (sujeto a confirmación "
-            "de la anfitriona). Para apartar, escribe 'hablar con Lore'.")
+            "de la anfitriona). Para apartar, escribe 'hablar con Marina'.")
 
 def responder(intencion: str, texto: str) -> str:
     kb, ta, ci = BASE_CONOCIMIENTO, BASE_CONOCIMIENTO["tarifas"], BASE_CONOCIMIENTO["checkin"]
     respuestas = {
-        "saludo": f"¡Hola! 👋 Bienvenido a {kb['nombre']}. Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Lore.",
+        "saludo": f"¡Hola! 👋 Bienvenido a {kb['nombre']}. Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Marina.",
         "tarifas": (f"Tarifas por noche: domingo a jueves ${ta['entre_semana']} MXN; viernes y sábado ${ta['fin_de_semana']} MXN. "
                     f"Incluye hasta 4 personas; persona extra ${ta['persona_extra']} MXN/noche (máx. {ta['capacidad']}). "
                     f"Limpieza ${ta['limpieza']} MXN por estancia. Mínimo {ta['minimo_noches']} noches."),
@@ -191,12 +191,12 @@ class ChatbotHospedaje:
             return "fallback→contactar_anfitrion", ("No logro entender tu consulta. Para no hacerte esperar: "
                                                     + responder("contactar_anfitrion", texto))
         return "fallback", ("Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, disponibilidad, "
-                            "ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Lore.")
+                            "ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Marina.")
 
 def conversar():
     """Bucle interactivo (Colab o terminal). Escribe 'salir' para terminar."""
     bot = ChatbotHospedaje()
-    print("Bot: ¡Hola! Soy el asistente de Casa Lore (datos de ejemplo). Escribe 'salir' para terminar.")
+    print("Bot: ¡Hola! Soy el asistente de Casa Almendro (datos de ejemplo). Escribe 'salir' para terminar.")
     while True:
         try:
             u = input("Tú: ")
@@ -212,7 +212,7 @@ def conversar():
 # ----------------------------------------------------------------------------
 CONVERSACIONES = {
     1: ("Saludo y tarifas", ["Hola, buenas tardes", "¿Cuánto cuesta la noche?", "Gracias"]),
-    2: ("Disponibilidad libre", ["Hola", "¿Está disponible el 14 de diciembre?", "Perfecto, quiero reservar, hablar con Lore"]),
+    2: ("Disponibilidad libre", ["Hola", "¿Está disponible el 14 de diciembre?", "Perfecto, quiero reservar, hablar con Marina"]),
     3: ("Disponibilidad ocupada", ["¿Tienen libre el 31 de octubre?", "¿y el 7 de noviembre está disponible?"]),
     4: ("Ubicación", ["¿Dónde están ubicados?", "¿Me pasas la dirección?"]),
     5: ("Llegada / check-in", ["¿A qué hora es el check-in?", "¿Qué instrucciones hay para la llegada?"]),
