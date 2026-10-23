@@ -5,141 +5,308 @@ Datos: DATOS DE EJEMPLO / FICTICIOS
 Conversación 1: Saludo y tarifas
 ------------------------------------------------------------------------------
 Usuario  : Hola, buenas tardes
-Intención: saludo
+Idioma   : es | Intención: greeting | Esperado: greeting/es | OK
 Bot      : ¡Hola! 👋 Bienvenido a Casa Almendro (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Marina.
 
 Usuario  : ¿Cuánto cuesta la noche?
-Intención: tarifas
+Idioma   : es | Intención: rates | Esperado: rates/es | OK
 Bot      : Tarifas por noche: domingo a jueves $1200 MXN; viernes y sábado $1500 MXN. Incluye hasta 4 personas; persona extra $200 MXN/noche (máx. 6). Limpieza $350 MXN por estancia. Mínimo 2 noches.
 
 Usuario  : Gracias
-Intención: agradecimiento
+Idioma   : es | Intención: thanks | Esperado: thanks/es | OK
 Bot      : ¡Con gusto! ¿Algo más en lo que te ayude?
 
 ==============================================================================
 Conversación 2: Disponibilidad libre
 ------------------------------------------------------------------------------
 Usuario  : Hola
-Intención: saludo
+Idioma   : es | Intención: greeting | Esperado: greeting/es | OK
 Bot      : ¡Hola! 👋 Bienvenido a Casa Almendro (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Marina.
 
 Usuario  : ¿Está disponible el 14 de diciembre?
-Intención: disponibilidad
+Idioma   : es | Intención: availability | Esperado: availability/es | OK
 Bot      : ¡Sí! La noche del 14/12/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Marina'.
 
 Usuario  : Perfecto, quiero reservar, hablar con Marina
-Intención: contactar_anfitrion
+Idioma   : es | Intención: contact_host | Esperado: contact_host/es | OK
 Bot      : Te comunico con Marina. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
 
 ==============================================================================
 Conversación 3: Disponibilidad ocupada
 ------------------------------------------------------------------------------
 Usuario  : ¿Tienen libre el 31 de octubre?
-Intención: disponibilidad
+Idioma   : es | Intención: availability | Esperado: availability/es | OK
 Bot      : Lo siento, la noche del 31/10/2026 ya está ocupada. ¿Quieres revisar otra fecha o que Marina te proponga opciones?
 
 Usuario  : ¿y el 7 de noviembre está disponible?
-Intención: disponibilidad
+Idioma   : es | Intención: availability | Esperado: availability/es | OK
 Bot      : ¡Sí! La noche del 07/11/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Marina'.
 
 ==============================================================================
 Conversación 4: Ubicación
 ------------------------------------------------------------------------------
 Usuario  : ¿Dónde están ubicados?
-Intención: ubicacion
+Idioma   : es | Intención: location | Esperado: location/es | OK
 Bot      : 📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-almendro
 
 Usuario  : ¿Me pasas la dirección?
-Intención: ubicacion
+Idioma   : es | Intención: location | Esperado: location/es | OK
 Bot      : 📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: https://maps.example.com/casa-almendro
 
 ==============================================================================
 Conversación 5: Llegada / check-in
 ------------------------------------------------------------------------------
 Usuario  : ¿A qué hora es el check-in?
-Intención: checkin_llegada
+Idioma   : es | Intención: checkin_arrival | Esperado: checkin_arrival/es | OK
 Bot      : Check-in desde las 15:00. Al llegar, avisa por este chat 30 minutos antes. Recibirás la confirmación con tu código de acceso del día. Pasos: 1) caseta del fraccionamiento, 2) portón del estacionamiento, 3) cerradura electrónica. Pregúntame por cualquiera.
 
 Usuario  : ¿Qué instrucciones hay para la llegada?
-Intención: checkin_llegada
+Idioma   : es | Intención: checkin_arrival | Esperado: checkin_arrival/es | OK
 Bot      : Check-in desde las 15:00. Al llegar, avisa por este chat 30 minutos antes. Recibirás la confirmación con tu código de acceso del día. Pasos: 1) caseta del fraccionamiento, 2) portón del estacionamiento, 3) cerradura electrónica. Pregúntame por cualquiera.
 
 ==============================================================================
 Conversación 6: Acceso al fraccionamiento
 ------------------------------------------------------------------------------
 Usuario  : Ya estoy en la caseta del fraccionamiento, ¿qué le digo al guardia?
-Intención: acceso_fraccionamiento
+Idioma   : es | Intención: community_access | Esperado: community_access/es | OK
 Bot      : 🛂 En la caseta de vigilancia del fraccionamiento indica que vas a Casa Almendro, lote 12, y muestra tu identificación. El guardia registrará tu placa.
 
 ==============================================================================
 Conversación 7: Cerradura electrónica
 ------------------------------------------------------------------------------
 Usuario  : No puedo abrir la puerta
-Intención: cerradura
+Idioma   : es | Intención: door_lock | Esperado: door_lock/es | OK
 Bot      : 🔐 La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día de llegada (ejemplo: 1234) y presiona la palomita ✓.
 
 Usuario  : ¿Cuál es el código de la cerradura?
-Intención: cerradura
+Idioma   : es | Intención: door_lock | Esperado: door_lock/es | OK
 Bot      : 🔐 La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día de llegada (ejemplo: 1234) y presiona la palomita ✓.
 
 ==============================================================================
 Conversación 8: Portón del estacionamiento
 ------------------------------------------------------------------------------
 Usuario  : ¿Dónde dejo el carro?
-Intención: porton_estacionamiento
+Idioma   : es | Intención: parking_gate | Esperado: parking_gate/es | OK
 Bot      : 🚗 El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Hay lugar para 2 autos.
 
 Usuario  : ¿Cómo abro el portón?
-Intención: porton_estacionamiento
+Idioma   : es | Intención: parking_gate | Esperado: parking_gate/es | OK
 Bot      : 🚗 El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Hay lugar para 2 autos.
 
 ==============================================================================
 Conversación 9: Servicios y reglas
 ------------------------------------------------------------------------------
 Usuario  : ¿Tienen wifi?
-Intención: servicios
+Idioma   : es | Intención: amenities | Esperado: amenities/es | OK
 Bot      : Servicios incluidos: Wi-Fi (red: CasaAlmendro_Ejemplo, clave: ejemplo2026), A/C, cocina equipada, alberca, asador.
 
 Usuario  : ¿Aceptan mascotas?
-Intención: reglas
+Idioma   : es | Intención: house_rules | Esperado: house_rules/es | OK
 Bot      : Reglas de la casa: No se permiten fiestas ni fumar dentro. Mascotas pequeñas con aviso previo. Silencio después de las 22:00.
 
 Usuario  : ¿Se puede fumar?
-Intención: reglas
+Idioma   : es | Intención: house_rules | Esperado: house_rules/es | OK
 Bot      : Reglas de la casa: No se permiten fiestas ni fumar dentro. Mascotas pequeñas con aviso previo. Silencio después de las 22:00.
 
 ==============================================================================
 Conversación 10: Check-out y despedida
 ------------------------------------------------------------------------------
 Usuario  : ¿A qué hora es la salida?
-Intención: checkout
+Idioma   : es | Intención: checkout | Esperado: checkout/es | OK
 Bot      : Check-out a las 11:00. Para el check-out deja las llaves/controles en la caja, apaga el aire acondicionado y cierra el portón. ¡Gracias!
 
 Usuario  : Gracias, adiós
-Intención: despedida
+Idioma   : es | Intención: goodbye | Esperado: goodbye/es | OK
 Bot      : ¡Hasta pronto! Que disfrutes tu estancia. 🌴
 
 ==============================================================================
 Conversación 11: Transferencia directa a la anfitriona
 ------------------------------------------------------------------------------
 Usuario  : Tengo una emergencia, quiero hablar con la anfitriona
-Intención: contactar_anfitrion
+Idioma   : es | Intención: contact_host | Esperado: contact_host/es | OK
 Bot      : Te comunico con Marina. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
 
 ==============================================================================
 Conversación 12: Mensajes no reconocidos → escalamiento
 ------------------------------------------------------------------------------
 Usuario  : ¿Eres un bot?
-Intención: regex_chat
+Idioma   : es | Intención: regex_chat | Esperado: regex_chat/es | OK
 Bot      : Soy el asistente virtual de Casa Almendro (bot de ejemplo). Respondo dudas sobre tarifas, disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Marina'.
 
 Usuario  : asdfgh
-Intención: fallback
+Idioma   : es | Intención: fallback | Esperado: fallback/es | OK
 Bot      : Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, disponibilidad, ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Marina.
 
 Usuario  : ¿venden boletos para el concierto?
-Intención: fallback→contactar_anfitrion
+Idioma   : es | Intención: fallback→contact_host | Esperado: fallback→contact_host/es | OK
 Bot      : No logro entender tu consulta. Para no hacerte esperar: Te comunico con Marina. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: +52 000 000 0000 (ficticio). [TRANSFERENCIA A HUMANO]
 
 ==============================================================================
-Resumen: 12 conversaciones, 26 turnos, 2 turnos en fallback.
+Conversación 13: EN: Greeting and rates
+------------------------------------------------------------------------------
+Usuario  : Hello, good afternoon
+Idioma   : en | Intención: greeting | Esperado: greeting/en | OK
+Bot      : Hi! 👋 Welcome to Casa Almendro (sample data). I can help with rates, availability, location, check-in or put you in touch with Marina.
+
+Usuario  : How much is it per night?
+Idioma   : en | Intención: rates | Esperado: rates/en | OK
+Bot      : Nightly rates: Sunday to Thursday $1200 MXN; Friday and Saturday $1500 MXN. Up to 4 guests included; extra guest $200 MXN/night (max. 6). Cleaning fee $350 MXN per stay. Minimum 2 nights.
+
+Usuario  : Thank you
+Idioma   : en | Intención: thanks | Esperado: thanks/en | OK
+Bot      : You're welcome! Anything else I can help with?
+
+==============================================================================
+Conversación 14: EN: Available date
+------------------------------------------------------------------------------
+Usuario  : Hi
+Idioma   : en | Intención: greeting | Esperado: greeting/en | OK
+Bot      : Hi! 👋 Welcome to Casa Almendro (sample data). I can help with rates, availability, location, check-in or put you in touch with Marina.
+
+Usuario  : Is December 14 available?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Yes! The night of 12/14/2026 is available (subject to the host's confirmation). To book it, type 'talk to Marina'.
+
+Usuario  : Perfect, I want to book, talk to Marina
+Idioma   : en | Intención: contact_host | Esperado: contact_host/en | OK
+Bot      : I'm connecting you with Marina. 🙋‍♀️ I've let her know and she'll message you shortly. Phone: +52 000 000 0000 (fictitious). [HANDOFF TO HUMAN]
+
+==============================================================================
+Conversación 15: EN: Booked date
+------------------------------------------------------------------------------
+Usuario  : Is the 31st of October free?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Sorry, the night of 10/31/2026 is already booked. Would you like to check another date or have Marina suggest options?
+
+Usuario  : What about Nov 7, is it available?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Yes! The night of 11/07/2026 is available (subject to the host's confirmation). To book it, type 'talk to Marina'.
+
+Usuario  : And December 24th?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Sorry, the night of 12/24/2026 is already booked. Would you like to check another date or have Marina suggest options?
+
+==============================================================================
+Conversación 16: EN: Location
+------------------------------------------------------------------------------
+Usuario  : Where are you located?
+Idioma   : en | Intención: location | Esperado: location/en | OK
+Bot      : 📍 Las Palmas gated community (fictitious), 123 Ejemplo St., 10 minutes from downtown. Map pin: https://maps.example.com/casa-almendro
+
+Usuario  : Can you send me the address?
+Idioma   : en | Intención: location | Esperado: location/en | OK
+Bot      : 📍 Las Palmas gated community (fictitious), 123 Ejemplo St., 10 minutes from downtown. Map pin: https://maps.example.com/casa-almendro
+
+==============================================================================
+Conversación 17: EN: Arrival / check-in
+------------------------------------------------------------------------------
+Usuario  : What time is check-in?
+Idioma   : en | Intención: checkin_arrival | Esperado: checkin_arrival/en | OK
+Bot      : Check-in from 15:00. Please message this chat 30 minutes before you arrive; you'll get a confirmation with your access code for the day. Steps: 1) community security booth, 2) parking gate, 3) electronic door lock. Ask me about any of them.
+
+Usuario  : What are the arrival instructions?
+Idioma   : en | Intención: checkin_arrival | Esperado: checkin_arrival/en | OK
+Bot      : Check-in from 15:00. Please message this chat 30 minutes before you arrive; you'll get a confirmation with your access code for the day. Steps: 1) community security booth, 2) parking gate, 3) electronic door lock. Ask me about any of them.
+
+==============================================================================
+Conversación 18: EN: Gated community
+------------------------------------------------------------------------------
+Usuario  : I'm at the security booth, what do I tell the guard?
+Idioma   : en | Intención: community_access | Esperado: community_access/en | OK
+Bot      : 🛂 At the security booth, tell the guard you're going to Casa Almendro, lot 12, and show your ID. The guard will register your license plate.
+
+==============================================================================
+Conversación 19: EN: Door lock and parking
+------------------------------------------------------------------------------
+Usuario  : I can't open the door
+Idioma   : en | Intención: door_lock | Esperado: door_lock/en | OK
+Bot      : 🔐 The door has an electronic lock: enter the 4-digit code we send you on arrival day (example: 1234) and press the ✓ key.
+
+Usuario  : What is the lock code?
+Idioma   : en | Intención: door_lock | Esperado: door_lock/en | OK
+Bot      : 🔐 The door has an electronic lock: enter the 4-digit code we send you on arrival day (example: 1234) and press the ✓ key.
+
+Usuario  : Where do I park the car?
+Idioma   : en | Intención: parking_gate | Esperado: parking_gate/en | OK
+Bot      : 🚗 The parking gate opens with the remote in the box next to the main entrance. There's room for 2 cars.
+
+==============================================================================
+Conversación 20: EN: Amenities and rules
+------------------------------------------------------------------------------
+Usuario  : Do you have wifi?
+Idioma   : en | Intención: amenities | Esperado: amenities/en | OK
+Bot      : Amenities: Wi-Fi (network: CasaAlmendro_Ejemplo, password: ejemplo2026), A/C, fully equipped kitchen, pool, grill.
+
+Usuario  : Are pets allowed?
+Idioma   : en | Intención: house_rules | Esperado: house_rules/en | OK
+Bot      : House rules: no parties and no smoking indoors. Small pets with prior notice. Quiet hours after 10:00 p.m.
+
+Usuario  : Can I smoke inside?
+Idioma   : en | Intención: house_rules | Esperado: house_rules/en | OK
+Bot      : House rules: no parties and no smoking indoors. Small pets with prior notice. Quiet hours after 10:00 p.m.
+
+==============================================================================
+Conversación 21: EN: Check-out and goodbye
+------------------------------------------------------------------------------
+Usuario  : What time is check-out?
+Idioma   : en | Intención: checkout | Esperado: checkout/en | OK
+Bot      : Check-out is at 11:00. Leave the keys/remotes in the box, turn off the A/C and close the gate. Thank you!
+
+Usuario  : Thanks, goodbye
+Idioma   : en | Intención: goodbye | Esperado: goodbye/en | OK
+Bot      : See you soon! Enjoy your stay. 🌴
+
+==============================================================================
+Conversación 22: EN: Emergency handoff
+------------------------------------------------------------------------------
+Usuario  : I have an emergency, I need to speak with the host
+Idioma   : en | Intención: contact_host | Esperado: contact_host/en | OK
+Bot      : I'm connecting you with Marina. 🙋‍♀️ I've let her know and she'll message you shortly. Phone: +52 000 000 0000 (fictitious). [HANDOFF TO HUMAN]
+
+==============================================================================
+Conversación 23: EN: Unrecognized → escalation
+------------------------------------------------------------------------------
+Usuario  : Are you a bot?
+Idioma   : en | Intención: regex_chat | Esperado: regex_chat/en | OK
+Bot      : I'm the virtual assistant for Casa Almendro (sample bot). I can help with rates, availability, location and check-in. If you prefer, type 'talk to Marina'.
+
+Usuario  : qwerty
+Idioma   : en | Intención: fallback | Esperado: fallback/en | OK
+Bot      : Sorry, I didn't get that. 🤔 I can help with: rates, availability, location, check-in (security booth, gate, door lock), check-out or talking to Marina.
+
+Usuario  : Do you sell concert tickets?
+Idioma   : en | Intención: fallback→contact_host | Esperado: fallback→contact_host/en | OK
+Bot      : I can't understand your request. So you don't have to wait: I'm connecting you with Marina. 🙋‍♀️ I've let her know and she'll message you shortly. Phone: +52 000 000 0000 (fictitious). [HANDOFF TO HUMAN]
+
+==============================================================================
+Conversación 24: Cambio de idioma ES → EN → ES
+------------------------------------------------------------------------------
+Usuario  : Hola, ¿tienen alberca?
+Idioma   : es | Intención: amenities | Esperado: amenities/es | OK
+Bot      : Servicios incluidos: Wi-Fi (red: CasaAlmendro_Ejemplo, clave: ejemplo2026), A/C, cocina equipada, alberca, asador.
+
+Usuario  : Sorry, do you speak English? What is the wifi password?
+Idioma   : en | Intención: amenities | Esperado: amenities/en | OK
+Bot      : Amenities: Wi-Fi (network: CasaAlmendro_Ejemplo, password: ejemplo2026), A/C, fully equipped kitchen, pool, grill.
+
+Usuario  : ¿Cuánto cuesta la noche?
+Idioma   : es | Intención: rates | Esperado: rates/es | OK
+Bot      : Tarifas por noche: domingo a jueves $1200 MXN; viernes y sábado $1500 MXN. Incluye hasta 4 personas; persona extra $200 MXN/noche (máx. 6). Limpieza $350 MXN por estancia. Mínimo 2 noches.
+
+==============================================================================
+Pruebas de detección de idioma
+------------------------------------------------------------------------------
+OK    es (esperado es): Hola, ¿cómo estás?
+OK    es (esperado es): ¿Dónde está la casa?
+OK    es (esperado es): Quiero reservar para el fin de semana
+OK    en (esperado en): Hello, how are you?
+OK    en (esperado en): Where is the house?
+OK    en (esperado en): I want to book for the weekend
+OK    es (esperado es): Gracias
+OK    en (esperado en): Thanks
+OK    en (esperado en): Can I bring my dog?
+OK    es (esperado es): ¿Puedo llevar a mi perro?
+==============================================================================
+Resumen: 24 conversaciones, 55 turnos, 4 turnos en fallback (esperados).
+Intención + idioma correctos: 55/55
+Detección de idioma: 10/10
