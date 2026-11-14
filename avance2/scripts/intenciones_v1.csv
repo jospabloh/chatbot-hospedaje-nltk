@@ -1,0 +1,246 @@
+texto|intencion
+como llego a la casa|como_llegar
+me pasas la ubicacion porfa|como_llegar
+cual es la direccion exacta|como_llegar
+no encuentro el lugar en waze|como_llegar
+ya estoy en la zona pero no veo el residencial|como_llegar
+por donde se entra al fraccionamiento|como_llegar
+el maps me manda a otro lado, me ayudas|como_llegar
+hay alguna referencia para llegar|como_llegar
+venimos en coche, por donde entramos|como_llegar
+¿me puedes compartir el pin de ubicacion?|como_llegar
+estamos llegando, como le hacemos para entrar|como_llegar
+el taxi no sabe donde es|como_llegar
+que calle es la entrada principal|como_llegar
+viene de la central, como llego|como_llegar
+cual es la casa, la de que color|como_llegar
+ya estoy afuera pero no se cual es|como_llegar
+hay caseta de vigilancia|como_llegar
+que le digo al guardia para que me deje pasar|como_llegar
+necesito la direccion para el uber|como_llegar
+a que nombre esta la reserva en la caseta|como_llegar
+nos pasas como llegar porfa|como_llegar
+esta lejos del centro|como_llegar
+cuanto hace del aeropuerto a la casa|como_llegar
+como se llama el residencial|como_llegar
+no me carga la ubicacion que mandaste|como_llegar
+puedes mandar la ubicacion otra vez|como_llegar
+donde queda exactamente|como_llegar
+tienen alguna foto de la fachada para ubicarla|como_llegar
+desde la carretera por donde me meto|como_llegar
+hola, como llego|como_llegar
+cual es el codigo de la puerta|codigo_acceso
+no me llego el codigo|codigo_acceso
+me puedes pasar la clave de la chapa|codigo_acceso
+como abro la puerta|codigo_acceso
+la chapa no me acepta el codigo|codigo_acceso
+cuando me mandan el codigo de entrada|codigo_acceso
+donde veo el codigo de acceso|codigo_acceso
+el numero que me diste no funciona|codigo_acceso
+tengo que marcar algo antes del codigo|codigo_acceso
+se bloqueo la chapa, que hago|codigo_acceso
+hay llave fisica o solo codigo|codigo_acceso
+el codigo sirve para toda la estancia|codigo_acceso
+cuantos digitos es la clave|codigo_acceso
+me reenvias el codigo porfa|codigo_acceso
+la cerradura esta parpadeando rojo|codigo_acceso
+como funciona la cerradura digital|codigo_acceso
+puse el codigo y no pasa nada|codigo_acceso
+el codigo cambia cada dia|codigo_acceso
+le doy enter despues del codigo|codigo_acceso
+no se abrir la puerta principal|codigo_acceso
+a que hora me mandan la clave|codigo_acceso
+me pueden mandar el codigo desde hoy|codigo_acceso
+perdi el mensaje con el codigo|codigo_acceso
+la pila de la chapa parece baja|codigo_acceso
+hay que girar la perilla despues de marcar|codigo_acceso
+cual es el acceso a la unidad|codigo_acceso
+que clave uso para entrar|codigo_acceso
+el codigo es el mismo del porton|codigo_acceso
+mi esposa llega despues, le sirve el mismo codigo|codigo_acceso
+puedo cambiar el codigo|codigo_acceso
+hay estacionamiento|estacionamiento
+donde dejo el carro|estacionamiento
+el estacionamiento esta incluido|estacionamiento
+como se abre el porton|estacionamiento
+cabe una camioneta|estacionamiento
+cuantos lugares de estacionamiento hay|estacionamiento
+el porton es automatico|estacionamiento
+hay que pagar el parking|estacionamiento
+se puede estacionar en la calle|estacionamiento
+me pasas el control del porton|estacionamiento
+el porton no abre|estacionamiento
+hay cochera techada|estacionamiento
+puedo meter dos carros|estacionamiento
+el estacionamiento es seguro|estacionamiento
+donde esta la entrada de la cochera|estacionamiento
+el porton tiene codigo tambien|estacionamiento
+venimos con dos autos, hay espacio|estacionamiento
+se puede dejar el carro toda la estancia|estacionamiento
+hay valet o algo asi|estacionamiento
+el porton se queda abierto|estacionamiento
+que hago si no abre la cochera|estacionamiento
+hay lugar para moto|estacionamiento
+el parking es privado o compartido|estacionamiento
+como salgo con el carro|estacionamiento
+el control va dentro de la casa|estacionamiento
+a que hora puedo hacer check in|horarios_checkin_checkout
+a que hora tengo que dejar la casa|horarios_checkin_checkout
+cual es el horario de entrada|horarios_checkin_checkout
+a que hora es el check out|horarios_checkin_checkout
+desde que hora puedo llegar|horarios_checkin_checkout
+hasta que hora puedo estar manana|horarios_checkin_checkout
+me recuerdas los horarios|horarios_checkin_checkout
+el check in es a las 3|horarios_checkin_checkout
+cuando tengo que entregar|horarios_checkin_checkout
+que hora es la salida|horarios_checkin_checkout
+hay hora limite para entrar|horarios_checkin_checkout
+me confirmas horario de entrada y salida|horarios_checkin_checkout
+el ultimo dia a que hora me voy|horarios_checkin_checkout
+a que hora esta lista la unidad|horarios_checkin_checkout
+cual es el horario de recepcion|horarios_checkin_checkout
+puedo entrar a cualquier hora|horarios_checkin_checkout
+que hago con las llaves al salir|horarios_checkin_checkout
+hay que avisar cuando nos vamos|horarios_checkin_checkout
+tengo que hacer algo antes de salir|horarios_checkin_checkout
+el checkout es el domingo a que hora|horarios_checkin_checkout
+vamos a llegar como a las 11 de la noche|llegada_tarde
+llegamos tarde, no hay problema|llegada_tarde
+nuestro vuelo aterriza a medianoche|llegada_tarde
+se nos hizo tarde en la carretera|llegada_tarde
+podemos llegar despues de las 10 pm|llegada_tarde
+va a haber alguien para recibirnos|llegada_tarde
+llegamos como a la 1 am, esta bien|llegada_tarde
+el vuelo se retraso, vamos a llegar noche|llegada_tarde
+hay check in tarde|llegada_tarde
+nos agarro el trafico, llegamos como a las 11|llegada_tarde
+si llego de madrugada como entro|llegada_tarde
+nadie tiene que esperarnos verdad|llegada_tarde
+podemos entrar aunque sea tardisimo|llegada_tarde
+llegamos pasada la medianoche, hay bronca|llegada_tarde
+hay problema si llegamos fuera de horario|llegada_tarde
+avisamos que venimos retrasados|llegada_tarde
+se puede llegar a cualquier hora de la noche|llegada_tarde
+vamos retrasados unas 3 horas|llegada_tarde
+llego hasta las 2 de la manana|llegada_tarde
+el autobus llega tarde, alcanzamos a entrar|llegada_tarde
+puedo entrar antes de la hora de check in|early_late_checkout
+se puede hacer early check in|early_late_checkout
+me dejan entrar al mediodia|early_late_checkout
+puedo salir mas tarde el domingo|early_late_checkout
+se puede late checkout|early_late_checkout
+cuanto cuesta entrar antes|early_late_checkout
+podemos quedarnos hasta las 6 de la tarde|early_late_checkout
+hay costo por salir tarde|early_late_checkout
+llego a las 9 am, puedo pasar ya|early_late_checkout
+mi vuelo sale en la noche, puedo estar mas tiempo|early_late_checkout
+se puede extender la salida unas horas|early_late_checkout
+cobran extra por el early check in|early_late_checkout
+podria dejar las maletas antes de entrar|early_late_checkout
+nos dejan salir a las 4 en lugar de las 12|early_late_checkout
+que tan temprano puedo llegar|early_late_checkout
+es posible entregar mas tarde sin pagar|early_late_checkout
+si quiero entrar temprano como le hago|early_late_checkout
+hay flexibilidad con los horarios|early_late_checkout
+se puede negociar la hora de salida|early_late_checkout
+cuanto me cobran por media noche extra|early_late_checkout
+el desayuno esta incluido|desayuno
+dan de desayunar|desayuno
+hay desayuno|desayuno
+cuanto cuesta el desayuno|desayuno
+a que hora sirven el desayuno|desayuno
+el desayuno viene con la tarifa|desayuno
+hay cafe en la casa|desayuno
+incluye alimentos|desayuno
+tienen servicio de comida|desayuno
+hay cocina para prepararnos algo|desayuno
+el desayuno es buffet o a la carta|desayuno
+puedo pedir desayuno extra|desayuno
+hay opciones vegetarianas en el desayuno|desayuno
+el desayuno se paga aparte|desayuno
+dejan algo de despensa|desayuno
+viene incluido el cafe y el pan|desayuno
+hay que pagar por el desayuno de los ninos|desayuno
+donde desayunamos|desayuno
+se puede pedir desayuno a la habitacion|desayuno
+tienen convenio con algun restaurante|desayuno
+dan factura|factura_electronica
+necesito factura electronica|factura_electronica
+pueden facturarme la estancia|factura_electronica
+como pido mi cfdi|factura_electronica
+emiten comprobante fiscal|factura_electronica
+necesito factura a nombre de mi empresa|factura_electronica
+a donde mando mis datos fiscales|factura_electronica
+me pueden facturar con rfc|factura_electronica
+cuanto tardan en mandar la factura|factura_electronica
+la factura lleva iva|factura_electronica
+puedo pedir factura despues de la estancia|factura_electronica
+que uso de cfdi le ponen|factura_electronica
+mandan la factura por correo|factura_electronica
+necesito comprobante para gastos de viaje|factura_electronica
+me facturan el hospedaje completo|factura_electronica
+les paso mi constancia de situacion fiscal|factura_electronica
+hacen facturas a persona moral|factura_electronica
+no me ha llegado mi factura|factura_electronica
+la factura sale a nombre de quien|factura_electronica
+pueden refacturar, puse mal el rfc|factura_electronica
+tienen tarifa corporativa|tarifa_corporativa
+manejan precios para empresas|tarifa_corporativa
+hay descuento por estancia larga de trabajo|tarifa_corporativa
+somos una empresa, hay convenio|tarifa_corporativa
+que incluye la tarifa corporativa|tarifa_corporativa
+podemos hacer un convenio por varias noches|tarifa_corporativa
+hay precio especial para colaboradores|tarifa_corporativa
+manejan tarifa para estancias de proyecto|tarifa_corporativa
+vamos a mandar gente cada mes, hay precio|tarifa_corporativa
+se puede facturar con tarifa empresarial|tarifa_corporativa
+cual es el precio corporativo por noche|tarifa_corporativa
+hay descuento si reservo las 4 unidades|tarifa_corporativa
+tienen convenio con empresas de la zona|tarifa_corporativa
+podemos firmar un contrato anual|tarifa_corporativa
+cuanto seria por 30 noches para personal|tarifa_corporativa
+el aire no enfria|reportar_problema
+no hay agua caliente|reportar_problema
+se fue la luz|reportar_problema
+la regadera gotea|reportar_problema
+no funciona el wifi|reportar_problema
+la television no prende|reportar_problema
+se tapo el bano|reportar_problema
+hay un foco fundido|reportar_problema
+el refri no esta enfriando|reportar_problema
+no sirve la estufa|reportar_problema
+se rompio un vaso, aviso|reportar_problema
+la puerta del cuarto no cierra|reportar_problema
+hay una fuga en la cocina|reportar_problema
+el minisplit saca aire caliente|reportar_problema
+no encuentro las toallas|reportar_problema
+el boiler no prende|reportar_problema
+se escucha un ruido raro|reportar_problema
+no hay senal de internet|reportar_problema
+la cafetera no funciona|reportar_problema
+creo que algo se descompuso|reportar_problema
+hola buenas tardes|fuera_de_alcance
+gracias, muy amable|fuera_de_alcance
+buenos dias|fuera_de_alcance
+ok perfecto|fuera_de_alcance
+ya quedo, gracias|fuera_de_alcance
+que tengan bonito dia|fuera_de_alcance
+hasta luego|fuera_de_alcance
+recomiendan algun restaurante por aca|fuera_de_alcance
+que lugares hay para visitar|fuera_de_alcance
+donde puedo comprar despensa cerca|fuera_de_alcance
+saben si hay farmacia cerca|fuera_de_alcance
+como esta el clima alla|fuera_de_alcance
+me pueden recomendar un taxi de confianza|fuera_de_alcance
+hay gimnasio cerca|fuera_de_alcance
+a que hora abre el super|fuera_de_alcance
+excelente servicio, muchas gracias|fuera_de_alcance
+buenas noches|fuera_de_alcance
+que onda|fuera_de_alcance
+una pregunta|fuera_de_alcance
+disculpa la molestia|fuera_de_alcance
+manejan paquete para empresas de la zona industrial|tarifa_corporativa
+si reservamos seguido hay mejor precio|tarifa_corporativa
+necesito cotizacion para 5 personas de la empresa|tarifa_corporativa
+hay tarifa especial entre semana para trabajo|tarifa_corporativa
+podemos dejar un contrato abierto para colaboradores|tarifa_corporativa

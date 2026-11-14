@@ -1,0 +1,35 @@
+texto,real,pred
+cobran multa si hay danos,reglas,early_late_checkout
+cobran extra por mascota,tarifas,early_late_checkout
+hasta luego,saludo_cortesia,llegada_tarde
+hay que registrarse en la entrada,acceso_fraccionamiento,horarios
+entrada anticipada es posible?,early_late_checkout,acceso_fraccionamiento
+me das el numero de la dueña,contactar_anfitrion,cerradura
+que tan caro es,tarifas,ubicacion
+hay una fuga en la cocina,reportar_problema,servicios
+si reservamos seguido hay mejor precio,contactar_anfitrion,tarifas
+hay descuento si reservo las 4 unidades,contactar_anfitrion,disponibilidad
+"llego a las 9 am, puedo pasar ya",early_late_checkout,llegada_tarde
+cual es la tarifa entre semana,tarifas,contactar_anfitrion
+el codigo es el mismo del porton,cerradura,porton_estacionamiento
+la caseta esta abierta en la noche,llegada_tarde,acceso_fraccionamiento
+me das indicaciones para llegar,ubicacion,llegada_tarde
+la entrada es a partir de las 15:00?,horarios,acceso_fraccionamiento
+esta en un fraccionamiento?,ubicacion,acceso_fraccionamiento
+"me interesa del 10 al 12, hay?",disponibilidad,servicios
+cuantas recamaras y banos tiene,servicios,reportar_problema
+no encuentro el lugar en waze,ubicacion,reportar_problema
+tengo que hacer algo antes de salir,horarios,early_late_checkout
+el control no tiene luz,porton_estacionamiento,reportar_problema
+podemos entrar aunque sea tardisimo,llegada_tarde,early_late_checkout
+como le hago para llegar en transporte publico,ubicacion,llegada_tarde
+la alberca esta verde,reportar_problema,servicios
+el de seguridad dice que no tiene mi nombre,acceso_fraccionamiento,servicios
+la puerta del cuarto no cierra,reportar_problema,cerradura
+"estamos llegando, como le hacemos para entrar",ubicacion,llegada_tarde
+cual es la clave del wifi,servicios,cerradura
+horario de llegada,horarios,llegada_tarde
+cual es el precio corporativo por noche,contactar_anfitrion,tarifas
+hay papel de baño suficiente,servicios,reportar_problema
+se permiten visitas,reglas,acceso_fraccionamiento
+en vigilancia preguntan por el anfitrion,acceso_fraccionamiento,contactar_anfitrion

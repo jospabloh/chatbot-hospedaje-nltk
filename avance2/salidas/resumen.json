@@ -1,0 +1,513 @@
+{
+ "corpus": {
+  "frases": 681,
+  "intenciones": 14,
+  "por_intencion": {
+   "servicios": 73,
+   "ubicacion": 62,
+   "cerradura": 62,
+   "porton_estacionamiento": 55,
+   "contactar_anfitrion": 53,
+   "saludo_cortesia": 50,
+   "llegada_tarde": 50,
+   "early_late_checkout": 50,
+   "reportar_problema": 48,
+   "horarios": 45,
+   "tarifas": 36,
+   "acceso_fraccionamiento": 35,
+   "disponibilidad": 32,
+   "reglas": 30
+  }
+ },
+ "texto": {
+  "dimension_tfidf": 7703,
+  "modelos": [
+   {
+    "modelo": "Naive Bayes",
+    "f1_macro_cv": 0.6603,
+    "f1_macro_cv_std": 0.0594,
+    "accuracy_prueba": 0.7445,
+    "f1_macro_prueba": 0.7373
+   },
+   {
+    "modelo": "SVM lineal",
+    "f1_macro_cv": 0.7059,
+    "f1_macro_cv_std": 0.0535,
+    "accuracy_prueba": 0.7299,
+    "f1_macro_prueba": 0.7232
+   }
+  ],
+  "ablacion": [
+   {
+    "variante": "Texto crudo",
+    "accuracy": 0.6569,
+    "f1_macro": 0.6326
+   },
+   {
+    "variante": "Normalizado y tokenizado",
+    "accuracy": 0.6569,
+    "f1_macro": 0.6326
+   },
+   {
+    "variante": "+ sin stopwords",
+    "accuracy": 0.6569,
+    "f1_macro": 0.6227
+   },
+   {
+    "variante": "+ stemming",
+    "accuracy": 0.6642,
+    "f1_macro": 0.6454
+   },
+   {
+    "variante": "+ n-gramas de caracteres (final)",
+    "accuracy": 0.7299,
+    "f1_macro": 0.7232
+   }
+  ],
+  "svm_calibrada": {
+   "accuracy": 0.7518248175182481,
+   "f1_macro": 0.746222838928393
+  },
+  "por_intencion": {
+   "acceso_fraccionamiento": {
+    "precision": 0.4444444444444444,
+    "recall": 0.5714285714285714,
+    "f1-score": 0.5,
+    "support": 7.0
+   },
+   "cerradura": {
+    "precision": 0.8,
+    "recall": 0.9230769230769231,
+    "f1-score": 0.8571428571428571,
+    "support": 13.0
+   },
+   "contactar_anfitrion": {
+    "precision": 0.7777777777777778,
+    "recall": 0.6363636363636364,
+    "f1-score": 0.7,
+    "support": 11.0
+   },
+   "disponibilidad": {
+    "precision": 0.8333333333333334,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.8333333333333334,
+    "support": 6.0
+   },
+   "early_late_checkout": {
+    "precision": 0.6666666666666666,
+    "recall": 0.8,
+    "f1-score": 0.7272727272727273,
+    "support": 10.0
+   },
+   "horarios": {
+    "precision": 0.8571428571428571,
+    "recall": 0.6666666666666666,
+    "f1-score": 0.75,
+    "support": 9.0
+   },
+   "llegada_tarde": {
+    "precision": 0.5714285714285714,
+    "recall": 0.8,
+    "f1-score": 0.6666666666666666,
+    "support": 10.0
+   },
+   "porton_estacionamiento": {
+    "precision": 0.9090909090909091,
+    "recall": 0.9090909090909091,
+    "f1-score": 0.9090909090909091,
+    "support": 11.0
+   },
+   "reglas": {
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "f1-score": 0.8,
+    "support": 6.0
+   },
+   "reportar_problema": {
+    "precision": 0.6363636363636364,
+    "recall": 0.7,
+    "f1-score": 0.6666666666666666,
+    "support": 10.0
+   },
+   "saludo_cortesia": {
+    "precision": 1.0,
+    "recall": 0.9,
+    "f1-score": 0.9473684210526315,
+    "support": 10.0
+   },
+   "servicios": {
+    "precision": 0.75,
+    "recall": 0.8,
+    "f1-score": 0.7741935483870968,
+    "support": 15.0
+   },
+   "tarifas": {
+    "precision": 0.6666666666666666,
+    "recall": 0.5714285714285714,
+    "f1-score": 0.6153846153846154,
+    "support": 7.0
+   },
+   "ubicacion": {
+    "precision": 0.875,
+    "recall": 0.5833333333333334,
+    "f1-score": 0.7,
+    "support": 12.0
+   }
+  },
+  "n_prueba": 137,
+  "errores": [
+   {
+    "texto": "cobran multa si hay danos",
+    "real": "reglas",
+    "pred": "early_late_checkout"
+   },
+   {
+    "texto": "cobran extra por mascota",
+    "real": "tarifas",
+    "pred": "early_late_checkout"
+   },
+   {
+    "texto": "hasta luego",
+    "real": "saludo_cortesia",
+    "pred": "llegada_tarde"
+   },
+   {
+    "texto": "hay que registrarse en la entrada",
+    "real": "acceso_fraccionamiento",
+    "pred": "horarios"
+   },
+   {
+    "texto": "entrada anticipada es posible?",
+    "real": "early_late_checkout",
+    "pred": "acceso_fraccionamiento"
+   },
+   {
+    "texto": "me das el numero de la dueña",
+    "real": "contactar_anfitrion",
+    "pred": "cerradura"
+   },
+   {
+    "texto": "que tan caro es",
+    "real": "tarifas",
+    "pred": "ubicacion"
+   },
+   {
+    "texto": "hay una fuga en la cocina",
+    "real": "reportar_problema",
+    "pred": "servicios"
+   },
+   {
+    "texto": "si reservamos seguido hay mejor precio",
+    "real": "contactar_anfitrion",
+    "pred": "tarifas"
+   },
+   {
+    "texto": "hay descuento si reservo las 4 unidades",
+    "real": "contactar_anfitrion",
+    "pred": "disponibilidad"
+   },
+   {
+    "texto": "llego a las 9 am, puedo pasar ya",
+    "real": "early_late_checkout",
+    "pred": "llegada_tarde"
+   },
+   {
+    "texto": "cual es la tarifa entre semana",
+    "real": "tarifas",
+    "pred": "contactar_anfitrion"
+   },
+   {
+    "texto": "el codigo es el mismo del porton",
+    "real": "cerradura",
+    "pred": "porton_estacionamiento"
+   },
+   {
+    "texto": "la caseta esta abierta en la noche",
+    "real": "llegada_tarde",
+    "pred": "acceso_fraccionamiento"
+   },
+   {
+    "texto": "me das indicaciones para llegar",
+    "real": "ubicacion",
+    "pred": "llegada_tarde"
+   },
+   {
+    "texto": "la entrada es a partir de las 15:00?",
+    "real": "horarios",
+    "pred": "acceso_fraccionamiento"
+   },
+   {
+    "texto": "esta en un fraccionamiento?",
+    "real": "ubicacion",
+    "pred": "acceso_fraccionamiento"
+   },
+   {
+    "texto": "me interesa del 10 al 12, hay?",
+    "real": "disponibilidad",
+    "pred": "servicios"
+   },
+   {
+    "texto": "cuantas recamaras y banos tiene",
+    "real": "servicios",
+    "pred": "reportar_problema"
+   },
+   {
+    "texto": "no encuentro el lugar en waze",
+    "real": "ubicacion",
+    "pred": "reportar_problema"
+   },
+   {
+    "texto": "tengo que hacer algo antes de salir",
+    "real": "horarios",
+    "pred": "early_late_checkout"
+   },
+   {
+    "texto": "el control no tiene luz",
+    "real": "porton_estacionamiento",
+    "pred": "reportar_problema"
+   },
+   {
+    "texto": "podemos entrar aunque sea tardisimo",
+    "real": "llegada_tarde",
+    "pred": "early_late_checkout"
+   },
+   {
+    "texto": "como le hago para llegar en transporte publico",
+    "real": "ubicacion",
+    "pred": "llegada_tarde"
+   },
+   {
+    "texto": "la alberca esta verde",
+    "real": "reportar_problema",
+    "pred": "servicios"
+   },
+   {
+    "texto": "el de seguridad dice que no tiene mi nombre",
+    "real": "acceso_fraccionamiento",
+    "pred": "servicios"
+   },
+   {
+    "texto": "la puerta del cuarto no cierra",
+    "real": "reportar_problema",
+    "pred": "cerradura"
+   },
+   {
+    "texto": "estamos llegando, como le hacemos para entrar",
+    "real": "ubicacion",
+    "pred": "llegada_tarde"
+   },
+   {
+    "texto": "cual es la clave del wifi",
+    "real": "servicios",
+    "pred": "cerradura"
+   },
+   {
+    "texto": "horario de llegada",
+    "real": "horarios",
+    "pred": "llegada_tarde"
+   },
+   {
+    "texto": "cual es el precio corporativo por noche",
+    "real": "contactar_anfitrion",
+    "pred": "tarifas"
+   },
+   {
+    "texto": "hay papel de baño suficiente",
+    "real": "servicios",
+    "pred": "reportar_problema"
+   },
+   {
+    "texto": "se permiten visitas",
+    "real": "reglas",
+    "pred": "acceso_fraccionamiento"
+   },
+   {
+    "texto": "en vigilancia preguntan por el anfitrion",
+    "real": "acceso_fraccionamiento",
+    "pred": "contactar_anfitrion"
+   }
+  ],
+  "umbral": 0.4,
+  "umbrales": [
+   {
+    "umbral": 0.2,
+    "cobertura": 0.9927,
+    "accuracy_cubierta": 0.75,
+    "fuera_de_alcance_escalado": 0.0
+   },
+   {
+    "umbral": 0.3,
+    "cobertura": 0.927,
+    "accuracy_cubierta": 0.7638,
+    "fuera_de_alcance_escalado": 0.0
+   },
+   {
+    "umbral": 0.4,
+    "cobertura": 0.8321,
+    "accuracy_cubierta": 0.8158,
+    "fuera_de_alcance_escalado": 0.125
+   },
+   {
+    "umbral": 0.5,
+    "cobertura": 0.6642,
+    "accuracy_cubierta": 0.8791,
+    "fuera_de_alcance_escalado": 0.375
+   }
+  ]
+ },
+ "vision": {
+  "conteo": {
+   "cerradura": 52,
+   "porton": 49,
+   "caseta": 45,
+   "controles": 50,
+   "interior": 60
+  },
+  "n_train": 179,
+  "n_val": 38,
+  "n_test": 39,
+  "modelos": [
+   {
+    "modelo": "CNN desde cero",
+    "accuracy": 0.5385,
+    "precision_macro": 0.5345,
+    "recall_macro": 0.55,
+    "f1_macro": 0.5266
+   },
+   {
+    "modelo": "ResNet50 (transferencia + ajuste fino)",
+    "accuracy": 0.8718,
+    "precision_macro": 0.8987,
+    "recall_macro": 0.8667,
+    "f1_macro": 0.8759
+   }
+  ],
+  "por_clase": {
+   "cerradura": {
+    "precision": 0.6363636363636364,
+    "recall": 0.875,
+    "f1-score": 0.7368421052631579,
+    "support": 8.0
+   },
+   "porton": {
+    "precision": 1.0,
+    "recall": 0.875,
+    "f1-score": 0.9333333333333333,
+    "support": 8.0
+   },
+   "caseta": {
+    "precision": 1.0,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.9090909090909091,
+    "support": 6.0
+   },
+   "controles": {
+    "precision": 0.8571428571428571,
+    "recall": 0.75,
+    "f1-score": 0.8,
+    "support": 8.0
+   },
+   "interior": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 9.0
+   }
+  },
+  "epocas": {
+   "cnn": 21,
+   "resnet": 13,
+   "ajuste_fino": 6
+  }
+ },
+ "integracion": [
+  {
+   "texto": "no me abre",
+   "intencion": "cerradura",
+   "conf_texto": 0.7,
+   "imagen": "cerradura",
+   "conf_imagen": 1.0,
+   "decision_por": "texto e imagen coinciden",
+   "intencion_final": "cerradura",
+   "accion": "RESPONDER",
+   "respuesta": "La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día de llegada y presiona la palomita. Si parpadea en rojo, espera 1 minuto y vuelve a intentar."
+  },
+  {
+   "texto": "no me abre",
+   "intencion": "cerradura",
+   "conf_texto": 0.7,
+   "imagen": "porton",
+   "conf_imagen": 1.0,
+   "decision_por": "imagen",
+   "intencion_final": "porton_estacionamiento",
+   "accion": "RESPONDER",
+   "respuesta": "El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Si no responde, presiona el botón 2 segundos frente al motor."
+  },
+  {
+   "texto": "ya estoy aqui y no puedo pasar",
+   "intencion": "reglas",
+   "conf_texto": 0.15,
+   "imagen": "caseta",
+   "conf_imagen": 1.0,
+   "decision_por": "imagen",
+   "intencion_final": "acceso_fraccionamiento",
+   "accion": "RESPONDER",
+   "respuesta": "En la caseta indica que vas a Casa Almendro, lote 12, y muestra tu identificación. El guardia registra tu placa."
+  },
+  {
+   "texto": "hace mucho calor y no enfria",
+   "intencion": "reportar_problema",
+   "conf_texto": 0.72,
+   "imagen": "controles",
+   "conf_imagen": 0.96,
+   "decision_por": "texto e imagen coinciden",
+   "intencion_final": "reportar_problema",
+   "accion": "RESPONDER",
+   "respuesta": "Gracias por avisar. Revisa que el control del minisplit tenga pilas y esté en modo frío (copo de nieve). Si sigue sin funcionar, la anfitriona te contacta en breve."
+  },
+  {
+   "texto": "mira como esta esto",
+   "intencion": "ubicacion",
+   "conf_texto": 0.4,
+   "imagen": "interior",
+   "conf_imagen": 1.0,
+   "decision_por": "imagen",
+   "intencion_final": "reportar_problema",
+   "accion": "ESCALAR",
+   "respuesta": "Gracias por la foto. Le aviso a la anfitriona para que lo revise contigo."
+  },
+  {
+   "texto": "me puedo quedar mas tarde el domingo",
+   "intencion": "early_late_checkout",
+   "conf_texto": 0.79,
+   "imagen": null,
+   "conf_imagen": 0.0,
+   "decision_por": "texto",
+   "intencion_final": "early_late_checkout",
+   "accion": "ESCALAR",
+   "respuesta": "Le paso tu mensaje a la anfitriona."
+  },
+  {
+   "texto": "a que hora es el check in",
+   "intencion": "horarios",
+   "conf_texto": 0.87,
+   "imagen": null,
+   "conf_imagen": 0.0,
+   "decision_por": "texto",
+   "intencion_final": "horarios",
+   "accion": "RESPONDER",
+   "respuesta": "Check-in desde las 15:00 y check-out a las 11:00."
+  },
+  {
+   "texto": "recomiendan algun restaurante por aca",
+   "intencion": "servicios",
+   "conf_texto": 0.55,
+   "imagen": null,
+   "conf_imagen": 0.0,
+   "decision_por": "texto",
+   "intencion_final": "servicios",
+   "accion": "RESPONDER",
+   "respuesta": "Con gusto te ayudo; la anfitriona te confirma este dato."
+  }
+ ]
+}

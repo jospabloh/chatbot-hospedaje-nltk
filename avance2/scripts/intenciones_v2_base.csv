@@ -1,0 +1,469 @@
+texto|intencion
+hola|saludo_cortesia
+hola buenas tardes|saludo_cortesia
+buenos dias|saludo_cortesia
+buenas noches, que tal|saludo_cortesia
+holaa|saludo_cortesia
+hola, como estas?|saludo_cortesia
+que onda|saludo_cortesia
+buen dia!|saludo_cortesia
+hola soy el huesped de este fin|saludo_cortesia
+hola, tengo una reserva con ustedes|saludo_cortesia
+gracias|saludo_cortesia
+muchas gracias|saludo_cortesia
+mil gracias por todo|saludo_cortesia
+gracias, muy amable|saludo_cortesia
+perfecto gracias|saludo_cortesia
+super, gracias!|saludo_cortesia
+ok gracias|saludo_cortesia
+grax|saludo_cortesia
+te lo agradezco mucho|saludo_cortesia
+excelente, gracias por la info|saludo_cortesia
+adios|saludo_cortesia
+hasta luego|saludo_cortesia
+nos vemos|saludo_cortesia
+bye|saludo_cortesia
+gracias, adios|saludo_cortesia
+eso es todo, gracias|saludo_cortesia
+listo, hasta pronto|saludo_cortesia
+que tengan buen dia|saludo_cortesia
+saludos|saludo_cortesia
+ya quedo, gracias|saludo_cortesia
+ok|saludo_cortesia
+va, perfecto|saludo_cortesia
+entendido|saludo_cortesia
+sale|saludo_cortesia
+de acuerdo|saludo_cortesia
+hola!! que gusto|saludo_cortesia
+buenas|saludo_cortesia
+hola, me ayudas?|saludo_cortesia
+gracias por responder tan rapido|saludo_cortesia
+todo perfecto, gracias por la estancia|saludo_cortesia
+estuvimos muy a gusto, gracias|saludo_cortesia
+hola buen dia una pregunta|saludo_cortesia
+okey muchas gracias|saludo_cortesia
+genial|saludo_cortesia
+cuanto cuesta la noche|tarifas
+que precio tiene por noche|tarifas
+cuanto sale el fin de semana|tarifas
+me pasas tarifas porfa|tarifas
+cual es la tarifa entre semana|tarifas
+cuanto cobran por persona extra|tarifas
+el precio incluye limpieza?|tarifas
+cuanto es por 3 noches|tarifas
+que costo tiene la casa|tarifas
+precio para 6 personas|tarifas
+tienen descuento por semana|tarifas
+cuanto cuesta quedarme un mes|tarifas
+hay cargo por limpieza|tarifas
+cuanto me sale todo|tarifas
+cuanto es el deposito|tarifas
+cual es el costo total con impuestos|tarifas
+el precio es por casa o por persona|tarifas
+cuanto cuesta el viernes y sabado|tarifas
+cuanto cobran la noche en diciembre|tarifas
+me cotizas 2 noches para 4|tarifas
+que tan caro es|tarifas
+la tarifa sube en temporada alta?|tarifas
+cuanto vale una noche nada mas|tarifas
+me podrias dar el precio|tarifas
+hay minimo de noches?|tarifas
+cobran extra por mascota|tarifas
+que incluye el precio|tarifas
+cuanto sale si somos 5|tarifas
+tienen promocion|tarifas
+precio por noche porfavor|tarifas
+cuanto cuesta rentar la casa completa|tarifas
+el costo es en pesos o dolares|tarifas
+aceptan tarjeta o solo transferencia|tarifas
+cuanto es el anticipo para apartar|tarifas
+quanto cuesta la noxhe|tarifas
+cuanto me cobrarias por 4 noches|tarifas
+esta disponible el 14 de diciembre|disponibilidad
+tienen libre este fin de semana|disponibilidad
+hay lugar para el 20 de noviembre|disponibilidad
+esta ocupada la casa en navidad|disponibilidad
+tienen disponibilidad del 3 al 5 de enero|disponibilidad
+puedo reservar para mañana|disponibilidad
+hay fechas libres en semana santa|disponibilidad
+quiero apartar el puente de noviembre|disponibilidad
+esta libre el sabado|disponibilidad
+tienen espacio para hoy en la noche|disponibilidad
+que fechas tienen disponibles en diciembre|disponibilidad
+se puede reservar para año nuevo|disponibilidad
+me interesa del 10 al 12, hay?|disponibilidad
+todavia esta disponible para el 31|disponibilidad
+quisiera reservar 2 noches|disponibilidad
+hay cupo la proxima semana|disponibilidad
+esta disponible la casa el 7 de noviembre|disponibilidad
+como hago la reservacion|disponibilidad
+quiero hacer una reserva|disponibilidad
+sigue libre la fecha que pregunte|disponibilidad
+tienen algo para el viernes|disponibilidad
+para cuando tienen libre|disponibilidad
+esta apartado el 24?|disponibilidad
+me confirmas si hay disponibilidad|disponibilidad
+podemos llegar el 15 y salir el 17|disponibilidad
+hay disponibilidad para un grupo de 6|disponibilidad
+puedo reservar por aqui o por airbnb|disponibilidad
+disponibilidad para el siguiente mes|disponibilidad
+esta disponoble el finde|disponibilidad
+queria saber si esta libre en enero|disponibilidad
+cuando esta desocupada|disponibilidad
+dispo para el lunes?|disponibilidad
+donde estan ubicados|ubicacion
+me pasas la ubicacion porfa|ubicacion
+cual es la direccion exacta|ubicacion
+no encuentro el lugar en waze|ubicacion
+como llego a la casa|ubicacion
+mandame el pin de google maps|ubicacion
+en que colonia queda|ubicacion
+que tan lejos esta del centro|ubicacion
+como llego desde el aeropuerto|ubicacion
+estoy perdido, por donde entro|ubicacion
+la direccion que me dieron no aparece|ubicacion
+queda cerca de la carretera?|ubicacion
+que calle es|ubicacion
+como llego en uber|ubicacion
+me puedes compartir la ubicacion en tiempo real|ubicacion
+waze me manda a otro lado|ubicacion
+hay alguna referencia para encontrar la casa|ubicacion
+que tan lejos esta de la playa|ubicacion
+a cuanto queda del centro historico|ubicacion
+como llego desde la central de autobuses|ubicacion
+donde queda exactamente|ubicacion
+me das indicaciones para llegar|ubicacion
+ya voy en camino, cual es la direccion|ubicacion
+la ubi porfa|ubicacion
+esta en un fraccionamiento?|ubicacion
+que hay cerca de la casa|ubicacion
+hay tiendas cerca|ubicacion
+me perdi en la glorieta, para donde voy|ubicacion
+cual es el codigo postal|ubicacion
+en google maps sale bien la casa?|ubicacion
+como le hago para llegar en transporte publico|ubicacion
+estamos a 10 minutos, donde damos vuelta|ubicacion
+nos pasas la direccion completa|ubicacion
+la casa queda en la ciudad o a las afueras|ubicacion
+donde es eso|ubicacion
+me mandas la locacion|ubicacion
+como llego desde la autopista|ubicacion
+a que hora es el check in|horarios
+a que hora puedo llegar|horarios
+desde que hora se puede entrar|horarios
+a que hora es la salida|horarios
+a que hora tengo que entregar la casa|horarios
+hora del check out|horarios
+cual es el horario de entrada|horarios
+hasta que hora tengo para salir|horarios
+el check in es a las 3?|horarios
+que hora es la entrada y la salida|horarios
+a que hora nos tenemos que ir el domingo|horarios
+cuales son los horarios de la casa|horarios
+el checkout es a las 11 verdad|horarios
+a partir de que hora nos reciben|horarios
+que hora es el chekin|horarios
+horario de llegada|horarios
+a que hora puedo entrar el viernes|horarios
+hay horario para registrarse|horarios
+cuando puedo hacer check in|horarios
+la entrada es a partir de las 15:00?|horarios
+a que hora debo dejar las llaves|horarios
+salida a que hora es|horarios
+recuerdame la hora de salida|horarios
+que dia y hora es mi salida|horarios
+el check out es temprano?|horarios
+a que hora empieza la reserva|horarios
+check in y check out?|horarios
+hasta que hora puedo llegar|llegada_tarde
+voy a llegar tarde, hay problema|llegada_tarde
+llegamos como a las 11 de la noche, se puede|llegada_tarde
+mi vuelo aterriza a medianoche|llegada_tarde
+puedo llegar en la madrugada|llegada_tarde
+se nos hizo tarde, llegamos como a la 1|llegada_tarde
+hay alguien que nos reciba si llegamos de noche|llegada_tarde
+venimos manejando, llegamos tarde|llegada_tarde
+tenemos que avisar si llegamos despues de las 10|llegada_tarde
+el vuelo se retraso, llegamos muy tarde|llegada_tarde
+puedo hacer check in a las 12 de la noche|llegada_tarde
+llegaremos ya noche, esta bien?|llegada_tarde
+no pasa nada si llego a las 2 am|llegada_tarde
+hay limite de hora para llegar|llegada_tarde
+voy retrasado como 3 horas|llegada_tarde
+salimos tarde de la ciudad, llegamos noche|llegada_tarde
+ojala no sea problema llegar tarde|llegada_tarde
+llego despues de cenar, como a las 11|llegada_tarde
+nos agarro trafico, vamos a llegar tarde|llegada_tarde
+la caseta esta abierta en la noche|llegada_tarde
+si llego de madrugada como entro|llegada_tarde
+llegamos ya muy noche, nos esperan?|llegada_tarde
+puedo entrar a cualquier hora|llegada_tarde
+aterrizamos a las 11:30 pm|llegada_tarde
+se puede llegar tarde sin problema|llegada_tarde
+voy a llegar tardisimo perdon|llegada_tarde
+el autobus llega a las 12|llegada_tarde
+hay check in nocturno|llegada_tarde
+llegaremos ya entrada la noche|llegada_tarde
+avisamos al llegar si es de noche?|llegada_tarde
+nos vamos a tardar, llegamos tipo 10 pm|llegada_tarde
+ya estoy en la caseta|acceso_fraccionamiento
+que le digo al guardia|acceso_fraccionamiento
+el vigilante no me deja pasar|acceso_fraccionamiento
+en la entrada del residencial que digo|acceso_fraccionamiento
+me piden identificacion en la caseta|acceso_fraccionamiento
+como entro al fraccionamiento|acceso_fraccionamiento
+hay que registrarse en la entrada|acceso_fraccionamiento
+el guardia pregunta a que casa voy|acceso_fraccionamiento
+estoy en la pluma de la entrada|acceso_fraccionamiento
+necesito un pase para entrar al residencial|acceso_fraccionamiento
+no hay nadie en la caseta|acceso_fraccionamiento
+en la caseta me piden un QR|acceso_fraccionamiento
+que numero de lote le doy al guardia|acceso_fraccionamiento
+la barrera de la entrada no se levanta|acceso_fraccionamiento
+el de seguridad dice que no tiene mi nombre|acceso_fraccionamiento
+cual es la entrada del condominio|acceso_fraccionamiento
+hay acceso por la entrada de atras?|acceso_fraccionamiento
+el guardia quiere hablar con la duena|acceso_fraccionamiento
+tengo que dejar mi ine en la caseta|acceso_fraccionamiento
+como paso la vigilancia|acceso_fraccionamiento
+ya llegue a la entrada del fracc|acceso_fraccionamiento
+no me dejan entrar al fraccionamiento|acceso_fraccionamiento
+en vigilancia preguntan por el anfitrion|acceso_fraccionamiento
+me piden placas en la entrada|acceso_fraccionamiento
+la caseta esta cerrada que hago|acceso_fraccionamiento
+el uber no puede entrar al residencial|acceso_fraccionamiento
+pueden avisar al guardia que ya llegamos|acceso_fraccionamiento
+estamos en la entrada principal, que sigue|acceso_fraccionamiento
+el guardia no encuentra la reservacion|acceso_fraccionamiento
+le doy mi nombre al guardia o el suyo|acceso_fraccionamiento
+la pluma esta abajo y nadie abre|acceso_fraccionamiento
+que entrada uso, la de visitas?|acceso_fraccionamiento
+en el acceso me piden autorizacion|acceso_fraccionamiento
+ya estamos afuera del residencial|acceso_fraccionamiento
+el vigilante pide el codigo de visita|acceso_fraccionamiento
+no puedo abrir la puerta|cerradura
+no me abre la chapa|cerradura
+cual es el codigo de la puerta|cerradura
+el codigo no funciona|cerradura
+la cerradura marca error|cerradura
+no me llego el codigo de acceso|cerradura
+la chapa electronica no responde|cerradura
+meti el codigo y parpadea rojo|cerradura
+como se usa la cerradura|cerradura
+cuando me mandan el codigo|cerradura
+la cerradura no tiene pila creo|cerradura
+la puerta no abre con la clave|cerradura
+me quede afuera de la casa|cerradura
+se trabo la puerta|cerradura
+el teclado de la puerta no prende|cerradura
+puse los 4 digitos y nada|cerradura
+como cierro la puerta al salir|cerradura
+la chapa hace un pitido raro|cerradura
+cual es la clave de la entrada|cerradura
+no me sale la contrasena de la puerta|cerradura
+no abre la puerta principal|cerradura
+hay llave fisica o solo codigo|cerradura
+el codigo es el mismo todos los dias?|cerradura
+no se donde esta la caja de llaves|cerradura
+la cerradura se bloqueo por intentos|cerradura
+nomas no me abre|cerradura
+la puerta no jala|cerradura
+me equivoque de codigo y ya no deja|cerradura
+a que hora llega el codigo|cerradura
+mandame otra vez el codigo de la chapa|cerradura
+la pantalla de la cerradura esta apagada|cerradura
+como abro la puerta de la casa|cerradura
+le pico a la palomita y no abre|cerradura
+no abre la cerradura digital|cerradura
+como abro el porton|porton_estacionamiento
+el porton no abre|porton_estacionamiento
+donde me estaciono|porton_estacionamiento
+hay estacionamiento|porton_estacionamiento
+cuantos carros caben|porton_estacionamiento
+donde esta el control del porton|porton_estacionamiento
+el porton electrico no responde|porton_estacionamiento
+puedo dejar el carro en la calle|porton_estacionamiento
+el control del estacionamiento no sirve|porton_estacionamiento
+se quedo atorado el porton|porton_estacionamiento
+el porton se abrio a medias|porton_estacionamiento
+tienen cochera techada|porton_estacionamiento
+caben dos camionetas|porton_estacionamiento
+donde dejo la moto|porton_estacionamiento
+el porton hace ruido y no avanza|porton_estacionamiento
+como cierro el porton|porton_estacionamiento
+hay lugar para el carro de mi amigo|porton_estacionamiento
+el porton tiene candado|porton_estacionamiento
+no encuentro el boton del porton|porton_estacionamiento
+el estacionamiento es seguro|porton_estacionamiento
+se puede estacionar adentro|porton_estacionamiento
+el porton no cierra|porton_estacionamiento
+se le acabo la pila al control del porton|porton_estacionamiento
+el portón se trabo con mi carro adentro|porton_estacionamiento
+donde parqueo|porton_estacionamiento
+hay cajon de estacionamiento asignado|porton_estacionamiento
+traemos remolque, cabe?|porton_estacionamiento
+el porton esta cerrado y no tengo control|porton_estacionamiento
+el motor del porton no prende|porton_estacionamiento
+la reja del estacionamiento no abre|porton_estacionamiento
+como abro la reja|porton_estacionamiento
+hay estacionamiento para visitas|porton_estacionamiento
+el control no tiene luz|porton_estacionamiento
+tienen wifi|servicios
+cual es la clave del wifi|servicios
+hay aire acondicionado|servicios
+la casa tiene cocina equipada|servicios
+hay alberca|servicios
+tienen asador|servicios
+incluye desayuno|servicios
+el desayuno tiene costo|servicios
+hay toallas y sabanas|servicios
+tienen secadora de pelo|servicios
+hay lavadora|servicios
+tienen cafetera|servicios
+la tele tiene netflix|servicios
+hay agua caliente|servicios
+cual es la red de internet|servicios
+tienen plancha|servicios
+hay utensilios para cocinar|servicios
+el internet es rapido? necesito trabajar|servicios
+hay cuna para bebe|servicios
+dan factura|servicios
+pueden facturar mi estancia|servicios
+hay jabon y shampoo|servicios
+tienen microondas|servicios
+que amenidades tiene la casa|servicios
+la contraseña del internet porfa|servicios
+tienen ventilador|servicios
+hay gym|servicios
+que incluye la estancia|servicios
+hay papel de baño suficiente|servicios
+tienen hielera|servicios
+el desayuno a que hora es|servicios
+la casa tiene calefaccion|servicios
+cuantas recamaras y banos tiene|servicios
+hay cama extra|servicios
+se pueden traer mascotas|reglas
+aceptan perros|reglas
+se puede fumar|reglas
+podemos hacer una fiesta|reglas
+hay horario de silencio|reglas
+cuantas personas pueden quedarse|reglas
+se permiten visitas|reglas
+puedo llevar a mi gato|reglas
+se puede hacer carne asada en la noche|reglas
+hasta que hora se puede hacer ruido|reglas
+cuales son las reglas de la casa|reglas
+puedo meter bocina|reglas
+se permite fumar en la terraza|reglas
+pueden venir amigos a la alberca|reglas
+podemos ser 8 personas|reglas
+hay que sacar la basura|reglas
+se pueden usar zapatos adentro|reglas
+se permite llevar ninos|reglas
+mi perro es grande, hay problema|reglas
+se puede vapear adentro|reglas
+puedo invitar gente a cenar|reglas
+hay restricciones en la casa|reglas
+que no se puede hacer en la casa|reglas
+cobran multa si hay danos|reglas
+se pueden mover los muebles|reglas
+aceptan mascotas pequeñas|reglas
+hay que lavar los trastes antes de salir|reglas
+es pet friendly|reglas
+podemos festejar un cumpleaños|reglas
+reglamento del fraccionamiento|reglas
+puedo hacer check in antes|early_late_checkout
+podemos entrar mas temprano|early_late_checkout
+me puedo quedar mas tarde el domingo|early_late_checkout
+se puede extender la salida a la 1|early_late_checkout
+llegamos a las 10 de la mañana, podemos pasar antes|early_late_checkout
+cuanto cuesta salir mas tarde|early_late_checkout
+hay late check out|early_late_checkout
+podemos dejar maletas antes de la hora de entrada|early_late_checkout
+se puede early check in|early_late_checkout
+nuestro vuelo sale en la noche, podemos quedarnos mas|early_late_checkout
+me dejas entregar la casa a las 2|early_late_checkout
+puedo llegar a las 12 del dia en lugar de las 3|early_late_checkout
+nos pueden dar salida tardia|early_late_checkout
+quisiera entrar antes de lo normal|early_late_checkout
+cobran extra por entrar temprano|early_late_checkout
+podemos extender unas horas|early_late_checkout
+podemos salir hasta la tarde|early_late_checkout
+hay manera de llegar en la mañana|early_late_checkout
+me puedo quedar una noche mas|early_late_checkout
+quiero extender mi estancia un dia|early_late_checkout
+llegamos muy temprano, ya esta lista la casa?|early_late_checkout
+se puede retrasar la salida un poco|early_late_checkout
+podemos dejar las cosas despues del check out|early_late_checkout
+me pueden recibir a las 9 am|early_late_checkout
+el domingo podemos salir a las 4|early_late_checkout
+hay costo por salir mas tarde|early_late_checkout
+entrada anticipada es posible?|early_late_checkout
+nos regalas un par de horas mas al salir|early_late_checkout
+podemos llegar antes de las 3|early_late_checkout
+podria entregar mas tarde de las 11|early_late_checkout
+aguas, no sirve el aire|reportar_problema
+no sale agua caliente|reportar_problema
+se fue la luz|reportar_problema
+no hay agua|reportar_problema
+el minisplit no enfria|reportar_problema
+el boiler no prende|reportar_problema
+se tapo el bano|reportar_problema
+hay una fuga en la cocina|reportar_problema
+el internet no funciona|reportar_problema
+la tele no prende|reportar_problema
+el termostato no responde|reportar_problema
+la estufa no enciende|reportar_problema
+hay cucarachas|reportar_problema
+la casa estaba sucia al llegar|reportar_problema
+se rompio un vaso|reportar_problema
+el refri no enfria|reportar_problema
+la regadera gotea mucho|reportar_problema
+hace mucho calor y el clima no sirve|reportar_problema
+el control del aire no tiene pilas|reportar_problema
+el wifi se cae a cada rato|reportar_problema
+no hay gas|reportar_problema
+la alberca esta verde|reportar_problema
+falta papel de bano|reportar_problema
+se descompuso la lavadora|reportar_problema
+huele a gas|reportar_problema
+el foco del cuarto se fundio|reportar_problema
+hay mucho ruido de los vecinos|reportar_problema
+el aire gotea agua|reportar_problema
+no hay toallas en el bano|reportar_problema
+el clima marca un error en la pantalla|reportar_problema
+la cama esta rota|reportar_problema
+el calentador hace un ruido raro|reportar_problema
+quiero hablar con la anfitriona|contactar_anfitrion
+me comunicas con una persona|contactar_anfitrion
+necesito hablar con alguien|contactar_anfitrion
+pasame con la duena|contactar_anfitrion
+quiero hablar con un humano|contactar_anfitrion
+me puede llamar la encargada|contactar_anfitrion
+hay alguien a quien llamar|contactar_anfitrion
+cual es el telefono de la anfitriona|contactar_anfitrion
+no quiero hablar con un bot|contactar_anfitrion
+eres un robot? quiero una persona|contactar_anfitrion
+me urge hablar con el responsable|contactar_anfitrion
+puedo hablar con marina|contactar_anfitrion
+me pueden marcar|contactar_anfitrion
+necesito tarifa corporativa, con quien hablo|contactar_anfitrion
+quiero negociar un precio, con quien|contactar_anfitrion
+tengo una queja, quiero hablar con la encargada|contactar_anfitrion
+me das el numero de la dueña|contactar_anfitrion
+esto no lo resuelves tu, pasame con alguien|contactar_anfitrion
+que me contacte la anfitriona porfavor|contactar_anfitrion
+hablar con persona|contactar_anfitrion
+quiero cancelar mi reserva, con quien veo eso|contactar_anfitrion
+necesito un reembolso|contactar_anfitrion
+me pasas con atencion a clientes|contactar_anfitrion
+quiero hacer un cambio de fechas con la duena|contactar_anfitrion
+hay un encargado en sitio?|contactar_anfitrion
+tengo una emergencia, llamen a alguien|contactar_anfitrion
+quisiera que me llame alguien de ustedes|contactar_anfitrion
+quien me puede atender|contactar_anfitrion
+contactame con el anfitrion|contactar_anfitrion
+humano por favor|contactar_anfitrion
+mejor que me escriba la anfitriona|contactar_anfitrion
+deseo hablar con el administrador|contactar_anfitrion
+somos empresa y queremos convenio|contactar_anfitrion
