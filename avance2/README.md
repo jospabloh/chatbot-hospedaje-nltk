@@ -21,7 +21,7 @@ Continuación del chatbot basado en reglas del Avance 1. Curso MBIA2602 Desarrol
 ## Resultados (conjunto de prueba, ejecución en Google Colab)
 
 - Intenciones, SVM lineal calibrada sobre TF-IDF de palabras y caracteres: accuracy 0.752, F1 macro 0.746, AUC macro 0.974.
-- Imágenes, ResNet50 con transferencia y ajuste fino: accuracy 0.949, F1 macro 0.947, AUC macro 0.997. CNN desde cero: accuracy 0.513.
+- Imágenes, ResNet50 con transferencia y ajuste fino: accuracy 0.949, F1 macro 0.947, AUC macro 0.997. CNN desde cero: accuracy 0.538.
 - Fotos fuera de dominio: 5 de 6 superan el umbral de imagen (0.60). El clasificador no sabe rechazar; queda como limitación y como acción para la versión final (`salidas/fuera_de_dominio.json`).
 - Fotos reales de Cas'aguacate: el modelo reconoce 8 de 8 interiores, 8 por encima del umbral. Solo hay fotos reales de una de las cinco clases.
 - Versión en inglés: accuracy 0.729, F1 macro 0.720 sobre 70 frases de prueba. El detector de idioma acierta 100.0 % en español y 96.6 % en inglés.
@@ -30,10 +30,15 @@ Continuación del chatbot basado en reglas del Avance 1. Curso MBIA2602 Desarrol
 
 - Bag of Words y TF-IDF de palabras, cada uno con Naive Bayes y SVM: F1 macro en prueba entre 0.567 y 0.645.
 - Búsqueda de hiperparámetros de la SVM (24 combinaciones, validación cruzada): la mejor da F1 macro 0.717 contra 0.706 de la configuración elegida, dentro de la variación entre particiones.
-- Redes neuronales con word embeddings: Embeddings + promedio, F1 macro 0.616; Embeddings + LSTM bidireccional, F1 macro 0.620.
-- Tono del mensaje (análisis de sentimientos, Bag of Words + SVM lineal): accuracy 0.722, F1 macro 0.714 en 36 frases.
+- Sobremuestreo y pesos por clase: sin cambio (0.705 y 0.705 contra 0.706). No se adoptan.
+- Redes neuronales con word embeddings aprendidos: Embeddings + promedio, F1 macro 0.616; Embeddings + LSTM bidireccional, F1 macro 0.620.
+- Vectores de palabras preentrenados (spaCy) + SVM: F1 macro 0.725 en español. No se adoptan.
+- Transformer multilingüe (MiniLM) + SVM, un solo modelo para los dos idiomas: F1 macro 0.773 en español y 0.913 en inglés. Es la base de la versión mejorada del asistente (`assist_plus`), comparada con la documentada en `salidas/integracion_mejorada.csv`.
+- Tono del mensaje (análisis de sentimientos, Transformer multilingüe (MiniLM) + SVM lineal): accuracy 0.917, F1 macro 0.917 en 36 frases.
 - Imágenes con características clásicas: HOG + SVM, accuracy 0.487; SIFT + SVM, accuracy 0.462.
 - Redes preentrenadas congeladas: VGG16, accuracy 0.923; ResNet50, accuracy 0.923; EfficientNetB0, accuracy 0.923.
+- Padding contra foto estirada (ResNet50 congelada, 5 semillas): accuracy en prueba 0.908 contra 0.949. No se adopta.
+- Robustez a la iluminación del modelo integrado (`salidas/iluminacion.png`): accuracy entre 0.923 y 0.949 con fotos oscuras, sobreexpuestas y de bajo contraste. Por eso no se agrega color jitter.
 - Curvas ROC (`salidas/curvas_roc.png`) y Grad-CAM (`salidas/grad_cam.png`).
 
 ## Idioma y código
