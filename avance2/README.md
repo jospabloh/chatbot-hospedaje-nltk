@@ -10,6 +10,7 @@ Continuación del chatbot basado en reglas del Avance 1. Curso MBIA2602 Desarrol
 | `datos/corpus_intenciones.csv` | 681 frases sintéticas en 14 intenciones (separador `\|`) |
 | `datos/corpus_intenciones_en.csv` | 350 frases en inglés para las mismas 14 intenciones (versión en inglés del asistente) |
 | `datos/corpus_tono.csv` | 180 frases etiquetadas por tono (positivo, neutral, negativo) para el análisis de sentimientos |
+| `datos/corpus_tono_en.csv` | 60 frases en inglés etiquetadas por tono, solo para evaluar |
 | `datos/fuera_de_alcance.csv` | 8 frases fuera de alcance para probar el umbral de confianza |
 | `datos/imagenes/<clase>/` | 259 imágenes de Wikimedia Commons en 5 clases (256 únicas tras quitar casi duplicados), revisadas a mano |
 | `datos/creditos_imagenes.csv` | Título, autor, licencia y URL de cada imagen |
@@ -21,7 +22,7 @@ Continuación del chatbot basado en reglas del Avance 1. Curso MBIA2602 Desarrol
 ## Resultados (conjunto de prueba, ejecución en Google Colab)
 
 - Intenciones, SVM lineal calibrada sobre TF-IDF de palabras y caracteres: accuracy 0.752, F1 macro 0.746, AUC macro 0.974.
-- Imágenes, ResNet50 con transferencia y ajuste fino: accuracy 0.949, F1 macro 0.947, AUC macro 0.997. CNN desde cero: accuracy 0.538.
+- Imágenes, ResNet50 con transferencia y ajuste fino: accuracy 0.949, F1 macro 0.947, AUC macro 0.997. CNN desde cero: accuracy 0.564.
 - Fotos fuera de dominio: 5 de 6 superan el umbral de imagen (0.60). El clasificador no sabe rechazar; queda como limitación y como acción para la versión final (`salidas/fuera_de_dominio.json`).
 - Fotos reales de Cas'aguacate: el modelo reconoce 8 de 8 interiores, 8 por encima del umbral. Solo hay fotos reales de una de las cinco clases.
 - Versión en inglés: accuracy 0.729, F1 macro 0.720 sobre 70 frases de prueba. El detector de idioma acierta 100.0 % en español y 96.6 % en inglés.
@@ -33,8 +34,9 @@ Continuación del chatbot basado en reglas del Avance 1. Curso MBIA2602 Desarrol
 - Sobremuestreo y pesos por clase: sin cambio (0.705 y 0.705 contra 0.706). No se adoptan.
 - Redes neuronales con word embeddings aprendidos: Embeddings + promedio, F1 macro 0.616; Embeddings + LSTM bidireccional, F1 macro 0.620.
 - Vectores de palabras preentrenados (spaCy) + SVM: F1 macro 0.725 en español. No se adoptan.
-- Transformer multilingüe (MiniLM) + SVM, un solo modelo para los dos idiomas: F1 macro 0.773 en español y 0.913 en inglés. Es la base de la versión mejorada del asistente (`assist_plus`), comparada con la documentada en `salidas/integracion_mejorada.csv`.
-- Tono del mensaje (análisis de sentimientos, Transformer multilingüe (MiniLM) + SVM lineal): accuracy 0.917, F1 macro 0.917 en 36 frases.
+- Transformer multilingüe (MiniLM) + SVM, un solo modelo para los dos idiomas: F1 macro 0.773 en español y 0.913 en inglés.
+- Ensamble (promedio de las probabilidades del modelo documentado y del multilingüe), elegido por validación cruzada: F1 macro 0.807 en español y 0.900 en inglés. Es el clasificador de la versión mejorada del asistente (`assist_plus`), comparada con la documentada en `salidas/integracion_mejorada.csv`.
+- Tono del mensaje (análisis de sentimientos, Transformer multilingüe (MiniLM) + SVM lineal): accuracy 0.917, F1 macro 0.917 en 36 frases en español; en inglés, sin frases de entrenamiento en ese idioma, accuracy 0.950 y F1 macro 0.950 en 60 frases.
 - Imágenes con características clásicas: HOG + SVM, accuracy 0.487; SIFT + SVM, accuracy 0.462.
 - Redes preentrenadas congeladas: VGG16, accuracy 0.923; ResNet50, accuracy 0.923; EfficientNetB0, accuracy 0.923.
 - Padding contra foto estirada (ResNet50 congelada, 5 semillas): accuracy en prueba 0.908 contra 0.949. No se adopta.
