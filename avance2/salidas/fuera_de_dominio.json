@@ -1,0 +1,79 @@
+{
+ "umbral_imagen": 0.6,
+ "fotos": [
+  {
+   "archivo": "perro_0.jpg",
+   "clase_predicha": "cerradura",
+   "confianza": 0.313,
+   "supera_umbral": false
+  },
+  {
+   "archivo": "perro_1.jpg",
+   "clase_predicha": "caseta",
+   "confianza": 0.966,
+   "supera_umbral": true
+  },
+  {
+   "archivo": "comida_0.jpg",
+   "clase_predicha": "interior",
+   "confianza": 0.966,
+   "supera_umbral": true
+  },
+  {
+   "archivo": "comida_1.jpg",
+   "clase_predicha": "interior",
+   "confianza": 0.525,
+   "supera_umbral": false
+  },
+  {
+   "archivo": "auto_0.jpg",
+   "clase_predicha": "porton",
+   "confianza": 0.994,
+   "supera_umbral": true
+  },
+  {
+   "archivo": "auto_1.jpg",
+   "clase_predicha": "caseta",
+   "confianza": 0.786,
+   "supera_umbral": true
+  }
+ ],
+ "casos": [
+  {
+   "texto": "puedo llevar a mi perro",
+   "intencion": "reglas",
+   "conf_texto": 0.76,
+   "imagen": "cerradura",
+   "conf_imagen": 0.31,
+   "decision_por": "texto",
+   "intencion_final": "reglas",
+   "accion": "RESPONDER",
+   "respuesta": "Con gusto te ayudo; la anfitriona te confirma este dato.",
+   "archivo": "perro_0.jpg"
+  },
+  {
+   "texto": "mira esto",
+   "intencion": "saludo_cortesia",
+   "conf_texto": 0.19,
+   "imagen": "cerradura",
+   "conf_imagen": 0.31,
+   "decision_por": "texto",
+   "intencion_final": "saludo_cortesia",
+   "accion": "ESCALAR",
+   "respuesta": "Le paso tu mensaje a la anfitriona con la foto (cerradura).",
+   "archivo": "perro_0.jpg"
+  },
+  {
+   "texto": "mira esto",
+   "intencion": "saludo_cortesia",
+   "conf_texto": 0.19,
+   "imagen": "caseta",
+   "conf_imagen": 0.97,
+   "decision_por": "imagen",
+   "intencion_final": "acceso_fraccionamiento",
+   "accion": "RESPONDER",
+   "respuesta": "En la caseta indica que vas a Cas'aguacate, lote 12, y muestra tu identificación. El guardia registra tu placa.",
+   "archivo": "perro_1.jpg"
+  }
+ ]
+}
