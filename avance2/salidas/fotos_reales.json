@@ -1,0 +1,79 @@
+{
+ "fotos": [
+  {
+   "archivo": "real_1.jpg",
+   "descripcion": "Recamara con cama y lamparas",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 1.0,
+   "acierta": true
+  },
+  {
+   "archivo": "real_2.jpg",
+   "descripcion": "Sala con sofa modular gris",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 0.948,
+   "acierta": true
+  },
+  {
+   "archivo": "real_3.jpg",
+   "descripcion": "Cocina con gabinetes blancos",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 0.856,
+   "acierta": true
+  },
+  {
+   "archivo": "real_4.jpg",
+   "descripcion": "Sala con sofa cafe y cocineta",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 0.991,
+   "acierta": true
+  },
+  {
+   "archivo": "real_5.jpg",
+   "descripcion": "Pasillo con puerta negra y tapete de entrada",
+   "esperada": "ninguna (entrada exterior)",
+   "clase_predicha": "interior",
+   "confianza": 0.903,
+   "acierta": false
+  },
+  {
+   "archivo": "real_6.jpg",
+   "descripcion": "Cama del apartamento familiar",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 1.0,
+   "acierta": true
+  },
+  {
+   "archivo": "real_7.jpg",
+   "descripcion": "Habitacion doble de lujo",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 0.998,
+   "acierta": true
+  },
+  {
+   "archivo": "real_8.jpg",
+   "descripcion": "Habitacion triple ejecutiva",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 1.0,
+   "acierta": true
+  },
+  {
+   "archivo": "real_9.jpg",
+   "descripcion": "Habitacion triple confort",
+   "esperada": "interior",
+   "clase_predicha": "interior",
+   "confianza": 0.996,
+   "acierta": true
+  }
+ ],
+ "interiores": 8,
+ "interiores_acertados": 8,
+ "interiores_sobre_umbral": 8
+}
