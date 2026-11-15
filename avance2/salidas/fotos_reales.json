@@ -5,7 +5,7 @@
    "descripcion": "Recamara con cama y lamparas",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 1.0,
+   "confianza": 0.999,
    "acierta": true
   },
   {
@@ -13,7 +13,7 @@
    "descripcion": "Sala con sofa modular gris",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.948,
+   "confianza": 0.993,
    "acierta": true
   },
   {
@@ -21,7 +21,7 @@
    "descripcion": "Cocina con gabinetes blancos",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.856,
+   "confianza": 0.881,
    "acierta": true
   },
   {
@@ -29,7 +29,7 @@
    "descripcion": "Sala con sofa cafe y cocineta",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.991,
+   "confianza": 0.997,
    "acierta": true
   },
   {
@@ -37,7 +37,7 @@
    "descripcion": "Pasillo con puerta negra y tapete de entrada",
    "esperada": "ninguna (entrada exterior)",
    "clase_predicha": "interior",
-   "confianza": 0.903,
+   "confianza": 0.662,
    "acierta": false
   },
   {
@@ -53,7 +53,7 @@
    "descripcion": "Habitacion doble de lujo",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.998,
+   "confianza": 0.989,
    "acierta": true
   },
   {
@@ -61,7 +61,7 @@
    "descripcion": "Habitacion triple ejecutiva",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 1.0,
+   "confianza": 0.992,
    "acierta": true
   },
   {
@@ -69,7 +69,7 @@
    "descripcion": "Habitacion triple confort",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.996,
+   "confianza": 0.998,
    "acierta": true
   }
  ],

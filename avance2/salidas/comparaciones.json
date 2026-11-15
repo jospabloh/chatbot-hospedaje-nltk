@@ -1,0 +1,352 @@
+{
+ "vectorizacion": [
+  {
+   "vectorizacion": "Bag of Words",
+   "modelo": "Naive Bayes",
+   "f1_macro_cv": 0.6157079022,
+   "f1_macro_cv_std": 0.0549996297,
+   "accuracy_prueba": 0.6131386861,
+   "f1_macro_prueba": 0.5672879408
+  },
+  {
+   "vectorizacion": "Bag of Words",
+   "modelo": "SVM lineal",
+   "f1_macro_cv": 0.6915921865,
+   "f1_macro_cv_std": 0.032677735,
+   "accuracy_prueba": 0.6569343066,
+   "f1_macro_prueba": 0.6326376798
+  },
+  {
+   "vectorizacion": "TF-IDF",
+   "modelo": "Naive Bayes",
+   "f1_macro_cv": 0.6190477353,
+   "f1_macro_cv_std": 0.0500098231,
+   "accuracy_prueba": 0.6204379562,
+   "f1_macro_prueba": 0.5666598523
+  },
+  {
+   "vectorizacion": "TF-IDF",
+   "modelo": "SVM lineal",
+   "f1_macro_cv": 0.6742450343,
+   "f1_macro_cv_std": 0.0409050412,
+   "accuracy_prueba": 0.6642335766,
+   "f1_macro_prueba": 0.6453684521
+  }
+ ],
+ "busqueda_hiperparametros": {
+  "combinaciones": 24,
+  "frases_por_intencion": {
+   "min": 30,
+   "max": 73
+  },
+  "actual": {
+   "C": 0.5,
+   "pesos": "ninguno",
+   "ngramas": "1-2",
+   "f1_macro_cv": 0.7059435822321618,
+   "f1_macro_cv_std": 0.05350422444329021,
+   "accuracy_prueba": 0.7299270072992701,
+   "f1_macro_prueba": 0.7232098112004077
+  },
+  "pesos_balanceados": {
+   "f1_macro_cv": 0.7049457682397128,
+   "f1_macro_cv_std": 0.04718484258527513
+  },
+  "mejor": {
+   "C": 1.0,
+   "pesos": "balanced",
+   "ngramas": "1-1",
+   "f1_macro_cv": 0.7173406971991187,
+   "f1_macro_cv_std": 0.029514581754874685,
+   "accuracy_prueba": 0.7372262773722628,
+   "f1_macro_prueba": 0.7294815814021437
+  }
+ },
+ "redes_texto": {
+  "vocabulario": 491,
+  "dimension_embedding": 64,
+  "modelos": [
+   {
+    "modelo": "Embeddings + promedio",
+    "epocas": 25,
+    "parametros": 36494,
+    "accuracy_prueba": 0.6277372263,
+    "f1_macro_prueba": 0.6164591554
+   },
+   {
+    "modelo": "Embeddings + LSTM bidireccional",
+    "epocas": 20,
+    "parametros": 61326,
+    "accuracy_prueba": 0.6350364964,
+    "f1_macro_prueba": 0.6200249812
+   }
+  ]
+ },
+ "tono": {
+  "frases": 180,
+  "n_prueba": 36,
+  "umbral": 0.6,
+  "elegido": "Bag of Words + SVM lineal",
+  "experimentos": [
+   {
+    "vectorizacion": "Bag of Words",
+    "modelo": "Naive Bayes",
+    "f1_macro_cv": 0.6677162489,
+    "f1_macro_cv_std": 0.0741687813,
+    "accuracy_prueba": 0.6111111111,
+    "f1_macro_prueba": 0.5917794486
+   },
+   {
+    "vectorizacion": "Bag of Words",
+    "modelo": "SVM lineal",
+    "f1_macro_cv": 0.7240200237,
+    "f1_macro_cv_std": 0.0877280071,
+    "accuracy_prueba": 0.6944444444,
+    "f1_macro_prueba": 0.6880952381
+   },
+   {
+    "vectorizacion": "TF-IDF",
+    "modelo": "Naive Bayes",
+    "f1_macro_cv": 0.6897299433,
+    "f1_macro_cv_std": 0.0585701021,
+    "accuracy_prueba": 0.6111111111,
+    "f1_macro_prueba": 0.5917794486
+   },
+   {
+    "vectorizacion": "TF-IDF",
+    "modelo": "SVM lineal",
+    "f1_macro_cv": 0.6947219356,
+    "f1_macro_cv_std": 0.0383331588,
+    "accuracy_prueba": 0.6111111111,
+    "f1_macro_prueba": 0.6079120879
+   }
+  ],
+  "accuracy_prueba": 0.7222222222222222,
+  "f1_macro_prueba": 0.7135802469135802,
+  "por_clase": {
+   "negativo": {
+    "precision": 0.75,
+    "recall": 0.5,
+    "f1-score": 0.6,
+    "support": 12.0
+   },
+   "neutral": {
+    "precision": 0.6666666666666666,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.7407407407407407,
+    "support": 12.0
+   },
+   "positivo": {
+    "precision": 0.7692307692307693,
+    "recall": 0.8333333333333334,
+    "f1-score": 0.8,
+    "support": 12.0
+   }
+  },
+  "casos": [
+   {
+    "idioma": "es",
+    "texto": "a que hora es el check in",
+    "intencion": "horarios",
+    "conf_texto": 0.87,
+    "imagen": null,
+    "conf_imagen": 0.0,
+    "decision_por": "texto",
+    "intencion_final": "horarios",
+    "accion": "RESPONDER",
+    "respuesta": "Check-in desde las 15:00 y check-out a las 11:00.",
+    "tono": "neutral",
+    "conf_tono": 0.84
+   },
+   {
+    "idioma": "es",
+    "texto": "llevo veinte minutos esperando y la cerradura sigue sin abrir",
+    "intencion": "cerradura",
+    "conf_texto": 0.61,
+    "imagen": null,
+    "conf_imagen": 0.0,
+    "decision_por": "texto y tono",
+    "intencion_final": "cerradura",
+    "accion": "ESCALAR",
+    "respuesta": "Lamento el inconveniente. Le paso tu mensaje a la anfitriona para que te atienda personalmente.",
+    "tono": "negativo",
+    "conf_tono": 0.61
+   },
+   {
+    "idioma": "es",
+    "texto": "ya pudimos entrar, muchas gracias por la ayuda",
+    "intencion": "saludo_cortesia",
+    "conf_texto": 0.73,
+    "imagen": null,
+    "conf_imagen": 0.0,
+    "decision_por": "texto",
+    "intencion_final": "saludo_cortesia",
+    "accion": "RESPONDER",
+    "respuesta": "Con gusto te ayudo; la anfitriona te confirma este dato.",
+    "tono": "positivo",
+    "conf_tono": 0.85
+   },
+   {
+    "idioma": "es",
+    "texto": "donde esta el control del porton",
+    "intencion": "porton_estacionamiento",
+    "conf_texto": 0.82,
+    "imagen": null,
+    "conf_imagen": 0.0,
+    "decision_por": "texto",
+    "intencion_final": "porton_estacionamiento",
+    "accion": "RESPONDER",
+    "respuesta": "El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Si no responde, presiona el botón 2 segundos frente al motor.",
+    "tono": "neutral",
+    "conf_tono": 0.84
+   },
+   {
+    "idioma": "es",
+    "texto": "es el colmo, el porton no abre y nadie contesta",
+    "intencion": "porton_estacionamiento",
+    "conf_texto": 0.78,
+    "imagen": null,
+    "conf_imagen": 0.0,
+    "decision_por": "texto y tono",
+    "intencion_final": "porton_estacionamiento",
+    "accion": "ESCALAR",
+    "respuesta": "Lamento el inconveniente. Le paso tu mensaje a la anfitriona para que te atienda personalmente.",
+    "tono": "negativo",
+    "conf_tono": 0.84
+   },
+   {
+    "idioma": "en",
+    "texto": "the door code is not working",
+    "intencion": "cerradura",
+    "conf_texto": 0.68,
+    "imagen": null,
+    "conf_imagen": 0.0,
+    "decision_por": "texto",
+    "intencion_final": "cerradura",
+    "accion": "RESPONDER",
+    "respuesta": "The door has an electronic lock: enter the 4-digit code we sent you on arrival day and press the check mark. If it blinks red, wait 1 minute and try again.",
+    "tono": "sin evaluar",
+    "conf_tono": 0.0
+   }
+  ]
+ },
+ "roc": {
+  "texto": {
+   "auc_macro": 0.9740893972139417,
+   "auc_micro": 0.977557101111899,
+   "auc_confianza_acierto": 0.8166761850371217,
+   "aciertos_sobre_umbral": 0.9029126213592233,
+   "errores_sobre_umbral": 0.6176470588235294,
+   "errores": 34
+  },
+  "imagen": {
+   "auc_macro": 0.9965705441511894,
+   "auc_micro": 0.9953977646285339,
+   "auc_por_clase": {
+    "cerradura": 1.0,
+    "porton": 1.0,
+    "caseta": 0.994949494949495,
+    "controles": 0.9879032258064516,
+    "interior": 1.0
+   },
+   "auc_confianza_acierto": 0.972972972972973,
+   "aciertos_sobre_umbral": 0.972972972972973,
+   "errores_sobre_umbral": 0.5,
+   "errores": 2
+  }
+ },
+ "imagen_clasica": [
+  {
+   "modelo": "HOG + SVM lineal",
+   "dimension": 1764,
+   "C": 0.001,
+   "accuracy": 0.4871794872,
+   "precision_macro": 0.50995671,
+   "recall_macro": 0.4833333333,
+   "f1_macro": 0.4702981229
+  },
+  {
+   "modelo": "SIFT, 150 palabras visuales + SVM lineal",
+   "dimension": 150,
+   "C": 0.001,
+   "accuracy": 0.4615384615,
+   "precision_macro": 0.469047619,
+   "recall_macro": 0.45,
+   "f1_macro": 0.4514285714
+  }
+ ],
+ "redes_preentrenadas": [
+  {
+   "modelo": "VGG16 congelada",
+   "parametros_base": 14714688,
+   "tasa_aprendizaje": 0.01,
+   "dropout": 0.2,
+   "accuracy_validacion": 0.9736842105,
+   "accuracy": 0.9230769231,
+   "precision_macro": 0.9377777778,
+   "recall_macro": 0.9277777778,
+   "f1_macro": 0.926984127
+  },
+  {
+   "modelo": "ResNet50 congelada",
+   "parametros_base": 23587712,
+   "tasa_aprendizaje": 0.001,
+   "dropout": 0.4,
+   "accuracy_validacion": 0.8684210526,
+   "accuracy": 0.9230769231,
+   "precision_macro": 0.9305555556,
+   "recall_macro": 0.9166666667,
+   "f1_macro": 0.9215240642
+  },
+  {
+   "modelo": "EfficientNetB0 congelada",
+   "parametros_base": 4049571,
+   "tasa_aprendizaje": 0.001,
+   "dropout": 0.4,
+   "accuracy_validacion": 0.9210526316,
+   "accuracy": 0.9230769231,
+   "precision_macro": 0.9314285714,
+   "recall_macro": 0.925,
+   "f1_macro": 0.9204884005
+  }
+ ],
+ "grad_cam": [
+  {
+   "caso": "Prueba: cerradura",
+   "prediccion": "cerradura",
+   "confianza": 0.9830847382545471
+  },
+  {
+   "caso": "Prueba: portón",
+   "prediccion": "porton",
+   "confianza": 0.9939664602279663
+  },
+  {
+   "caso": "Prueba: error (real: controles)",
+   "prediccion": "interior",
+   "confianza": 0.5223436951637268
+  },
+  {
+   "caso": "Foto real: entrada exterior",
+   "prediccion": "interior",
+   "confianza": 0.661578357219696
+  },
+  {
+   "caso": "Fuera de dominio: perro",
+   "prediccion": "caseta",
+   "confianza": 0.8589901328086853
+  },
+  {
+   "caso": "Fuera de dominio: auto",
+   "prediccion": "porton",
+   "confianza": 0.796765148639679
+  }
+ ],
+ "imagenes_por_clase": {
+  "cerradura": 52,
+  "porton": 49,
+  "caseta": 45,
+  "controles": 50,
+  "interior": 60
+ }
+}

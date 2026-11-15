@@ -9,8 +9,8 @@
    "porton_estacionamiento": 55,
    "contactar_anfitrion": 53,
    "saludo_cortesia": 50,
-   "llegada_tarde": 50,
    "early_late_checkout": 50,
+   "llegada_tarde": 50,
    "reportar_problema": 48,
    "horarios": 45,
    "tarifas": 36,
@@ -369,24 +369,24 @@
   "modelos": [
    {
     "modelo": "CNN desde cero",
-    "accuracy": 0.5385,
-    "precision_macro": 0.5345,
-    "recall_macro": 0.55,
-    "f1_macro": 0.5266
+    "accuracy": 0.5128,
+    "precision_macro": 0.48,
+    "recall_macro": 0.525,
+    "f1_macro": 0.482
    },
    {
     "modelo": "ResNet50 (transferencia + ajuste fino)",
-    "accuracy": 0.8718,
-    "precision_macro": 0.8987,
-    "recall_macro": 0.8667,
-    "f1_macro": 0.8759
+    "accuracy": 0.9487,
+    "precision_macro": 0.9514,
+    "recall_macro": 0.95,
+    "f1_macro": 0.9474
    }
   ],
   "por_clase": {
    "cerradura": {
-    "precision": 0.6363636363636364,
-    "recall": 0.875,
-    "f1-score": 0.7368421052631579,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
     "support": 8.0
    },
    "porton": {
@@ -396,27 +396,27 @@
     "support": 8.0
    },
    "caseta": {
-    "precision": 1.0,
-    "recall": 0.8333333333333334,
-    "f1-score": 0.9090909090909091,
+    "precision": 0.8571428571428571,
+    "recall": 1.0,
+    "f1-score": 0.9230769230769231,
     "support": 6.0
    },
    "controles": {
-    "precision": 0.8571428571428571,
-    "recall": 0.75,
-    "f1-score": 0.8,
+    "precision": 1.0,
+    "recall": 0.875,
+    "f1-score": 0.9333333333333333,
     "support": 8.0
    },
    "interior": {
-    "precision": 1.0,
+    "precision": 0.9,
     "recall": 1.0,
-    "f1-score": 1.0,
+    "f1-score": 0.9473684210526315,
     "support": 9.0
    }
   },
   "epocas": {
    "cnn": 21,
-   "resnet": 13,
+   "resnet": 15,
    "ajuste_fino": 6
   }
  },
@@ -426,7 +426,7 @@
    "intencion": "cerradura",
    "conf_texto": 0.7,
    "imagen": "cerradura",
-   "conf_imagen": 1.0,
+   "conf_imagen": 0.98,
    "decision_por": "texto e imagen coinciden",
    "intencion_final": "cerradura",
    "accion": "RESPONDER",
@@ -437,7 +437,7 @@
    "intencion": "cerradura",
    "conf_texto": 0.7,
    "imagen": "porton",
-   "conf_imagen": 1.0,
+   "conf_imagen": 0.99,
    "decision_por": "imagen",
    "intencion_final": "porton_estacionamiento",
    "accion": "RESPONDER",
@@ -448,7 +448,7 @@
    "intencion": "reglas",
    "conf_texto": 0.15,
    "imagen": "caseta",
-   "conf_imagen": 1.0,
+   "conf_imagen": 0.99,
    "decision_por": "imagen",
    "intencion_final": "acceso_fraccionamiento",
    "accion": "RESPONDER",
@@ -459,7 +459,7 @@
    "intencion": "reportar_problema",
    "conf_texto": 0.72,
    "imagen": "controles",
-   "conf_imagen": 0.96,
+   "conf_imagen": 0.94,
    "decision_por": "texto e imagen coinciden",
    "intencion_final": "reportar_problema",
    "accion": "RESPONDER",

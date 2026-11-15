@@ -1,8 +1,8 @@
 texto,intencion,conf_texto,imagen,conf_imagen,decision_por,intencion_final,accion,respuesta
-no me abre,cerradura,0.7,cerradura,1.0,texto e imagen coinciden,cerradura,RESPONDER,"La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día de llegada y presiona la palomita. Si parpadea en rojo, espera 1 minuto y vuelve a intentar."
-no me abre,cerradura,0.7,porton,1.0,imagen,porton_estacionamiento,RESPONDER,"El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Si no responde, presiona el botón 2 segundos frente al motor."
-ya estoy aqui y no puedo pasar,reglas,0.15,caseta,1.0,imagen,acceso_fraccionamiento,RESPONDER,"En la caseta indica que vas a Cas'aguacate, lote 12, y muestra tu identificación. El guardia registra tu placa."
-hace mucho calor y no enfria,reportar_problema,0.72,controles,0.96,texto e imagen coinciden,reportar_problema,RESPONDER,"Gracias por avisar. Revisa que el control del minisplit tenga pilas y esté en modo frío (copo de nieve). Si sigue sin funcionar, la anfitriona te contacta en breve."
+no me abre,cerradura,0.7,cerradura,0.98,texto e imagen coinciden,cerradura,RESPONDER,"La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día de llegada y presiona la palomita. Si parpadea en rojo, espera 1 minuto y vuelve a intentar."
+no me abre,cerradura,0.7,porton,0.99,imagen,porton_estacionamiento,RESPONDER,"El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Si no responde, presiona el botón 2 segundos frente al motor."
+ya estoy aqui y no puedo pasar,reglas,0.15,caseta,0.99,imagen,acceso_fraccionamiento,RESPONDER,"En la caseta indica que vas a Cas'aguacate, lote 12, y muestra tu identificación. El guardia registra tu placa."
+hace mucho calor y no enfria,reportar_problema,0.72,controles,0.94,texto e imagen coinciden,reportar_problema,RESPONDER,"Gracias por avisar. Revisa que el control del minisplit tenga pilas y esté en modo frío (copo de nieve). Si sigue sin funcionar, la anfitriona te contacta en breve."
 mira como esta esto,ubicacion,0.4,interior,1.0,imagen,reportar_problema,ESCALAR,Gracias por la foto. Le aviso a la anfitriona para que lo revise contigo.
 me puedo quedar mas tarde el domingo,early_late_checkout,0.79,,0.0,texto,early_late_checkout,ESCALAR,Le paso tu mensaje a la anfitriona.
 a que hora es el check in,horarios,0.87,,0.0,texto,horarios,RESPONDER,Check-in desde las 15:00 y check-out a las 11:00.

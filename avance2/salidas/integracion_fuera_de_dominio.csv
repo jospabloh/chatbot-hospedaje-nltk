@@ -1,4 +1,4 @@
 texto,intencion,conf_texto,imagen,conf_imagen,decision_por,intencion_final,accion,respuesta,archivo
-puedo llevar a mi perro,reglas,0.76,cerradura,0.31,texto,reglas,RESPONDER,Con gusto te ayudo; la anfitriona te confirma este dato.,perro_0.jpg
-mira esto,saludo_cortesia,0.19,cerradura,0.31,texto,saludo_cortesia,ESCALAR,Le paso tu mensaje a la anfitriona con la foto (cerradura).,perro_0.jpg
-mira esto,saludo_cortesia,0.19,caseta,0.97,imagen,acceso_fraccionamiento,RESPONDER,"En la caseta indica que vas a Cas'aguacate, lote 12, y muestra tu identificación. El guardia registra tu placa.",perro_1.jpg
+puedo llevar a mi perro,reglas,0.76,interior,0.97,texto,reglas,RESPONDER,Con gusto te ayudo; la anfitriona te confirma este dato.,perro_0.jpg
+mira esto,saludo_cortesia,0.19,interior,0.97,imagen,reportar_problema,ESCALAR,Gracias por la foto. Le aviso a la anfitriona para que lo revise contigo.,perro_0.jpg
+mira esto,saludo_cortesia,0.19,caseta,0.86,imagen,acceso_fraccionamiento,RESPONDER,"En la caseta indica que vas a Cas'aguacate, lote 12, y muestra tu identificación. El guardia registra tu placa.",perro_1.jpg

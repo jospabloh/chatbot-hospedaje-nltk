@@ -3,38 +3,38 @@
  "fotos": [
   {
    "archivo": "perro_0.jpg",
-   "clase_predicha": "cerradura",
-   "confianza": 0.313,
-   "supera_umbral": false
+   "clase_predicha": "interior",
+   "confianza": 0.972,
+   "supera_umbral": true
   },
   {
    "archivo": "perro_1.jpg",
    "clase_predicha": "caseta",
-   "confianza": 0.966,
+   "confianza": 0.859,
    "supera_umbral": true
   },
   {
    "archivo": "comida_0.jpg",
-   "clase_predicha": "interior",
-   "confianza": 0.966,
-   "supera_umbral": true
+   "clase_predicha": "porton",
+   "confianza": 0.546,
+   "supera_umbral": false
   },
   {
    "archivo": "comida_1.jpg",
-   "clase_predicha": "interior",
-   "confianza": 0.525,
-   "supera_umbral": false
+   "clase_predicha": "cerradura",
+   "confianza": 0.756,
+   "supera_umbral": true
   },
   {
    "archivo": "auto_0.jpg",
    "clase_predicha": "porton",
-   "confianza": 0.994,
+   "confianza": 0.797,
    "supera_umbral": true
   },
   {
    "archivo": "auto_1.jpg",
    "clase_predicha": "caseta",
-   "confianza": 0.786,
+   "confianza": 0.678,
    "supera_umbral": true
   }
  ],
@@ -43,8 +43,8 @@
    "texto": "puedo llevar a mi perro",
    "intencion": "reglas",
    "conf_texto": 0.76,
-   "imagen": "cerradura",
-   "conf_imagen": 0.31,
+   "imagen": "interior",
+   "conf_imagen": 0.97,
    "decision_por": "texto",
    "intencion_final": "reglas",
    "accion": "RESPONDER",
@@ -55,12 +55,12 @@
    "texto": "mira esto",
    "intencion": "saludo_cortesia",
    "conf_texto": 0.19,
-   "imagen": "cerradura",
-   "conf_imagen": 0.31,
-   "decision_por": "texto",
-   "intencion_final": "saludo_cortesia",
+   "imagen": "interior",
+   "conf_imagen": 0.97,
+   "decision_por": "imagen",
+   "intencion_final": "reportar_problema",
    "accion": "ESCALAR",
-   "respuesta": "Le paso tu mensaje a la anfitriona con la foto (cerradura).",
+   "respuesta": "Gracias por la foto. Le aviso a la anfitriona para que lo revise contigo.",
    "archivo": "perro_0.jpg"
   },
   {
@@ -68,7 +68,7 @@
    "intencion": "saludo_cortesia",
    "conf_texto": 0.19,
    "imagen": "caseta",
-   "conf_imagen": 0.97,
+   "conf_imagen": 0.86,
    "decision_por": "imagen",
    "intencion_final": "acceso_fraccionamiento",
    "accion": "RESPONDER",
