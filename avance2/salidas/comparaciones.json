@@ -184,6 +184,64 @@
   "frases_entrenamiento_multilingue": 824,
   "parametros_transformer": 117653760
  },
+ "ensamble": {
+  "español": {
+   "clasico": {
+    "f1_macro_cv": 0.7191138276420255,
+    "f1_macro_cv_std": 0.05281725051889636
+   },
+   "multilingue": {
+    "f1_macro_cv": 0.7564639297281165,
+    "f1_macro_cv_std": 0.045884542144482524
+   },
+   "ensamble": {
+    "f1_macro_cv": 0.8111881534753198,
+    "f1_macro_cv_std": 0.04858340845846261,
+    "accuracy_prueba": 0.8175182481751825,
+    "precision_macro_prueba": 0.8232030691064305,
+    "recall_macro_prueba": 0.8052824159967017,
+    "f1_macro_prueba": 0.8070629340665485
+   }
+  },
+  "inglés": {
+   "clasico": {
+    "f1_macro_cv": 0.6709577723863438,
+    "f1_macro_cv_std": 0.033701700930287064
+   },
+   "multilingue": {
+    "f1_macro_cv": 0.880366934652649,
+    "f1_macro_cv_std": 0.035938888567150155
+   },
+   "ensamble": {
+    "f1_macro_cv": 0.9075438054009484,
+    "f1_macro_cv_std": 0.04099477497308726,
+    "accuracy_prueba": 0.9,
+    "precision_macro_prueba": 0.9200680272108844,
+    "recall_macro_prueba": 0.9000000000000001,
+    "f1_macro_prueba": 0.8995310245310245
+   }
+  },
+  "umbrales": [
+   {
+    "umbral": 0.4,
+    "cobertura": 0.7737226277,
+    "accuracy_cubierta": 0.9339622642,
+    "fuera_de_alcance_escalado": 0.5
+   },
+   {
+    "umbral": 0.5,
+    "cobertura": 0.6423357664,
+    "accuracy_cubierta": 0.9545454545,
+    "fuera_de_alcance_escalado": 0.875
+   },
+   {
+    "umbral": 0.6,
+    "cobertura": 0.5401459854,
+    "accuracy_cubierta": 0.972972973,
+    "fuera_de_alcance_escalado": 0.875
+   }
+  ]
+ },
  "tono": {
   "frases": 180,
   "n_prueba": 36,
@@ -278,7 +336,49 @@
     "real": "neutral",
     "prediccion": "negativo"
    }
-  ]
+  ],
+  "ingles": {
+   "frases": 60,
+   "accuracy": 0.95,
+   "f1_macro": 0.9499164578111946,
+   "por_clase": {
+    "negativo": {
+     "precision": 0.95,
+     "recall": 0.95,
+     "f1-score": 0.95,
+     "support": 20.0
+    },
+    "neutral": {
+     "precision": 1.0,
+     "recall": 0.9,
+     "f1-score": 0.9473684210526315,
+     "support": 20.0
+    },
+    "positivo": {
+     "precision": 0.9090909090909091,
+     "recall": 1.0,
+     "f1-score": 0.9523809523809523,
+     "support": 20.0
+    }
+   },
+   "errores": [
+    {
+     "texto": "where do i find the remote for the gate",
+     "real": "neutral",
+     "prediccion": "positivo"
+    },
+    {
+     "texto": "the lock is blinking green, is that normal",
+     "real": "neutral",
+     "prediccion": "negativo"
+    },
+    {
+     "texto": "we paid for a clean house and found hair in the shower",
+     "real": "negativo",
+     "prediccion": "positivo"
+    }
+   ]
+  }
  },
  "mejorado": {
   "casos": [
@@ -286,11 +386,13 @@
     "texto": "a que hora es el check in",
     "foto": null,
     "idioma": "es",
+    "multilingue_intencion": "horarios",
+    "multilingue_conf": 0.84,
     "clasico_intencion": "horarios",
     "clasico_conf": 0.87,
     "clasico_accion": "RESPONDER",
     "mejorado_intencion": "horarios",
-    "mejorado_conf": 0.84,
+    "mejorado_conf": 0.86,
     "tono": "neutral",
     "conf_tono": 0.91,
     "mejorado_decide": "texto",
@@ -301,6 +403,8 @@
     "texto": "what time is check in",
     "foto": null,
     "idioma": "en",
+    "multilingue_intencion": "horarios",
+    "multilingue_conf": 0.83,
     "clasico_intencion": "horarios",
     "clasico_conf": 0.83,
     "clasico_accion": "RESPONDER",
@@ -316,11 +420,13 @@
     "texto": "can we check out later, our flight is at night",
     "foto": null,
     "idioma": "en",
+    "multilingue_intencion": "early_late_checkout",
+    "multilingue_conf": 0.56,
     "clasico_intencion": "llegada_tarde",
     "clasico_conf": 0.42,
     "clasico_accion": "RESPONDER",
     "mejorado_intencion": "early_late_checkout",
-    "mejorado_conf": 0.56,
+    "mejorado_conf": 0.45,
     "tono": "neutral",
     "conf_tono": 0.88,
     "mejorado_decide": "texto",
@@ -331,11 +437,13 @@
     "texto": "we will arrive around midnight, is that ok",
     "foto": null,
     "idioma": "en",
+    "multilingue_intencion": "llegada_tarde",
+    "multilingue_conf": 0.83,
     "clasico_intencion": "llegada_tarde",
     "clasico_conf": 0.76,
     "clasico_accion": "RESPONDER",
     "mejorado_intencion": "llegada_tarde",
-    "mejorado_conf": 0.83,
+    "mejorado_conf": 0.8,
     "tono": "neutral",
     "conf_tono": 0.88,
     "mejorado_decide": "texto",
@@ -346,11 +454,13 @@
     "texto": "recomiendan algun restaurante por aca",
     "foto": null,
     "idioma": "es",
+    "multilingue_intencion": "servicios",
+    "multilingue_conf": 0.43,
     "clasico_intencion": "servicios",
     "clasico_conf": 0.55,
     "clasico_accion": "RESPONDER",
     "mejorado_intencion": "servicios",
-    "mejorado_conf": 0.43,
+    "mejorado_conf": 0.49,
     "tono": "positivo",
     "conf_tono": 0.56,
     "mejorado_decide": "texto",
@@ -361,6 +471,8 @@
     "texto": "no me abre",
     "foto": "porton",
     "idioma": "es",
+    "multilingue_intencion": "cerradura",
+    "multilingue_conf": 0.7,
     "clasico_intencion": "porton_estacionamiento",
     "clasico_conf": 0.7,
     "clasico_accion": "RESPONDER",
@@ -376,71 +488,81 @@
     "texto": "llevo veinte minutos esperando y la cerradura sigue sin abrir",
     "foto": null,
     "idioma": "es",
+    "multilingue_intencion": "cerradura",
+    "multilingue_conf": 0.32,
     "clasico_intencion": "cerradura",
     "clasico_conf": 0.61,
     "clasico_accion": "RESPONDER",
     "mejorado_intencion": "cerradura",
-    "mejorado_conf": 0.32,
+    "mejorado_conf": 0.47,
     "tono": "negativo",
     "conf_tono": 0.82,
-    "mejorado_decide": "texto",
-    "mejorado_accion": "ESCALAR",
-    "mejorado_respuesta": "Le paso tu mensaje a la anfitriona."
-   },
-   {
-    "texto": "ya pudimos entrar, muchas gracias por la ayuda",
-    "foto": null,
-    "idioma": "es",
-    "clasico_intencion": "saludo_cortesia",
-    "clasico_conf": 0.73,
-    "clasico_accion": "RESPONDER",
-    "mejorado_intencion": "early_late_checkout",
-    "mejorado_conf": 0.62,
-    "tono": "positivo",
-    "conf_tono": 0.86,
-    "mejorado_decide": "texto",
-    "mejorado_accion": "ESCALAR",
-    "mejorado_respuesta": "Le paso tu mensaje a la anfitriona."
-   },
-   {
-    "texto": "es el colmo, el porton no abre y nadie contesta",
-    "foto": null,
-    "idioma": "es",
-    "clasico_intencion": "porton_estacionamiento",
-    "clasico_conf": 0.78,
-    "clasico_accion": "RESPONDER",
-    "mejorado_intencion": "cerradura",
-    "mejorado_conf": 0.41,
-    "tono": "negativo",
-    "conf_tono": 0.9,
     "mejorado_decide": "texto y tono",
     "mejorado_accion": "RESPONDER Y AVISAR",
     "mejorado_respuesta": "La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día de llegada y presiona la palomita. Si parpadea en rojo, espera 1 minuto y vuelve a intentar. Además le aviso a la anfitriona para que te contacte."
    },
    {
+    "texto": "ya pudimos entrar, muchas gracias por la ayuda",
+    "foto": null,
+    "idioma": "es",
+    "multilingue_intencion": "early_late_checkout",
+    "multilingue_conf": 0.62,
+    "clasico_intencion": "saludo_cortesia",
+    "clasico_conf": 0.73,
+    "clasico_accion": "RESPONDER",
+    "mejorado_intencion": "saludo_cortesia",
+    "mejorado_conf": 0.43,
+    "tono": "positivo",
+    "conf_tono": 0.86,
+    "mejorado_decide": "texto",
+    "mejorado_accion": "RESPONDER",
+    "mejorado_respuesta": "Con gusto te ayudo; la anfitriona te confirma este dato."
+   },
+   {
+    "texto": "es el colmo, el porton no abre y nadie contesta",
+    "foto": null,
+    "idioma": "es",
+    "multilingue_intencion": "cerradura",
+    "multilingue_conf": 0.41,
+    "clasico_intencion": "porton_estacionamiento",
+    "clasico_conf": 0.78,
+    "clasico_accion": "RESPONDER",
+    "mejorado_intencion": "porton_estacionamiento",
+    "mejorado_conf": 0.5,
+    "tono": "negativo",
+    "conf_tono": 0.9,
+    "mejorado_decide": "texto y tono",
+    "mejorado_accion": "RESPONDER Y AVISAR",
+    "mejorado_respuesta": "El portón del estacionamiento se abre con el control que está en la caja junto a la entrada principal. Si no responde, presiona el botón 2 segundos frente al motor. Además le aviso a la anfitriona para que te contacte."
+   },
+   {
     "texto": "we have been waiting outside for an hour and nobody answers",
     "foto": null,
     "idioma": "en",
+    "multilingue_intencion": "llegada_tarde",
+    "multilingue_conf": 0.61,
     "clasico_intencion": "horarios",
     "clasico_conf": 0.21,
     "clasico_accion": "ESCALAR",
     "mejorado_intencion": "llegada_tarde",
-    "mejorado_conf": 0.61,
+    "mejorado_conf": 0.33,
     "tono": "negativo",
     "conf_tono": 0.89,
-    "mejorado_decide": "texto y tono",
-    "mejorado_accion": "RESPONDER Y AVISAR",
-    "mejorado_respuesta": "Yes, you can arrive late with no problem: access is by code and nobody needs to be there to receive you. I am also letting the host know so she can contact you."
+    "mejorado_decide": "texto",
+    "mejorado_accion": "ESCALAR",
+    "mejorado_respuesta": "I am passing your message to the host."
    },
    {
     "texto": "thank you so much, the place is lovely",
     "foto": null,
     "idioma": "en",
+    "multilingue_intencion": "saludo_cortesia",
+    "multilingue_conf": 0.85,
     "clasico_intencion": "saludo_cortesia",
     "clasico_conf": 0.55,
     "clasico_accion": "RESPONDER",
     "mejorado_intencion": "saludo_cortesia",
-    "mejorado_conf": 0.85,
+    "mejorado_conf": 0.7,
     "tono": "positivo",
     "conf_tono": 0.97,
     "mejorado_decide": "texto",
@@ -577,32 +699,32 @@
   {
    "caso": "Prueba: cerradura",
    "prediccion": "cerradura",
-   "confianza": 0.9830629825592041
+   "confianza": 0.9831241369247437
   },
   {
    "caso": "Prueba: portón",
    "prediccion": "porton",
-   "confianza": 0.9940310120582581
+   "confianza": 0.9940698146820068
   },
   {
    "caso": "Prueba: error (real: controles)",
    "prediccion": "interior",
-   "confianza": 0.5210785865783691
+   "confianza": 0.5233273506164551
   },
   {
    "caso": "Foto real: entrada exterior",
    "prediccion": "interior",
-   "confianza": 0.6599262952804565
+   "confianza": 0.6611152291297913
   },
   {
    "caso": "Fuera de dominio: perro",
    "prediccion": "caseta",
-   "confianza": 0.85918128490448
+   "confianza": 0.8589670062065125
   },
   {
    "caso": "Fuera de dominio: auto",
    "prediccion": "porton",
-   "confianza": 0.7956801056861877
+   "confianza": 0.7974690198898315
   }
  ],
  "imagenes_por_clase": {

@@ -21,7 +21,7 @@
    "descripcion": "Cocina con gabinetes blancos",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.881,
+   "confianza": 0.882,
    "acierta": true
   },
   {
@@ -29,7 +29,7 @@
    "descripcion": "Sala con sofa cafe y cocineta",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.997,
+   "confianza": 0.998,
    "acierta": true
   },
   {
@@ -37,7 +37,7 @@
    "descripcion": "Pasillo con puerta negra y tapete de entrada",
    "esperada": "ninguna (entrada exterior)",
    "clase_predicha": "interior",
-   "confianza": 0.66,
+   "confianza": 0.661,
    "acierta": false
   },
   {
@@ -53,7 +53,7 @@
    "descripcion": "Habitacion doble de lujo",
    "esperada": "interior",
    "clase_predicha": "interior",
-   "confianza": 0.989,
+   "confianza": 0.99,
    "acierta": true
   },
   {

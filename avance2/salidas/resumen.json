@@ -369,10 +369,10 @@
   "modelos": [
    {
     "modelo": "CNN desde cero",
-    "accuracy": 0.5385,
-    "precision_macro": 0.5742,
-    "recall_macro": 0.5417,
-    "f1_macro": 0.5295
+    "accuracy": 0.5641,
+    "precision_macro": 0.59,
+    "recall_macro": 0.575,
+    "f1_macro": 0.5601
    },
    {
     "modelo": "ResNet50 (transferencia + ajuste fino)",
