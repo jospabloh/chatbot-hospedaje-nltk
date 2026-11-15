@@ -37,7 +37,7 @@
    "descripcion": "Pasillo con puerta negra y tapete de entrada",
    "esperada": "ninguna (entrada exterior)",
    "clase_predicha": "interior",
-   "confianza": 0.662,
+   "confianza": 0.66,
    "acierta": false
   },
   {

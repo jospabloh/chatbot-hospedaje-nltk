@@ -16,7 +16,7 @@
   {
    "archivo": "comida_0.jpg",
    "clase_predicha": "porton",
-   "confianza": 0.546,
+   "confianza": 0.548,
    "supera_umbral": false
   },
   {
@@ -28,7 +28,7 @@
   {
    "archivo": "auto_0.jpg",
    "clase_predicha": "porton",
-   "confianza": 0.797,
+   "confianza": 0.796,
    "supera_umbral": true
   },
   {
