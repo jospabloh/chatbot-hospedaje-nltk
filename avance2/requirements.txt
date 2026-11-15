@@ -5,3 +5,5 @@ pandas
 matplotlib
 seaborn
 pillow
+scikit-image
+opencv-python
