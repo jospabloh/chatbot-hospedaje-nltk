@@ -6,6 +6,7 @@ set them in the app's Secrets; locally they can be environment variables.
 """
 import os
 import sys
+import uuid
 
 import pandas as pd
 import streamlit as st
@@ -38,7 +39,7 @@ TEXTS = {
         "disconnected": "Sin conexión con el asistente", "advanced": "Avanzado", "api_url": "Dirección de la API",
         "thinking": "Pensando...", "trace": "Ver cómo decidió el asistente", "action": "Acción", "notified": "Se avisó a la anfitriona",
         "step": "Paso", "component": "Componente", "event": "Qué hizo", "data": "Datos", "ms": "ms",
-        "no_metrics": "Aún no hay métricas o la API no responde.", "requests": "Peticiones", "errors": "Errores 5xx", "uptime": "Tiempo activo (s)",
+        "refresh_metrics": "Cargar métricas", "metrics_hint": "Pulsa el botón para cargar las métricas del servicio.", "no_metrics": "Aún no hay métricas o la API no responde.", "requests": "Peticiones", "errors": "Errores 5xx", "uptime": "Tiempo activo (s)",
         "per_route": "Por ruta", "latency": "Latencia",
         "actions": {"RESPONDER": "Respondió", "RESPONDER_Y_AVISAR": "Respondió y avisó a la anfitriona", "PEDIR_FOTO": "Pidió una foto",
                     "ACLARAR": "Pidió aclarar", "ESCALAR": "Pasó el caso a la anfitriona", "ESCALAR_URGENTE": "Urgencia: avisó a la anfitriona",
@@ -65,7 +66,7 @@ TEXTS = {
         "disconnected": "No connection to the assistant", "advanced": "Advanced", "api_url": "API address",
         "thinking": "Thinking...", "trace": "See how the assistant decided", "action": "Action", "notified": "The host was notified",
         "step": "Step", "component": "Component", "event": "What it did", "data": "Data", "ms": "ms",
-        "no_metrics": "No metrics yet or the API is not answering.", "requests": "Requests", "errors": "5xx errors", "uptime": "Uptime (s)",
+        "refresh_metrics": "Load metrics", "metrics_hint": "Press the button to load the service metrics.", "no_metrics": "No metrics yet or the API is not answering.", "requests": "Requests", "errors": "5xx errors", "uptime": "Uptime (s)",
         "per_route": "By route", "latency": "Latency",
         "actions": {"RESPONDER": "Answered", "RESPONDER_Y_AVISAR": "Answered and notified the host", "PEDIR_FOTO": "Asked for a photo",
                     "ACLARAR": "Asked to rephrase", "ESCALAR": "Passed the case to the host", "ESCALAR_URGENTE": "Emergency: host alerted",
@@ -93,6 +94,8 @@ def init_state() -> None:
     st.session_state.setdefault("agent_state", {})
     st.session_state.setdefault("uploader_key", 0)
     st.session_state.setdefault("api_url_dev", "")
+    st.session_state.setdefault("session_id", uuid.uuid4().hex)
+    st.session_state.setdefault("metrics", None)
     st.session_state.setdefault("health", None)
 
 
@@ -114,7 +117,8 @@ def get_client() -> ApiClient:
     if dev_override_enabled() and st.session_state.get("api_url_dev"):
         url = st.session_state["api_url_dev"]
     # the token is only attached to the configured address, never to a different one
-    return ApiClient(url, setting("API_TOKEN"), token_url=configured_api_url())
+    return ApiClient(url, setting("API_TOKEN"), token_url=configured_api_url(),
+                     session_id=st.session_state["session_id"])
 
 
 def send(text: str, photo, t: dict, lang: str) -> None:
@@ -180,7 +184,13 @@ def sidebar(t: dict) -> None:
 
 
 def metrics_tab(t: dict) -> None:
-    result = get_client().metrics(st.session_state["lang"])
+    # fetched only on demand, not on every rerun: the metrics call must not compete with the guests' chat
+    if st.button(t["refresh_metrics"]):
+        st.session_state["metrics"] = get_client().metrics(st.session_state["lang"])
+    result = st.session_state["metrics"]
+    if result is None:
+        st.caption(t["metrics_hint"])
+        return
     if not result.ok:
         st.info(t["no_metrics"])
         return

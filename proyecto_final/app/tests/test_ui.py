@@ -55,6 +55,12 @@ def test_el_token_nunca_se_envia_a_una_url_distinta_de_la_configurada():
     assert all(kwargs["allow_redirects"] is False for _, _, kwargs in session.calls)
 
 
+def test_la_ui_manda_un_id_de_sesion_por_huesped():
+    session = FakeSession(FakeResponse(200, {"estado": "ok"}))
+    ApiClient("http://api.test", "t", session=session, session_id="abc12345").health()
+    assert session.calls[0][2]["headers"]["X-Session-Id"] == "abc12345"
+
+
 def test_el_token_si_se_envia_a_la_url_configurada():
     session = FakeSession(FakeResponse(200, {"estado": "ok"}))
     ApiClient("http://api.test/", "secreto", session=session, token_url="http://api.test").health()
@@ -161,3 +167,12 @@ def test_la_ui_manda_el_token_solo_a_la_url_configurada(monkeypatch):
     monkeypatch.setenv("API_TOKEN", "secreto")
     run_app(monkeypatch, "http://api.test")   # the fake answers every endpoint the same; only the destinations matter here
     assert seen and all(base == tok_url == "http://api.test" for base, tok_url, _ in seen)
+
+
+def test_la_ui_no_pide_metricas_en_cada_rerun(monkeypatch):
+    paths = []
+    monkeypatch.setattr(cliente_api.ApiClient, "_request", lambda self, method, path, lang="es", **kw:
+                        paths.append(path) or ApiResult(True, {"estado": "ok"}))
+    app = run_app(monkeypatch, "http://api.test")
+    app.sidebar.selectbox[0].select("en").run()
+    assert "/metrics" not in paths

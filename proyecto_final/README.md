@@ -89,7 +89,7 @@ curl -s localhost:5000/image -F file=@foto.jpg
 | `API_URL` | UI | `http://127.0.0.1:5000` | URL de la API Flask |
 | `ALLOW_API_URL_OVERRIDE` | UI | vacío | Solo desarrollo local: con valor `1` y sin `API_TOKEN` muestra un campo para cambiar la URL. En la UI pública no existe ese campo |
 | `API_TOKEN` | UI y API | vacío | Si la API lo define, exige el encabezado `X-API-Token`; la UI lo envía |
-| `RATE_LIMIT_PER_MIN` | API | 60 | Peticiones por minuto por IP (usa `CF-Connecting-IP` detrás del túnel) |
+| `RATE_LIMIT_PER_MIN` | API | 60 | Peticiones por minuto. Con token válido se cuenta por huésped (encabezado `X-Session-Id`, que la UI genera por sesión); sin token, por IP (`CF-Connecting-IP`). `/metrics` tiene su propio contador y `/health` no cuenta |
 | `LOG_LEVEL` | API | `INFO` | Nivel de logs JSON |
 | `VISION_BACKBONE` | API | `efficientnetb0` | `resnet50`, `mobilenetv2` o `efficientnetb0` |
 | `ARTIFACTS_DIR` | API | `artefactos/` | Carpeta de modelos |
@@ -136,7 +136,7 @@ Aclaración sobre los datos: solo se guarda la cabeza (100 KB), los pesos del ba
 
 ### Pruebas
 
-`pytest`: 194 pruebas pasan (reglas 69, agente 40, API 33, validación 22, interfaz 19, modelos reales 6, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
+`pytest`: 204 pruebas pasan (reglas 69, agente 40, API 36, validación 22, interfaz 26, modelos reales 6, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
 
 Las pruebas con modelos reales llevan la marca `modelos`; para omitirlas: `pytest -m "not modelos"`.
 

@@ -162,6 +162,32 @@ def test_token_de_acceso(services):
     assert client.post("/chat", json={"texto": "hola"}, headers={"X-API-Token": "secreto-de-prueba"}).status_code == 200
 
 
+def test_cada_huesped_tiene_su_propio_limite_aunque_compartan_ip(services):
+    # behind Streamlit Cloud all guests share one IP: with a valid token each session id gets its own budget
+    client = create_app(services, {"API_TOKEN": "t0ken-de-prueba", "RATE_LIMIT_PER_MIN": 3}).test_client()
+
+    def chat(session_id):
+        headers = {"X-API-Token": "t0ken-de-prueba", "CF-Connecting-IP": "9.9.9.9", "X-Session-Id": session_id}
+        return client.post("/chat", json={"texto": "hola"}, headers=headers).status_code
+    assert [chat("huesped-aaaa") for _ in range(4)] == [200, 200, 200, 429]
+    assert [chat("huesped-bbbb") for _ in range(3)] == [200, 200, 200]
+
+
+def test_sin_token_el_id_de_sesion_no_se_toma_en_cuenta(services):
+    # an anonymous client could invent session ids to dodge the limit: without a token the limit is by IP
+    client = create_app(services, {"RATE_LIMIT_PER_MIN": 2}).test_client()
+    codes = [client.post("/chat", json={"texto": "hola"}, headers={"CF-Connecting-IP": "1.1.1.1", "X-Session-Id": f"sesion-{i:04d}"}).status_code
+             for i in range(3)]
+    assert codes == [200, 200, 429]
+
+
+def test_metrics_no_consume_el_limite_del_chat(services):
+    client = create_app(services, {"RATE_LIMIT_PER_MIN": 3}).test_client()
+    headers = {"CF-Connecting-IP": "4.4.4.4"}
+    assert [client.get("/metrics", headers=headers).status_code for _ in range(3)] == [200, 200, 200]
+    assert [client.post("/chat", json={"texto": "hola"}, headers=headers).status_code for _ in range(3)] == [200, 200, 200]
+
+
 def test_limite_de_peticiones_por_cliente(services):
     client = create_app(services, {"RATE_LIMIT_PER_MIN": 3}).test_client()
     codes = [client.post("/chat", json={"texto": "hola"}, headers={"CF-Connecting-IP": "1.2.3.4"}).status_code for _ in range(5)]

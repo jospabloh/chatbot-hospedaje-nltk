@@ -12,6 +12,7 @@ from __future__ import annotations
 import hmac
 import json
 import logging
+import re
 import sys
 import threading
 import time
@@ -75,6 +76,18 @@ def client_id() -> str:
     return forwarded or request.remote_addr or "desconocido"
 
 
+SESSION_ID = re.compile(r"^[A-Za-z0-9_-]{8,64}$")
+
+
+def rate_key(token_validated: bool) -> str:
+    """Rate-limit key. Behind a shared front end (Streamlit Cloud) every guest has the same IP, so with a valid
+    access token the UI's per-guest session id is used; without a token the id is not trusted and the IP is used."""
+    session_id = request.headers.get("X-Session-Id", "")
+    if token_validated and SESSION_ID.match(session_id):
+        return "s:" + session_id
+    return client_id()
+
+
 def create_app(services: Services | None = None, settings: dict | None = None) -> Flask:
     configure_logging()
     app = Flask(__name__)
@@ -83,6 +96,7 @@ def create_app(services: Services | None = None, settings: dict | None = None) -
     app.config["JSON_AS_ASCII"] = False
     app.json.ensure_ascii = False
     metrics, limiter = Metrics(), RateLimiter(cfg["RATE_LIMIT_PER_MIN"])
+    read_limiter = RateLimiter(cfg["RATE_LIMIT_PER_MIN"])   # /metrics has its own budget: it must not use up the chat one
     if services is None:
         from .servicios import load_services
         services = load_services()
@@ -100,7 +114,8 @@ def create_app(services: Services | None = None, settings: dict | None = None) -
         token = cfg["API_TOKEN"]
         if token and not hmac.compare_digest(request.headers.get("X-API-Token", ""), token):
             raise ApiError(401, "token_invalido", "Falta el token de acceso o no es valido (cabecera X-API-Token).")
-        if not limiter.allow(client_id()):
+        chosen, key = (read_limiter, "m:" + client_id()) if request.path == "/metrics" else (limiter, rate_key(bool(token)))
+        if not chosen.allow(key):
             metrics.count("limite_de_peticiones", "excedido")
             raise ApiError(429, "demasiadas_peticiones", "Demasiadas peticiones. Espera un minuto e intenta de nuevo.")
         return None

@@ -48,11 +48,13 @@ class ApiResult:
 
 
 class ApiClient:
-    def __init__(self, base_url: str, token: str = "", timeout: float = 45.0, session=None, token_url: str | None = None):
+    def __init__(self, base_url: str, token: str = "", timeout: float = 45.0, session=None, token_url: str | None = None,
+                 session_id: str = ""):
         """token_url is the only address the token may be sent to (the one set by the server configuration);
         by default it is base_url. If base_url differs, the token is never attached."""
         self.base_url = base_url.rstrip("/")
         self.token = token
+        self.session_id = session_id   # per-guest id (not a secret): lets the API rate-limit each guest separately
         self.token_url = (token_url if token_url is not None else base_url).rstrip("/")
         self.timeout = timeout
         self.session = session or requests.Session()
@@ -61,6 +63,8 @@ class ApiClient:
         messages = ERRORS.get(lang, ERRORS["es"])
         send_token = bool(self.token) and self.base_url == self.token_url
         headers = {"X-API-Token": self.token} if send_token else {}
+        if self.session_id:
+            headers["X-Session-Id"] = self.session_id
         try:
             response = self.session.request(method, self.base_url + path, headers=headers, timeout=self.timeout,
                                            allow_redirects=False, **kwargs)
