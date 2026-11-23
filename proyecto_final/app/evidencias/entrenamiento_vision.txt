@@ -1,0 +1,14 @@
+/Users/jphf/haru-work/pf-app-venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+Wikimedia: 256 unicas (179/38/39), fuera de dominio: 6
+Fotos reales (recortes): 44 {'interior': 25, 'otro': 15, 'porton': 3, 'cerradura': 1}
+== resnet50
+{"wikimedia": {"n_prueba": 39, "accuracy": 0.9744, "f1_macro": 0.9749, "por_clase": {"caseta": 1.0, "cerradura": 0.941, "controles": 0.933, "interior": 1.0, "porton": 1.0}}, "clases_cabeza": ["caseta", "cerradura", "controles", "interior", "otro", "porton"], "costo": {"parametros": 23587712, "peso_float32_mb": 94.4, "latencia_ms_media": 112.7, "latencia_ms_p95": 126.2, "memoria_pico_mb": 560.0, "memoria_inicial_mb": 93.0}}
+   fotos reales: {'n': 44, 'accuracy': 0.8182, 'f1_macro': 0.4109, 'recall_interior': 1.0, 'recall_otro': 0.667}
+== mobilenetv2
+{"wikimedia": {"n_prueba": 39, "accuracy": 0.8974, "f1_macro": 0.8984, "por_clase": {"caseta": 1.0, "cerradura": 0.778, "controles": 0.714, "interior": 1.0, "porton": 1.0}}, "clases_cabeza": ["caseta", "cerradura", "controles", "interior", "otro", "porton"], "costo": {"parametros": 2257984, "peso_float32_mb": 9.0, "latencia_ms_media": 51.1, "latencia_ms_p95": 54.4, "memoria_pico_mb": 517.0, "memoria_inicial_mb": 90.0}}
+   fotos reales: {'n': 44, 'accuracy': 0.7955, 'f1_macro': 0.4421, 'recall_interior': 0.96, 'recall_otro': 0.6}
+== efficientnetb0
+{"wikimedia": {"n_prueba": 39, "accuracy": 0.9744, "f1_macro": 0.9749, "por_clase": {"caseta": 1.0, "cerradura": 0.941, "controles": 0.933, "interior": 1.0, "porton": 1.0}}, "clases_cabeza": ["caseta", "cerradura", "controles", "interior", "otro", "porton"], "costo": {"parametros": 4049571, "peso_float32_mb": 16.2, "latencia_ms_media": 128.1, "latencia_ms_p95": 206.7, "memoria_pico_mb": 378.0, "memoria_inicial_mb": 86.0}}
+   fotos reales: {'n': 44, 'accuracy': 0.8409, 'f1_macro': 0.5974, 'recall_interior': 0.96, 'recall_otro': 0.667}
+DESPLIEGUE: efficientnetb0
