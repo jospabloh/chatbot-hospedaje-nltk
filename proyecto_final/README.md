@@ -87,6 +87,7 @@ curl -s localhost:5000/image -F file=@foto.jpg
 | Variable | Dónde | Por defecto | Uso |
 |---|---|---|---|
 | `API_URL` | UI | `http://127.0.0.1:5000` | URL de la API Flask |
+| `ALLOW_API_URL_OVERRIDE` | UI | vacío | Solo desarrollo local: con valor `1` y sin `API_TOKEN` muestra un campo para cambiar la URL. En la UI pública no existe ese campo |
 | `API_TOKEN` | UI y API | vacío | Si la API lo define, exige el encabezado `X-API-Token`; la UI lo envía |
 | `RATE_LIMIT_PER_MIN` | API | 60 | Peticiones por minuto por IP (usa `CF-Connecting-IP` detrás del túnel) |
 | `LOG_LEVEL` | API | `INFO` | Nivel de logs JSON |
@@ -94,7 +95,7 @@ curl -s localhost:5000/image -F file=@foto.jpg
 | `ARTIFACTS_DIR` | API | `artefactos/` | Carpeta de modelos |
 | `HOST`, `PORT` | `servidor.py` | `127.0.0.1`, `5000` | Dirección de escucha |
 
-En Streamlit Community Cloud, `API_URL` y `API_TOKEN` se definen como Secrets.
+En Streamlit Community Cloud, `API_URL` y `API_TOKEN` se definen como Secrets. La URL de la API sale solo de la configuración del servidor, y el token solo se envía a esa URL (el cliente no sigue redirecciones).
 
 ## API
 

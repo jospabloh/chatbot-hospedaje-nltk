@@ -46,6 +46,21 @@ def test_exito_devuelve_los_datos_y_manda_el_token():
     assert (method, url) == ("GET", "http://api.test/health") and kwargs["headers"] == {"X-API-Token": "abc"}
 
 
+def test_el_token_nunca_se_envia_a_una_url_distinta_de_la_configurada():
+    # security: if the UI is ever pointed to another server, that server must not receive the access token
+    session = FakeSession(FakeResponse(200, {"estado": "ok"}))
+    client = ApiClient("http://servidor-ajeno.test", "secreto", session=session, token_url="http://api.test")
+    client.health(); client.metrics(); client.agent("hola")
+    assert session.calls and all("X-API-Token" not in kwargs["headers"] for _, _, kwargs in session.calls)
+    assert all(kwargs["allow_redirects"] is False for _, _, kwargs in session.calls)
+
+
+def test_el_token_si_se_envia_a_la_url_configurada():
+    session = FakeSession(FakeResponse(200, {"estado": "ok"}))
+    ApiClient("http://api.test/", "secreto", session=session, token_url="http://api.test").health()
+    assert session.calls[0][2]["headers"] == {"X-API-Token": "secreto"}
+
+
 @pytest.mark.parametrize("error,fragment", [(requests.ConnectionError("x"), "No pude conectarme"), (requests.Timeout("x"), "tardó demasiado")])
 def test_fallas_de_red_son_mensajes_amigables(error, fragment):
     result = client_with(error=error)[0].agent("hola")
@@ -123,3 +138,26 @@ def test_cambio_de_idioma_de_la_interfaz(monkeypatch):
     app = run_app(monkeypatch)
     app.sidebar.selectbox[0].select("en").run()
     assert not app.exception and "Cas'aguacate guest assistant" in app.title[0].value
+
+
+def test_no_hay_campo_para_cambiar_la_url_de_la_api_en_la_ui_publica(monkeypatch):
+    monkeypatch.setenv("API_TOKEN", "secreto")
+    monkeypatch.setenv("ALLOW_API_URL_OVERRIDE", "1")   # even with the flag, a configured token disables the override
+    app = run_app(monkeypatch)
+    assert not app.exception and not [w for w in app.sidebar.text_input if "API" in w.label]
+
+
+def test_override_local_solo_con_bandera_y_sin_token(monkeypatch):
+    monkeypatch.delenv("API_TOKEN", raising=False)
+    assert not [w for w in run_app(monkeypatch).sidebar.text_input if "API" in w.label]
+    monkeypatch.setenv("ALLOW_API_URL_OVERRIDE", "1")
+    assert [w for w in run_app(monkeypatch).sidebar.text_input if "API" in w.label]
+
+
+def test_la_ui_manda_el_token_solo_a_la_url_configurada(monkeypatch):
+    seen = []
+    monkeypatch.setattr(cliente_api.ApiClient, "_request", lambda self, method, path, lang="es", **kw:
+                        seen.append((self.base_url, self.token_url, self.token)) or ApiResult(True, {"estado": "ok"}))
+    monkeypatch.setenv("API_TOKEN", "secreto")
+    run_app(monkeypatch, "http://api.test")   # the fake answers every endpoint the same; only the destinations matter here
+    assert seen and all(base == tok_url == "http://api.test" for base, tok_url, _ in seen)

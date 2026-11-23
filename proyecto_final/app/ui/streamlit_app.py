@@ -92,12 +92,29 @@ def init_state() -> None:
     st.session_state.setdefault("messages", [])
     st.session_state.setdefault("agent_state", {})
     st.session_state.setdefault("uploader_key", 0)
-    st.session_state.setdefault("api_url", setting("API_URL", "http://127.0.0.1:5000"))
+    st.session_state.setdefault("api_url_dev", "")
     st.session_state.setdefault("health", None)
 
 
+DEFAULT_API_URL = "http://127.0.0.1:5000"
+
+
+def configured_api_url() -> str:
+    """The API address comes only from the server configuration (env var or Secrets)."""
+    return setting("API_URL", DEFAULT_API_URL)
+
+
+def dev_override_enabled() -> bool:
+    """Local-development override of the API address: explicit flag AND no access token configured."""
+    return setting("ALLOW_API_URL_OVERRIDE") == "1" and not setting("API_TOKEN")
+
+
 def get_client() -> ApiClient:
-    return ApiClient(st.session_state["api_url"], setting("API_TOKEN"))
+    url = configured_api_url()
+    if dev_override_enabled() and st.session_state.get("api_url_dev"):
+        url = st.session_state["api_url_dev"]
+    # the token is only attached to the configured address, never to a different one
+    return ApiClient(url, setting("API_TOKEN"), token_url=configured_api_url())
 
 
 def send(text: str, photo, t: dict, lang: str) -> None:
@@ -157,8 +174,9 @@ def sidebar(t: dict) -> None:
             st.warning(t["degraded"])
         else:
             st.success(t["connected"])
-        with st.expander(t["advanced"]):
-            st.text_input(t["api_url"], key="api_url")
+        if dev_override_enabled():
+            with st.expander(t["advanced"]):
+                st.text_input(t["api_url"], key="api_url_dev", placeholder=configured_api_url())
 
 
 def metrics_tab(t: dict) -> None:

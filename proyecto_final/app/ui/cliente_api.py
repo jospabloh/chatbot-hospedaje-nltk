@@ -48,17 +48,22 @@ class ApiResult:
 
 
 class ApiClient:
-    def __init__(self, base_url: str, token: str = "", timeout: float = 45.0, session=None):
+    def __init__(self, base_url: str, token: str = "", timeout: float = 45.0, session=None, token_url: str | None = None):
+        """token_url is the only address the token may be sent to (the one set by the server configuration);
+        by default it is base_url. If base_url differs, the token is never attached."""
         self.base_url = base_url.rstrip("/")
         self.token = token
+        self.token_url = (token_url if token_url is not None else base_url).rstrip("/")
         self.timeout = timeout
         self.session = session or requests.Session()
 
     def _request(self, method: str, path: str, lang: str = "es", **kwargs) -> ApiResult:
         messages = ERRORS.get(lang, ERRORS["es"])
-        headers = {"X-API-Token": self.token} if self.token else {}
+        send_token = bool(self.token) and self.base_url == self.token_url
+        headers = {"X-API-Token": self.token} if send_token else {}
         try:
-            response = self.session.request(method, self.base_url + path, headers=headers, timeout=self.timeout, **kwargs)
+            response = self.session.request(method, self.base_url + path, headers=headers, timeout=self.timeout,
+                                           allow_redirects=False, **kwargs)
         except requests.Timeout:
             return ApiResult(False, error=messages["timeout"])
         except requests.RequestException:
