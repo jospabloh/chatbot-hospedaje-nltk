@@ -49,6 +49,8 @@ DEFAULT_TABLE = {
     "me puedo quedar mas tarde el domingo": ("early_late_checkout", 0.79),
     "hace mucho calor y no enfria": ("reportar_problema", 0.72),
     "el porton no abre y nadie contesta": ("porton_estacionamiento", 0.78),
+    "is there a late check in": ("llegada_tarde", 0.82),
+    "tenemos llegada tarde": ("llegada_tarde", 0.80),
     "hola": ("saludo_cortesia", 0.90),
     "gracias": ("saludo_cortesia", 0.85),
     "tienen alberca": ("servicios", 0.70),

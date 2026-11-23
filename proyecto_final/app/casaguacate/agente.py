@@ -205,11 +205,13 @@ class HybridAgent:
         if final == "reportar_problema":
             if image_pred is None and not state.pidio_foto:
                 state.pidio_foto, state.intencion_pendiente = True, final
+                state.fallos = 0   # an understood turn breaks the streak of unrecognized messages
                 return "PEDIR_FOTO", kb.message("ask_photo", lang), "un reporte de problema se entiende mejor con foto"
             key = "photo_issue" if image_pred is not None else "escalate"
             return "ESCALAR", kb.message(key, lang), "los reportes de fallas los revisa la anfitriona"
         if final in kb.ACCESS_INTENTS and image_pred is None and p < config.AMBIGUOUS_TEXT and not state.pidio_foto:
             state.pidio_foto, state.intencion_pendiente = True, final
+            state.fallos = 0   # an understood turn breaks the streak of unrecognized messages
             return "PEDIR_FOTO", kb.message("ask_photo", lang), f"texto ambiguo ({p:.2f}) sobre un acceso: se pide una foto"
         reply = kb.reply_for(final, text, lang)
         if reply is None:

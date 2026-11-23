@@ -1,13 +1,13 @@
 /Users/jphf/haru-work/pf-app-venv/lib/python3.9/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
   warnings.warn(
-OK    GET /health (8 ms) -> {'estado': 'ok', 'modelos': {'intenciones': True, 'tono': False, 'vision': 'efficientnetb0'}, 'uptime_s': 22.3, 'version': '1.0.0'}
-OK    POST /chat (28 ms) -> tarifas
-OK    POST /image (148 ms) -> interior (0.999) con efficientnetb0
+OK    GET /health (6105 ms) -> {'estado': 'ok', 'modelos': {'intenciones': True, 'tono': False, 'vision': 'efficientnetb0'}, 'uptime_s': 4.4, 'version': '1.0.0'}
+OK    POST /chat (8 ms) -> tarifas
+OK    POST /image (122 ms) -> interior (0.999) con efficientnetb0
 OK    POST /agent texto (EN) (7 ms) -> RESPONDER (en)
-OK    POST /agent texto + foto (115 ms) -> ESCALAR, traza: ['Agente', 'Capa reactiva', 'Chatbot NLP', 'Clasificador visual', 'Capa deliberativa']
+OK    POST /agent texto + foto (112 ms) -> ESCALAR, traza: ['Agente', 'Capa reactiva', 'Chatbot NLP', 'Clasificador visual', 'Capa deliberativa']
 OK    POST /agent urgencia (2 ms) -> ESCALAR_URGENTE
 OK    Validacion: texto demasiado largo (2 ms) -> 400 texto_demasiado_largo
-OK    Validacion: foto corrupta (43 ms) -> 415 imagen_corrupta
-OK    GET /metrics (3 ms) -> {"peticiones_total": 9, "errores_5xx_total": 0}
+OK    Validacion: foto corrupta (40 ms) -> 415 imagen_corrupta
+OK    GET /metrics (3 ms) -> {"peticiones_total": 8, "errores_5xx_total": 0}
 
 9 de 9 comprobaciones correctas

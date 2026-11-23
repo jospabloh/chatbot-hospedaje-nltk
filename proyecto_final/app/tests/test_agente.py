@@ -119,6 +119,22 @@ def test_un_mensaje_entendido_reinicia_los_fallos(agent):
     assert second.action == "RESPONDER" and second.state.fallos == 0
 
 
+@pytest.mark.parametrize("text", ["is there a late check in", "tenemos llegada tarde"])
+def test_llegada_tarde_no_es_politica_de_la_anfitriona(agent, text):
+    # a late arrival is a normal question (arrival instructions); only early check-in and early/late check-out need the host
+    result = agent.run(text)
+    assert result.action == "RESPONDER" and result.final_intent == "llegada_tarde" and not result.notify_host
+
+
+def test_pedir_foto_reinicia_los_fallos_consecutivos(agent):
+    # unrecognized -> understood (asks for a photo) -> unrecognized are NOT two consecutive failures
+    first = agent.run("asdfgh")
+    second = agent.run("hace mucho calor y no enfria", None, first.state)
+    assert second.action == "PEDIR_FOTO" and second.state.fallos == 0
+    third = agent.run("asdfgh", None, second.state)
+    assert third.action == "ACLARAR" and third.state.fallos == 1 and not third.notify_host
+
+
 def test_tono_molesto_responde_y_avisa(agent):
     result = agent.run("el porton no abre y nadie contesta")
     assert result.action == "RESPONDER_Y_AVISAR" and result.notify_host

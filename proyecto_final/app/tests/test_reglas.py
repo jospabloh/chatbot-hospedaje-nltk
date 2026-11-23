@@ -86,7 +86,8 @@ def test_politica_de_la_anfitriona_check_out_y_check_in(text):
 
 
 @pytest.mark.parametrize("text", ["What time is check-out?", "¿A qué hora es la salida?", "we will arrive late tonight",
-                                  "vamos a llegar tarde", "what time is check in", "¿a qué hora es el check in?"])
+                                  "vamos a llegar tarde", "is there a late check in", "can we check in late tonight",
+                                  "tenemos llegada tarde, ¿hay check in tardío?", "what time is check in", "¿a qué hora es el check in?"])
 def test_horarios_normales_no_son_politica(text):
     hit = check_blocking(text)
     assert hit is None or hit.rule != "politica_anfitriona"

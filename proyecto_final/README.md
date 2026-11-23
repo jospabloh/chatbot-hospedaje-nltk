@@ -37,7 +37,7 @@ proyecto_final/
 El agente sigue el ciclo percibir, decidir, actuar.
 
 1. Percibir: normaliza el texto, detecta idioma, clasifica la intención (texto) y la foto (visión).
-2. Capa reactiva: reglas con prioridad fija que no dependen de los modelos. En orden: urgencia (fuego, humo, emergencia médica, remite al 911), datos sensibles (tarjeta o CVV), petición de hablar con una persona, política de la anfitriona (early check-in, late check-out) y fuera de alcance.
+2. Capa reactiva: reglas con prioridad fija que no dependen de los modelos. En orden: urgencia (fuego, humo, emergencia médica, remite al 911), datos sensibles (tarjeta o CVV), petición de hablar con una persona, política de la anfitriona (early check-in y early o late check-out; la llegada tarde la contesta el clasificador) y fuera de alcance.
 3. Capa deliberativa: combina texto, imagen y estado (idioma, turnos, fallos, si ya pidió foto, intención pendiente) y elige una acción: `RESPONDER`, `RESPONDER_Y_AVISAR`, `PEDIR_FOTO`, `ACLARAR`, `ESCALAR`, `ESCALAR_URGENTE`, `PROTEGER_DATOS`.
 4. Actuar: arma la respuesta bilingüe con los datos reales de la base de conocimiento del repo y devuelve la traza de decisiones.
 
@@ -135,7 +135,7 @@ Aclaración sobre los datos: solo se guarda la cabeza (100 KB), los pesos del ba
 
 ### Pruebas
 
-`pytest`: 188 pruebas pasan (reglas 66, agente 37, API 33, validación 22, interfaz 19, modelos reales 6, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
+`pytest`: 194 pruebas pasan (reglas 69, agente 40, API 33, validación 22, interfaz 19, modelos reales 6, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
 
 Las pruebas con modelos reales llevan la marca `modelos`; para omitirlas: `pytest -m "not modelos"`.
 
