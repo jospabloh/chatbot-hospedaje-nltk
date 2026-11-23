@@ -50,7 +50,9 @@ OUT_OF_SCOPE_PATTERNS = [
 ]
 # Business policy: early / late check-out and early check-in are decided by the host, never by the bot
 HOST_POLICY_PATTERNS = [
-    r"\b(late|early) (check ?out|check ?in)\b", r"\bcheck ?(out|in) (\w+ ){0,2}(later|earlier|early)\b",
+    # only early check-in and early/late check-out; "late check in" is a late arrival and goes to the classifier (llegada_tarde)
+    r"\b(late|early) check ?out\b", r"\bearly check ?in\b",
+    r"\bcheck ?out (\w+ ){0,2}(later|earlier|early)\b", r"\bcheck ?in (\w+ ){0,2}(earlier|early)\b",
     r"\b(salida|salir|salgo|salimos|checkout|check out) (\w+ ){0,2}(mas tarde|mas temprano|tardia|temprano)\b",
     r"\b(quedar(nos|me)?|quedarnos) (\w+ ){0,2}mas tarde\b",
     r"\b(entrar|llegar|check ?in) (\w+ ){0,2}(antes de las|mas temprano)\b",
