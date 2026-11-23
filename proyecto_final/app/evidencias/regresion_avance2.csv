@@ -1,0 +1,30 @@
+fuente,texto,foto,accion_avance2,intencion_avance2,accion_final,intencion_final,decidido_por,misma_familia,cambio_documentado
+integracion.csv,no me abre,cerradura,RESPONDER,cerradura,RESPONDER,cerradura,texto e imagen coinciden,si,
+integracion.csv,no me abre,porton,RESPONDER,porton_estacionamiento,RESPONDER,porton_estacionamiento,imagen,si,
+integracion.csv,ya estoy aqui y no puedo pasar,caseta,RESPONDER,acceso_fraccionamiento,RESPONDER,acceso_fraccionamiento,imagen,si,
+integracion.csv,hace mucho calor y no enfria,controles,RESPONDER,reportar_problema,ESCALAR,reportar_problema,texto e imagen coinciden,no,reportes de fallas: la base de conocimiento real no tiene guia para el aire; antes se respondia con un texto inventado
+integracion.csv,mira como esta esto,interior,ESCALAR,reportar_problema,ESCALAR,reportar_problema,imagen,si,
+integracion.csv,me puedo quedar mas tarde el domingo,,ESCALAR,early_late_checkout,ESCALAR,early_late_checkout,regla: politica de la anfitriona,si,
+integracion.csv,a que hora es el check in,,RESPONDER,horarios,RESPONDER,horarios,texto,si,
+integracion.csv,recomiendan algun restaurante por aca,,RESPONDER,servicios,ESCALAR,fuera_de_alcance,regla: fuera de alcance,no,regla reactiva de fuera de alcance: antes se respondia con la lista de servicios
+integracion_bilingue.csv,no me abre,cerradura,RESPONDER,cerradura,RESPONDER,cerradura,texto e imagen coinciden,si,
+integracion_bilingue.csv,the door wont open,cerradura,RESPONDER,cerradura,RESPONDER,cerradura,texto e imagen coinciden,si,
+integracion_bilingue.csv,a que hora es el check in,,RESPONDER,horarios,RESPONDER,horarios,texto,si,
+integracion_bilingue.csv,what time is check in,,RESPONDER,horarios,RESPONDER,horarios,texto,si,
+integracion_bilingue.csv,"can we check out later, our flight is at night",,RESPONDER,llegada_tarde,ESCALAR,early_late_checkout,regla: politica de la anfitriona,no,regla de politica: el late check-out lo decide la anfitriona (antes se contestaba con la info de check-in)
+integracion_bilingue.csv,the ac is not cooling,controles,RESPONDER,reportar_problema,ESCALAR,reportar_problema,texto e imagen coinciden,no,"igual que el caso anterior, en ingles"
+integracion_bilingue.csv,"we will arrive around midnight, is that ok",,RESPONDER,llegada_tarde,RESPONDER,llegada_tarde,texto,si,
+integracion_fuera_de_dominio.csv,puedo llevar a mi perro,perro_0.jpg,RESPONDER,reglas,RESPONDER,reglas,texto,si,
+integracion_fuera_de_dominio.csv,mira esto,perro_0.jpg,ESCALAR,reportar_problema,ESCALAR,saludo_cortesia,texto,si,
+integracion_fuera_de_dominio.csv,mira esto,perro_1.jpg,RESPONDER,acceso_fraccionamiento,ESCALAR,saludo_cortesia,texto,no,la clase 'otro' rechaza la foto de un perro que el modelo de 5 clases aceptaba como caseta (0.86)
+integracion_mejorada.csv,a que hora es el check in,,RESPONDER,horarios,RESPONDER,horarios,texto,si,
+integracion_mejorada.csv,what time is check in,,RESPONDER,horarios,RESPONDER,horarios,texto,si,
+integracion_mejorada.csv,"can we check out later, our flight is at night",,ESCALAR,early_late_checkout,ESCALAR,early_late_checkout,regla: politica de la anfitriona,si,
+integracion_mejorada.csv,"we will arrive around midnight, is that ok",,RESPONDER,llegada_tarde,RESPONDER,llegada_tarde,texto,si,
+integracion_mejorada.csv,recomiendan algun restaurante por aca,,RESPONDER,servicios,ESCALAR,fuera_de_alcance,regla: fuera de alcance,no,regla reactiva de fuera de alcance
+integracion_mejorada.csv,no me abre,porton,RESPONDER Y AVISAR,porton_estacionamiento,RESPONDER,porton_estacionamiento,imagen,si,
+integracion_mejorada.csv,llevo veinte minutos esperando y la cerradura sigue sin abrir,,RESPONDER Y AVISAR,cerradura,RESPONDER_Y_AVISAR,cerradura,texto y tono,si,
+integracion_mejorada.csv,"ya pudimos entrar, muchas gracias por la ayuda",,RESPONDER,saludo_cortesia,RESPONDER,saludo_cortesia,texto,si,
+integracion_mejorada.csv,"es el colmo, el porton no abre y nadie contesta",,RESPONDER Y AVISAR,porton_estacionamiento,RESPONDER_Y_AVISAR,porton_estacionamiento,texto y tono,si,
+integracion_mejorada.csv,we have been waiting outside for an hour and nobody answers,,ESCALAR,llegada_tarde,ESCALAR,horarios,texto y tono,si,
+integracion_mejorada.csv,"thank you so much, the place is lovely",,RESPONDER,saludo_cortesia,RESPONDER,saludo_cortesia,texto,si,
