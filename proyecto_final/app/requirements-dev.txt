@@ -1,0 +1,5 @@
+# Todo lo necesario para entrenar, correr las pruebas y la interfaz en una sola computadora
+-r requirements.txt
+-r ui/requirements.txt
+pytest==8.4.2
+matplotlib==3.9.4
