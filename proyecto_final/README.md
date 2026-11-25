@@ -151,9 +151,9 @@ Se reproducen los casos de integración del Avance 2 (`app/evidencias/regresion_
 
 Como la cabeza de visión final se entrena con todas las imágenes, estas pruebas validan la política del agente, no la generalización del modelo. La generalización se mide con la partición Wikimedia y la validación dejando una toma fuera.
 
-## Despliegue (no ejecutado)
+## Despliegue (parcial)
 
-Plan: la UI en Streamlit Community Cloud y la API Flask en la Mac de JP expuesta con Cloudflare Tunnel. El despliegue no se ha hecho; requiere pasos de JP.
+Plan: la UI en Streamlit Community Cloud y la API Flask en una computadora local expuesta con Cloudflare Tunnel. Estado: la API se publicó el 23-nov con gunicorn y un túnel rápido, y la prueba de humo por la URL pública pasó 9 de 9; el túnel rápido se detuvo el 24-nov y su URL cambia en cada arranque. Falta la UI en Streamlit Community Cloud y un túnel con nombre para tener una URL estable.
 
 1. API en la Mac:
    ```bash
@@ -193,11 +193,11 @@ Limitación: si la Mac o el túnel están apagados, la UI muestra el aviso de se
 
 | # | Producto | Estado | Evidencia o pendiente |
 |---|---|---|---|
-| 1 | PDF técnico de 15 a 20 páginas | Pendiente | Redactar; el material sale de este README y de `docs/` |
-| 2 | Repositorio en GitHub | Listo | Este repo, rama `proyecto-final-app` (PR en borrador) |
+| 1 | PDF técnico de 15 a 20 páginas | Esqueleto | `documento/esqueleto_documento_tecnico.md` (secciones, extensión y fuentes); falta redactar |
+| 2 | Repositorio en GitHub | Listo | Este repo, rama `proyecto-final` |
 | 3 | Video demo de 5 a 10 min | Pendiente | Grabar después del despliegue |
-| 4 | URL pública | Pendiente | Requiere el despliegue descrito arriba |
+| 4 | URL pública | Parcial | API publicada el 23-nov por túnel rápido; falta la UI en Streamlit Cloud y una URL estable |
 | 5 | Diagrama de arquitectura final | Listo | `app/docs/arquitectura_final.png`, `app/docs/flujo_coordinacion.md` |
 | 6 | Evidencia de pruebas y despliegue | Parcial | Pruebas listas en `app/evidencias/`; falta evidencia del despliegue |
-| 7 | Métricas de clasificación y chatbot | Listo | Secciones Resultados y `app/artefactos/*.json` |
+| 7 | Métricas de clasificación y chatbot | Listo | Secciones Resultados, `app/artefactos/*.json` y `app/evidencias/metricas_evaluacion_texto.json` (matriz de confusión, AUC uno contra el resto, precisión promedio) |
 | 8 | Plan de mejoras futuras | Parcial | Ver Limitaciones; falta redactarlo como plan en el PDF |
