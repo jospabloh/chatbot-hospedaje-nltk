@@ -1,0 +1,279 @@
+{
+ "umbral_imagen": 0.6,
+ "imagenes_wikimedia": 265,
+ "reparto_real": {
+  "pagina": {
+   "otro": 23,
+   "interior": 10
+  },
+  "recorte": {
+   "interior": 25,
+   "otro": 15,
+   "porton": 3,
+   "cerradura": 1
+  }
+ },
+ "tomas": [
+  "alrededores",
+  "amenidades",
+  "arbol",
+  "bienvenida",
+  "colibri",
+  "comunes",
+  "exterior",
+  "instrucciones",
+  "marca",
+  "morfo",
+  "reglas",
+  "servicios",
+  "tortuga",
+  "tucan"
+ ],
+ "pagina_base": {
+  "n": 33,
+  "accuracy": 0.697,
+  "f1_macro": 0.301,
+  "clases_en_f1": [
+   "porton",
+   "caseta",
+   "controles",
+   "interior",
+   "otro"
+  ],
+  "matriz": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    3,
+    5,
+    2
+   ],
+   [
+    0,
+    1,
+    1,
+    3,
+    0,
+    18
+   ]
+  ]
+ },
+ "pagina_cabeza": {
+  "n": 33,
+  "accuracy": 0.818,
+  "f1_macro": 0.516,
+  "clases_en_f1": [
+   "controles",
+   "interior",
+   "otro"
+  ],
+  "matriz": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    5,
+    5
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    0,
+    22
+   ]
+  ]
+ },
+ "recorte_base": {
+  "n": 44,
+  "accuracy": 0.545,
+  "f1_macro": 0.24,
+  "clases_en_f1": [
+   "cerradura",
+   "porton",
+   "caseta",
+   "controles",
+   "interior",
+   "otro"
+  ],
+  "matriz": [
+   [
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    2,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0,
+    1,
+    20,
+    3
+   ],
+   [
+    2,
+    3,
+    2,
+    0,
+    5,
+    3
+   ]
+  ]
+ },
+ "recorte_cabeza": {
+  "n": 44,
+  "accuracy": 0.75,
+  "f1_macro": 0.315,
+  "clases_en_f1": [
+   "cerradura",
+   "porton",
+   "caseta",
+   "interior",
+   "otro"
+  ],
+  "matriz": [
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    2
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    25,
+    0
+   ],
+   [
+    2,
+    2,
+    1,
+    0,
+    2,
+    8
+   ]
+  ]
+ }
+}

@@ -1,0 +1,316 @@
+{
+ "despliegue": "efficientnetb0",
+ "referencia": "resnet50",
+ "clases": [
+  "cerradura",
+  "porton",
+  "caseta",
+  "controles",
+  "interior",
+  "otro"
+ ],
+ "umbral": 0.6,
+ "tamano_entrada": 160,
+ "criterio": "el mas ligero en memoria con accuracy a menos de 0.02 de ResNet50",
+ "fotos_reales_usadas": 44,
+ "comparacion": {
+  "resnet50": {
+   "wikimedia": {
+    "n_prueba": 39,
+    "accuracy": 0.9744,
+    "f1_macro": 0.9749,
+    "por_clase": {
+     "caseta": 1.0,
+     "cerradura": 0.941,
+     "controles": 0.933,
+     "interior": 1.0,
+     "porton": 1.0
+    }
+   },
+   "fotos_reales": {
+    "n": 44,
+    "accuracy": 0.8182,
+    "f1_macro": 0.4109,
+    "recall_interior": 1.0,
+    "recall_otro": 0.667,
+    "matriz": {
+     "clases": [
+      "cerradura",
+      "porton",
+      "caseta",
+      "controles",
+      "interior",
+      "otro"
+     ],
+     "valores": [
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       1,
+       1,
+       0,
+       0,
+       1
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       25,
+       0
+      ],
+      [
+       1,
+       2,
+       1,
+       0,
+       1,
+       10
+      ]
+     ]
+    }
+   },
+   "clases_cabeza": [
+    "caseta",
+    "cerradura",
+    "controles",
+    "interior",
+    "otro",
+    "porton"
+   ],
+   "costo": {
+    "parametros": 23587712,
+    "peso_float32_mb": 94.4,
+    "latencia_ms_media": 112.7,
+    "latencia_ms_p95": 126.2,
+    "memoria_pico_mb": 560.0,
+    "memoria_inicial_mb": 93.0
+   }
+  },
+  "mobilenetv2": {
+   "wikimedia": {
+    "n_prueba": 39,
+    "accuracy": 0.8974,
+    "f1_macro": 0.8984,
+    "por_clase": {
+     "caseta": 1.0,
+     "cerradura": 0.778,
+     "controles": 0.714,
+     "interior": 1.0,
+     "porton": 1.0
+    }
+   },
+   "fotos_reales": {
+    "n": 44,
+    "accuracy": 0.7955,
+    "f1_macro": 0.4421,
+    "recall_interior": 0.96,
+    "recall_otro": 0.6,
+    "matriz": {
+     "clases": [
+      "cerradura",
+      "porton",
+      "caseta",
+      "controles",
+      "interior",
+      "otro"
+     ],
+     "valores": [
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       1,
+       0,
+       0,
+       0,
+       2
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       1,
+       24,
+       0
+      ],
+      [
+       1,
+       2,
+       2,
+       0,
+       1,
+       9
+      ]
+     ]
+    }
+   },
+   "clases_cabeza": [
+    "caseta",
+    "cerradura",
+    "controles",
+    "interior",
+    "otro",
+    "porton"
+   ],
+   "costo": {
+    "parametros": 2257984,
+    "peso_float32_mb": 9.0,
+    "latencia_ms_media": 51.1,
+    "latencia_ms_p95": 54.4,
+    "memoria_pico_mb": 517.0,
+    "memoria_inicial_mb": 90.0
+   }
+  },
+  "efficientnetb0": {
+   "wikimedia": {
+    "n_prueba": 39,
+    "accuracy": 0.9744,
+    "f1_macro": 0.9749,
+    "por_clase": {
+     "caseta": 1.0,
+     "cerradura": 0.941,
+     "controles": 0.933,
+     "interior": 1.0,
+     "porton": 1.0
+    }
+   },
+   "fotos_reales": {
+    "n": 44,
+    "accuracy": 0.8409,
+    "f1_macro": 0.5974,
+    "recall_interior": 0.96,
+    "recall_otro": 0.667,
+    "matriz": {
+     "clases": [
+      "cerradura",
+      "porton",
+      "caseta",
+      "controles",
+      "interior",
+      "otro"
+     ],
+     "valores": [
+      [
+       1,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       2,
+       1,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      [
+       0,
+       0,
+       0,
+       0,
+       24,
+       1
+      ],
+      [
+       1,
+       2,
+       2,
+       0,
+       0,
+       10
+      ]
+     ]
+    }
+   },
+   "clases_cabeza": [
+    "caseta",
+    "cerradura",
+    "controles",
+    "interior",
+    "otro",
+    "porton"
+   ],
+   "costo": {
+    "parametros": 4049571,
+    "peso_float32_mb": 16.2,
+    "latencia_ms_media": 128.1,
+    "latencia_ms_p95": 206.7,
+    "memoria_pico_mb": 378.0,
+    "memoria_inicial_mb": 86.0
+   }
+  }
+ },
+ "referencia_avance2": {
+  "avance2_resnet50_afinada": {
+   "accuracy_wikimedia": 0.9487,
+   "f1_macro_wikimedia": 0.9474,
+   "accuracy_recortes_reales": 0.545
+  }
+ }
+}

@@ -1,0 +1,351 @@
+texto|intencion
+hi there|saludo_cortesia
+hello good afternoon|saludo_cortesia
+hey, good morning|saludo_cortesia
+good evening|saludo_cortesia
+thanks a lot|saludo_cortesia
+thank you so much|saludo_cortesia
+ok perfect thanks|saludo_cortesia
+great, thank you|saludo_cortesia
+bye, have a nice day|saludo_cortesia
+see you later|saludo_cortesia
+hi, hope you are doing well|saludo_cortesia
+thx!|saludo_cortesia
+awesome, thanks for the help|saludo_cortesia
+goodbye and thanks again|saludo_cortesia
+hello, quick question|saludo_cortesia
+good night, thank you|saludo_cortesia
+hi! how are you|saludo_cortesia
+cheers, thanks|saludo_cortesia
+got it, thank u|saludo_cortesia
+hellooo|saludo_cortesia
+thanks, talk soon|saludo_cortesia
+ok great|saludo_cortesia
+many thanks|saludo_cortesia
+hi, thanks for the quick reply|saludo_cortesia
+have a good one, bye|saludo_cortesia
+how much is the night|tarifas
+what is the price per night|tarifas
+how much does it cost for two nights|tarifas
+whats the rate for the weekend|tarifas
+price for 4 people please|tarifas
+is there a cleaning fee|tarifas
+how much for an extra guest|tarifas
+do you have a weekly discount|tarifas
+what are your rates|tarifas
+cost per night on weekdays|tarifas
+how much would 3 nights be|tarifas
+is the price in dollars or colones|tarifas
+any discount for longer stays|tarifas
+total price for the family apartment|tarifas
+how much is it for one person|tarifas
+what do you charge per nite|tarifas
+is breakfast included in the price|tarifas
+rate for friday and saturday|tarifas
+can you send me the prices|tarifas
+whats the cheapest room and how much|tarifas
+price for a couple, 2 nights|tarifas
+do kids pay the full rate|tarifas
+how much is the deposit|tarifas
+are taxes included in the rate|tarifas
+quote for 5 nights please|tarifas
+is it available on december 14|disponibilidad
+do you have availability this weekend|disponibilidad
+any rooms free for tonight|disponibilidad
+is the apartment free next friday|disponibilidad
+can i book from the 3rd to the 6th|disponibilidad
+do you have space for new years|disponibilidad
+are you fully booked in january|disponibilidad
+is there anything available tomorrow|disponibilidad
+availability for 2 nights next week|disponibilidad
+can we still reserve for saturday|disponibilidad
+is the triple room free on the 20th|disponibilidad
+do you have a room for 6 people this month|disponibilidad
+any availabilty for easter week|disponibilidad
+is it booked on november 28|disponibilidad
+we want to come in february, is it open|disponibilidad
+can i reserve for tonight last minute|disponibilidad
+free dates in march please|disponibilidad
+is the place available for a week in july|disponibilidad
+do you have 2 rooms for the same dates|disponibilidad
+checking if the 15th is taken|disponibilidad
+could we extend our booking two more nights|disponibilidad
+is there a vacancy on sunday|disponibilidad
+when is the next free date|disponibilidad
+are the dates dec 24 to 26 open|disponibilidad
+i need a room for monday, do you have one|disponibilidad
+where are you located|ubicacion
+can you send me the location|ubicacion
+what is the address|ubicacion
+please share the google maps pin|ubicacion
+how far is it from the airport|ubicacion
+how do i get there from the airport|ubicacion
+is it close to downtown|ubicacion
+what neighborhood is the place in|ubicacion
+send me the address for the uber|ubicacion
+the taxi driver cant find the place|ubicacion
+waze takes me somewhere else|ubicacion
+how many minutes from sjo airport|ubicacion
+is there a supermarket nearby|ubicacion
+directions please|ubicacion
+which city is this in|ubicacion
+could you drop a pin|ubicacion
+how do we find the house|ubicacion
+what street is it on|ubicacion
+are you near the mall|ubicacion
+the map link is not opening|ubicacion
+im lost, where exactly is it|ubicacion
+is the area safe to walk|ubicacion
+distance to the city center|ubicacion
+can i walk there from the bus stop|ubicacion
+exact adress please|ubicacion
+what time is check in|horarios
+what time is check out|horarios
+when can we check in|horarios
+what time do we have to leave|horarios
+check in and check out times please|horarios
+from what time is the room ready|horarios
+by what time should we be out on sunday|horarios
+is check in at 3 pm|horarios
+what are the checkin hours|horarios
+when is checkout|horarios
+what time does the reception open|horarios
+until what time can we stay on the last day|horarios
+remind me the check in time|horarios
+is checkout at 11|horarios
+at what hour can we enter|horarios
+what time is the room available|horarios
+do we need to tell someone when we leave|horarios
+whats the latest we can check out normally|horarios
+time of arrival allowed|horarios
+schedule for check in please|horarios
+what time is chek in|horarios
+is there a fixed time to enter|horarios
+when do we get the room|horarios
+check out time on monday|horarios
+hours for arriving and leaving|horarios
+we will arrive around 11 pm|llegada_tarde
+our flight lands at midnight|llegada_tarde
+is it ok if we get there very late|llegada_tarde
+we are running late, arriving after 10|llegada_tarde
+can we check in at 1 am|llegada_tarde
+flight delayed, we will be there late at night|llegada_tarde
+is late arrival a problem|llegada_tarde
+will someone be there if we arrive at 2 am|llegada_tarde
+we land late, how do we get in|llegada_tarde
+arriving past midnight, is that fine|llegada_tarde
+stuck in traffic, will be 3 hours late|llegada_tarde
+can we arrive at any time of the night|llegada_tarde
+we get in really late tonight|llegada_tarde
+is there a late check in|llegada_tarde
+our bus arrives at 11:30 pm|llegada_tarde
+we wont make it before midnight|llegada_tarde
+do we need to let you know if we come late|llegada_tarde
+arrival will be around 12:30 am|llegada_tarde
+its going to be a late night arrival|llegada_tarde
+plane is delayed so late arrival|llegada_tarde
+can i still get in after hours|llegada_tarde
+we come from the airport at dawn|llegada_tarde
+what happens if i arrive late|llegada_tarde
+late arival ok?|llegada_tarde
+we will be there after 11 tonite|llegada_tarde
+what do i tell the guard at the gate|acceso_fraccionamiento
+im at the security booth|acceso_fraccionamiento
+the guard wont let me in|acceso_fraccionamiento
+how do we enter the gated community|acceso_fraccionamiento
+is there a guard house at the entrance|acceso_fraccionamiento
+do i need to show id at the entrance|acceso_fraccionamiento
+we are at the main gate of the community|acceso_fraccionamiento
+security is asking for the house number|acceso_fraccionamiento
+what name is the reservation under at the gate|acceso_fraccionamiento
+how do i get past security|acceso_fraccionamiento
+the booth guard needs an authorization|acceso_fraccionamiento
+which entrance of the residential should we use|acceso_fraccionamiento
+they stopped us at the community entrance|acceso_fraccionamiento
+is the neighborhood gated|acceso_fraccionamiento
+do visitors need to register with security|acceso_fraccionamiento
+the barrier at the entrance is down|acceso_fraccionamiento
+guard says he has no record of us|acceso_fraccionamiento
+what lot number do i give the guard|acceso_fraccionamiento
+entering the condo complex, what do i say|acceso_fraccionamiento
+can the uber driver go through the gate|acceso_fraccionamiento
+at the checkpoint now|acceso_fraccionamiento
+security booth is closed, how do we enter|acceso_fraccionamiento
+do you need my plate number for the guard|acceso_fraccionamiento
+im outside the community, guard wants a code|acceso_fraccionamiento
+stuck at the gatehouse|acceso_fraccionamiento
+what is the door code|cerradura
+the code is not working|cerradura
+i cant open the door|cerradura
+how does the lock work|cerradura
+the keypad is blinking red|cerradura
+i didnt get the access code|cerradura
+door wont open with the code|cerradura
+can you resend the door code|cerradura
+the lock is beeping|cerradura
+do i press something after the code|cerradura
+is there a key or just a code|cerradura
+the smart lock is not responding|cerradura
+how many digits is the code|cerradura
+when do you send the code|cerradura
+locked out of the room|cerradura
+the door lock battery seems dead|cerradura
+code says invalid|cerradura
+i typed the code and nothing happens|cerradura
+does the code change every day|cerradura
+how do i lock the door when i leave|cerradura
+cant get in, keypad doesnt work|cerradura
+is the code the same for my wife|cerradura
+whats the pin for the door|cerradura
+door code please|cerradura
+the lock got jammed|cerradura
+is there parking|porton_estacionamiento
+where do i park the car|porton_estacionamiento
+how do i open the garage gate|porton_estacionamiento
+the parking gate wont open|porton_estacionamiento
+is parking included|porton_estacionamiento
+does a pickup truck fit in the parking|porton_estacionamiento
+where is the remote for the gate|porton_estacionamiento
+can i park two cars|porton_estacionamiento
+is the parking covered|porton_estacionamiento
+the gate remote is not working|porton_estacionamiento
+how do i get the car out|porton_estacionamiento
+is street parking allowed|porton_estacionamiento
+is the parking lot safe|porton_estacionamiento
+the driveway gate is stuck|porton_estacionamiento
+do you charge for parking|porton_estacionamiento
+where is the garage entrance|porton_estacionamiento
+is there space for a motorcycle|porton_estacionamiento
+gate does not close|porton_estacionamiento
+parking for a van, is there a height limit|porton_estacionamiento
+which parking spot is ours|porton_estacionamiento
+how do we open the electric gate|porton_estacionamiento
+car park is full, where do i leave it|porton_estacionamiento
+can i leave the car all week|porton_estacionamiento
+the parking gate opens with a code too?|porton_estacionamiento
+need help with the garage door|porton_estacionamiento
+do you have wifi|servicios
+what is the wifi password|servicios
+is there air conditioning|servicios
+does the kitchen have a microwave|servicios
+is there a washing machine|servicios
+do you have a pool|servicios
+are towels included|servicios
+is there hot water|servicios
+does it have a tv with netflix|servicios
+do you offer airport shuttle|servicios
+is there a coffee maker|servicios
+do you provide breakfast|servicios
+is there a hair dryer|servicios
+can we use the bbq|servicios
+do you have a crib for a baby|servicios
+is the kitchen fully equipped|servicios
+do you rent bikes|servicios
+wifi name and password please|servicios
+is there laundry service|servicios
+do rooms have a fridge|servicios
+is there an iron|servicios
+is drinking water provided|servicios
+what amenities do you have|servicios
+does the apartment have a desk to work|servicios
+is there a terrace or garden|servicios
+are pets allowed|reglas
+can i bring my dog|reglas
+is smoking allowed|reglas
+can we have a small party|reglas
+are visitors allowed|reglas
+what are the house rules|reglas
+is there a noise curfew|reglas
+can we play music at night|reglas
+maximum number of guests|reglas
+can i smoke on the terrace|reglas
+do you accept children|reglas
+is alcohol allowed|reglas
+can my friend visit for a few hours|reglas
+quiet hours?|reglas
+are cats ok|reglas
+can we cook late at night|reglas
+is vaping inside allowed|reglas
+any rules we should know|reglas
+can we bring one more person|reglas
+are events allowed in the apartment|reglas
+minimum age to book|reglas
+can i have guests over|reglas
+is it ok to bring a small pet|reglas
+no smoking everywhere or only inside|reglas
+what is not allowed in the house|reglas
+can we check in early|early_late_checkout
+is early check in possible|early_late_checkout
+can we get a late checkout|early_late_checkout
+can we stay until 6 pm on sunday|early_late_checkout
+we arrive at 9 am, can we enter before 3|early_late_checkout
+how much is a late check out|early_late_checkout
+my flight is at night, can i leave later|early_late_checkout
+could we drop our bags before check in|early_late_checkout
+can we extend the checkout a few hours|early_late_checkout
+is there a fee for early check in|early_late_checkout
+possible to check out at 2 pm instead of 11|early_late_checkout
+we would like to enter earlier than the check in time|early_late_checkout
+can i keep the room until the evening|early_late_checkout
+late checkout available for tomorrow?|early_late_checkout
+any chance to get in at noon|early_late_checkout
+need to leave later than checkout time|early_late_checkout
+can we leave our luggage after check out|early_late_checkout
+early arrival, can the room be ready sooner|early_late_checkout
+how flexible is the checkout time|early_late_checkout
+could we have two extra hours on the last day|early_late_checkout
+is half day charge for late check out|early_late_checkout
+want to check in before the official time|early_late_checkout
+can i checkout later, flight leaves at 9 pm|early_late_checkout
+request early chekin|early_late_checkout
+we land at 7 am, can we go straight to the room|early_late_checkout
+the ac is not cooling|reportar_problema
+there is no hot water|reportar_problema
+the power went out|reportar_problema
+the shower is leaking|reportar_problema
+wifi is not working|reportar_problema
+the tv wont turn on|reportar_problema
+the toilet is clogged|reportar_problema
+a light bulb is burned out|reportar_problema
+the fridge is not cold|reportar_problema
+the stove doesnt work|reportar_problema
+we broke a glass, sorry|reportar_problema
+the bedroom door wont close|reportar_problema
+there is a leak in the kitchen|reportar_problema
+air conditioner blows warm air|reportar_problema
+there are no towels in the room|reportar_problema
+the water heater is not turning on|reportar_problema
+there is a strange noise in the room|reportar_problema
+internet keeps dropping|reportar_problema
+the coffee maker is broken|reportar_problema
+something is not working here|reportar_problema
+the remote for the ac has no batteries|reportar_problema
+its very hot and the air doesnt work|reportar_problema
+the sink is blocked|reportar_problema
+there are ants in the kitchen|reportar_problema
+the window doesnt close properly|reportar_problema
+i want to talk to the host|contactar_anfitrion
+can i speak with a person|contactar_anfitrion
+please call me|contactar_anfitrion
+i need to talk to someone|contactar_anfitrion
+can the owner contact me|contactar_anfitrion
+is there a phone number i can call|contactar_anfitrion
+connect me with the host please|contactar_anfitrion
+i prefer to speak to a human|contactar_anfitrion
+talk to lore|contactar_anfitrion
+can someone from the staff help me|contactar_anfitrion
+i need the host urgently|contactar_anfitrion
+who can i call in an emergency|contactar_anfitrion
+let me speak with the manager|contactar_anfitrion
+real person please|contactar_anfitrion
+could the host message me|contactar_anfitrion
+whats the hosts whatsapp|contactar_anfitrion
+i want to talk with the owner directly|contactar_anfitrion
+is anyone there|contactar_anfitrion
+need help from a human|contactar_anfitrion
+can you get the host for me|contactar_anfitrion
+pass me to the person in charge|contactar_anfitrion
+how do i reach the host|contactar_anfitrion
+i need to speak to somebody now|contactar_anfitrion
+contact number for the property|contactar_anfitrion
+put me through to the host|contactar_anfitrion

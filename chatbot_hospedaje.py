@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Rule-based bilingual (Spanish/English) chatbot for a vacation rental host ("Casa Almendro").
-Project milestone 1 - Desarrollo de aplicaciones con inteligencia artificial (Tecmilenio)
+Rule-based bilingual (Spanish/English) chatbot for Cas'aguacate, a boutique aparthotel in
+La Asunción, Belén, Heredia, Costa Rica (host: Lore).
+Desarrollo de aplicaciones con inteligencia artificial (Tecmilenio) - Avance 1, updated for the final project.
 Author: José Pablo Herrera (07317961)
 
-IMPORTANT: all knowledge base data is SAMPLE / FICTITIOUS data.
-It does not belong to any real rental, client or person.
+Business data (hours, rules, services, payment methods, reservations e-mail) come from the guest
+information that Cas'aguacate shared, used with the hosts' permission. No guest data is stored.
+Account numbers, Wi-Fi passwords and access codes are never written here: each guest gets them
+in the welcome message. Booked nights below are SAMPLE dates to demo the availability check.
 Requirements: Python 3.10+ and NLTK (pip install nltk). No corpus downloads needed.
 """
 import re
@@ -18,26 +21,19 @@ from nltk.stem import PorterStemmer, SnowballStemmer
 from nltk.chat.util import Chat, reflections
 
 # ----------------------------------------------------------------------------
-# 1. Knowledge base (SAMPLE / FICTITIOUS DATA)
+# 1. Knowledge base (Cas'aguacate)
 # ----------------------------------------------------------------------------
 KNOWLEDGE_BASE = {
-    "name": "Casa Almendro",
-    "host": "Marina",
-    "host_phone": "+52 000 000 0000",  # fictitious
-    "rates": {
-        "weekday": 1200,      # MXN per night, Sunday to Thursday
-        "weekend": 1500,      # MXN per night, Friday and Saturday
-        "extra_guest": 200,   # MXN per night, from the 5th guest on
-        "cleaning": 350,      # MXN per stay
-        "capacity": 6,
-        "min_nights": 2,
-    },
-    # Sample booked nights (year 2026)
+    "name": "Cas'aguacate",
+    "host": "Lore",
+    "reservations_email": "reservations.casaguacate@gmail.com",
+    "units": "Apartamento Morfo y suites Tucán, Tortuga y Colibrí",
+    "units_en": "the Morfo apartment and the Tucán, Tortuga and Colibrí suites",
+    # SAMPLE booked nights (year 2026), only to demo the availability check
     "booked_dates": [date(2026, 10, 24), date(2026, 10, 25), date(2026, 10, 31),
                      date(2026, 11, 1), date(2026, 11, 2), date(2026, 11, 14),
                      date(2026, 11, 15), date(2026, 12, 24), date(2026, 12, 25)],
-    "map_pin": "https://maps.example.com/casa-almendro",
-    "wifi": ("CasaAlmendro_Ejemplo", "ejemplo2026"),
+    "maps_name": "CasAguacate Hotel Boutique",
     "checkin_time": "15:00",
     "checkout_time": "11:00",
 }
@@ -106,7 +102,7 @@ def detect_language(text: str, default: str = "es") -> str:
 # 4. Intent rules (keywords in both languages). Priority: list order on ties.
 # ----------------------------------------------------------------------------
 INTENTS = [
-    ("contact_host", {"anfitrion", "anfitriona", "marina", "humano", "persona", "hablar", "dueña", "dueño", "agente", "llamar", "queja", "urgente", "emergencia",
+    ("contact_host", {"anfitrion", "anfitriona", "lore", "humano", "persona", "hablar", "dueña", "dueño", "agente", "llamar", "queja", "urgente", "emergencia",
                       "host", "human", "person", "owner", "agent", "call", "speak", "talk", "complaint", "urgent", "emergency"}),
     ("parking_gate", {"porton", "estacionamiento", "estacionar", "cochera", "auto", "carro", "coche", "control",
                       "gate", "parking", "park", "garage", "car", "remote"}),
@@ -119,14 +115,16 @@ INTENTS = [
                          "arrival", "arrive", "arriving", "instructions"}),
     ("availability", {"disponible", "disponibilidad", "libre", "fechas", "fecha", "ocupado", "reservar", "reserva", "apartar",
                       "available", "availability", "free", "dates", "date", "booked", "book", "booking", "reserve", "reservation", "vacancy"}),
-    ("rates", {"precio", "precios", "tarifa", "tarifas", "costo", "cuesta", "cobran", "noche", "pagar", "cuanto",
-               "price", "prices", "rate", "rates", "cost", "costs", "charge", "night", "pay", "much"}),
+    ("payment", {"pago", "pagos", "pagar", "sinpe", "transferencia", "tarjeta", "factura", "facturar", "tiquete",
+                 "comprobante", "payment", "payments", "pay", "card", "transfer", "invoice", "receipt"}),
+    ("rates", {"precio", "precios", "tarifa", "tarifas", "costo", "cuesta", "cobran", "noche", "cuanto",
+               "price", "prices", "rate", "rates", "cost", "costs", "charge", "night", "much"}),
     ("location", {"ubicacion", "donde", "direccion", "mapa", "ubicados", "llego", "como", "centro",
                   "location", "where", "address", "map", "located", "downtown", "directions"}),
-    ("amenities", {"wifi", "internet", "alberca", "cocina", "servicios", "incluye", "aire", "asador",
-                   "pool", "kitchen", "amenities", "include", "includes", "ac", "grill", "bbq", "password"}),
-    ("house_rules", {"mascota", "mascotas", "perro", "fumar", "fiesta", "reglas", "ruido",
-                     "pet", "pets", "dog", "smoke", "smoking", "party", "rules", "noise"}),
+    ("amenities", {"wifi", "internet", "alberca", "piscina", "cocina", "servicios", "incluye", "aire", "asador",
+                   "pool", "swimming", "kitchen", "amenities", "include", "includes", "ac", "grill", "bbq", "password"}),
+    ("house_rules", {"mascota", "mascotas", "perro", "gato", "fumar", "vapear", "fiesta", "reglas", "ruido", "visitas",
+                     "pet", "pets", "dog", "cat", "smoke", "smoking", "vape", "party", "rules", "noise", "visitors"}),
     ("thanks", {"gracias", "agradezco", "excelente", "perfecto", "thanks", "thank", "great", "perfect", "awesome"}),
     ("goodbye", {"adios", "bye", "hasta", "nos", "vemos", "salu2", "goodbye", "later", "see"}),
     ("greeting", {"hola", "buenas", "buenos", "dias", "tardes", "noches", "hey", "saludos",
@@ -145,15 +143,15 @@ AVAILABILITY_HINTS = {"disponible", "libre", "hay", "fechas", "reservar", "avail
 CHAT_PAIRS = {
     "es": [
         (r"(.*)(quien eres|que eres|eres un bot|eres robot)(.*)",
-         ["Soy el asistente virtual de Casa Almendro (bot de ejemplo). Respondo dudas sobre tarifas, "
-          "disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Marina'."]),
+         ["Soy el asistente virtual de Cas'aguacate. Respondo dudas sobre tarifas, pagos, "
+          "disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Lore'."]),
         (r"(.*)\b(ok|va|sale|de acuerdo|entendido)\b(.*)",
          ["¡Perfecto! ¿Te ayudo con algo más? (tarifas, disponibilidad, ubicación, check-in)"]),
     ],
     "en": [
         (r"(.*)(who are you|what are you|are you a bot|are you a robot)(.*)",
-         ["I'm the virtual assistant for Casa Almendro (sample bot). I can help with rates, availability, "
-          "location and check-in. If you prefer, type 'talk to Marina'."]),
+         ["I'm Cas'aguacate's virtual assistant. I can help with rates, payments, availability, "
+          "location and check-in. If you prefer, type 'talk to Lore'."]),
         (r"(.*)\b(ok|okay|sure|got it|understood|alright)\b(.*)",
          ["Great! Anything else I can help with? (rates, availability, location, check-in)"]),
     ],
@@ -212,82 +210,107 @@ def identify_intent(text: str) -> tuple[str, int]:
 
 def availability_reply(text: str, lang: str) -> str:
     d = extract_date(text)
-    min_nights = KNOWLEDGE_BASE["rates"]["min_nights"]
+    host = KNOWLEDGE_BASE["host"]
     if d is None:
         if lang == "en":
-            return f"Which date are you interested in? Write it like 'November 14'. Minimum stay: {min_nights} nights."
-        return f"¿Para qué fecha te interesa? Escríbela así: '14 de noviembre'. Estancia mínima: {min_nights} noches."
+            return "Which date are you interested in? Write it like 'November 14'."
+        return "¿Para qué fecha te interesa? Escríbela así: '14 de noviembre'."
     if d in KNOWLEDGE_BASE["booked_dates"]:
         if lang == "en":
             return (f"Sorry, the night of {d.strftime('%m/%d/%Y')} is already booked. "
-                    "Would you like to check another date or have Marina suggest options?")
+                    f"Would you like to check another date or have {host} suggest options?")
         return (f"Lo siento, la noche del {d.strftime('%d/%m/%Y')} ya está ocupada. "
-                "¿Quieres revisar otra fecha o que Marina te proponga opciones?")
+                f"¿Quieres revisar otra fecha o que {host} te proponga opciones?")
     if lang == "en":
         return (f"Yes! The night of {d.strftime('%m/%d/%Y')} is available (subject to the host's "
-                "confirmation). To book it, type 'talk to Marina'.")
+                f"confirmation). To book it, type 'talk to {host}'.")
     return (f"¡Sí! La noche del {d.strftime('%d/%m/%Y')} está disponible (sujeto a confirmación "
-            "de la anfitriona). Para apartar, escribe 'hablar con Marina'.")
+            f"de la anfitriona). Para apartar, escribe 'hablar con {host}'.")
 
 def build_replies(lang: str) -> dict:
     """Fixed replies per intent, filled in from the knowledge base."""
-    kb, r = KNOWLEDGE_BASE, KNOWLEDGE_BASE["rates"]
-    ssid, wifi_key = kb["wifi"]
+    kb = KNOWLEDGE_BASE
+    email, host = kb["reservations_email"], kb["host"]
     if lang == "en":
         return {
-            "greeting": f"Hi! 👋 Welcome to {kb['name']} (sample data). I can help with rates, availability, location, check-in or put you in touch with Marina.",
-            "rates": (f"Nightly rates: Sunday to Thursday ${r['weekday']} MXN; Friday and Saturday ${r['weekend']} MXN. "
-                      f"Up to 4 guests included; extra guest ${r['extra_guest']} MXN/night (max. {r['capacity']}). "
-                      f"Cleaning fee ${r['cleaning']} MXN per stay. Minimum {r['min_nights']} nights."),
-            "location": f"📍 Las Palmas gated community (fictitious), 123 Ejemplo St., 10 minutes from downtown. Map pin: {kb['map_pin']}",
-            "checkin_arrival": (f"Check-in from {kb['checkin_time']}. Please message this chat 30 minutes before you arrive; "
-                                "you'll get a confirmation with your access code for the day. Steps: 1) community security booth, "
-                                "2) parking gate, 3) electronic door lock. Ask me about any of them."),
-            "community_access": ("🛂 At the security booth, tell the guard you're going to Casa Almendro, lot 12, and show your ID. "
-                                 "The guard will register your license plate."),
-            "door_lock": ("🔐 The door has an electronic lock: enter the 4-digit code we send you on arrival day "
-                          "(example: 1234) and press the ✓ key."),
-            "parking_gate": ("🚗 The parking gate opens with the remote in the box next to the main entrance. "
-                             "There's room for 2 cars."),
-            "checkout": (f"Check-out is at {kb['checkout_time']}. Leave the keys/remotes in the box, turn off the A/C "
-                         "and close the gate. Thank you!"),
-            "amenities": f"Amenities: Wi-Fi (network: {ssid}, password: {wifi_key}), A/C, fully equipped kitchen, pool, grill.",
-            "house_rules": "House rules: no parties and no smoking indoors. Small pets with prior notice. Quiet hours after 10:00 p.m.",
-            "contact_host": f"I'm connecting you with {kb['host']}. 🙋‍♀️ I've let her know and she'll message you shortly. Phone: {kb['host_phone']} (fictitious). [HANDOFF TO HUMAN]",
+            "greeting": f"Hi! 👋 Welcome to {kb['name']}, a boutique hotel in Belén, Heredia. I can help with rates and payments, availability, location, check-in or put you in touch with {host}.",
+            "rates": (f"Rates depend on the room ({kb['units_en']}) and on your dates. "
+                      f"Write to {email} or type 'talk to {host}' and we'll send you a quote."),
+            "payment": ("You can pay by SINPE Móvil, BAC bank transfer (colones or dollars) or card; "
+                        "payment details are sent with your booking confirmation. "
+                        "We issue an electronic invoice (factura electrónica) if you have Costa Rican tax details, "
+                        "or an electronic receipt (tiquete electrónico) for international guests."),
+            "location": (f"📍 Bosques de Doña Rosa, La Asunción, Belén, Heredia, Costa Rica, a few minutes from "
+                         f"Juan Santamaría International Airport. Search for '{kb['maps_name']}' on Waze or Google Maps. "
+                         "If you come by Uber, DiDi or taxi, follow the map so you aren't dropped off at the wrong place."),
+            "checkin_arrival": (f"Check-in from {kb['checkin_time']} (3:00 p.m.); check-out at {kb['checkout_time']} a.m. "
+                                "Before you arrive, please send us a photo of each guest's ID or passport (covering sensitive data). "
+                                "Your welcome message includes your 4-digit code: the same code opens the pedestrian gate and your room. "
+                                "Steps: 1) security at the gated community, 2) pedestrian gate, 3) your room's lock. Ask me about any of them."),
+            "community_access": ("🛂 At roundabout #2 of the gated community, the guard will ask for the driver's ID. "
+                                 "Tell them the property number from your welcome message."),
+            "door_lock": ("🔐 Pedestrian gate: place your hand on the keypad to wake it up (it beeps), enter your 4-digit code "
+                          "and press ✓. Your room uses the same code. To lock: from inside, turn the knob until it locks; "
+                          "from outside, pull the door closed and place your palm on the keypad until it locks."),
+            "parking_gate": ("🚗 If you come by car, the parking gate opens from the inside: turn the knob and pull the gate. "
+                             "To close it, push it until it is fully closed. There is one parking space per room; "
+                             "your space number is in your welcome message."),
+            "checkout": (f"Check-out is at {kb['checkout_time']} a.m. Before leaving, turn off the A/C, lights and appliances, "
+                         "and make sure the main door and gates are closed. Late check-out is subject to availability. Thank you!"),
+            "amenities": ("Amenities: high-speed Wi-Fi (network and password are on the QR codes inside your room), A/C, "
+                          "TV with streaming, mini fridge, shared kitchen, dining area, TV lounge, terraces, BBQ area "
+                          "and private parking. On request: breakfast, airport transportation, laundry and luggage storage. "
+                          "There is no swimming pool."),
+            "house_rules": ("House rules: pets and visitors are not allowed; no parties or events; no smoking or vaping "
+                            "(there is a smoking booth in the parking area); quiet hours from 10 p.m. to 8 a.m. "
+                            "All guests must be registered before check-in. Breaking the rules carries a fine starting at USD 100."),
+            "contact_host": f"I'm connecting you with {host}. 🙋‍♀️ I've let her know and she'll message you shortly. You can also write to {email}. [HANDOFF TO HUMAN]",
             "thanks": "You're welcome! Anything else I can help with?",
-            "goodbye": "See you soon! Enjoy your stay. 🌴",
+            "goodbye": "See you soon! Enjoy your stay. 🥑",
         }
     return {
-        "greeting": f"¡Hola! 👋 Bienvenido a {kb['name']} (datos de ejemplo). Puedo ayudarte con tarifas, disponibilidad, ubicación, check-in o contactarte con Marina.",
-        "rates": (f"Tarifas por noche: domingo a jueves ${r['weekday']} MXN; viernes y sábado ${r['weekend']} MXN. "
-                  f"Incluye hasta 4 personas; persona extra ${r['extra_guest']} MXN/noche (máx. {r['capacity']}). "
-                  f"Limpieza ${r['cleaning']} MXN por estancia. Mínimo {r['min_nights']} noches."),
-        "location": f"📍 Fraccionamiento Las Palmas (ficticio), Calle Ejemplo 123, a 10 minutos del centro. Pin de ubicación: {kb['map_pin']}",
-        "checkin_arrival": (f"Check-in desde las {kb['checkin_time']}. Al llegar, avisa por este chat 30 minutos antes. "
-                            "Recibirás la confirmación con tu código de acceso del día. Pasos: 1) caseta del fraccionamiento, "
-                            "2) portón del estacionamiento, 3) cerradura electrónica. Pregúntame por cualquiera."),
-        "community_access": ("🛂 En la caseta de vigilancia del fraccionamiento indica que vas a Casa Almendro, lote 12, "
-                             "y muestra tu identificación. El guardia registrará tu placa."),
-        "door_lock": ("🔐 La puerta tiene cerradura electrónica: marca el código de 4 dígitos que te enviamos el día "
-                      "de llegada (ejemplo: 1234) y presiona la palomita ✓."),
-        "parking_gate": ("🚗 El portón del estacionamiento se abre con el control que está en la caja junto a la "
-                         "entrada principal. Hay lugar para 2 autos."),
-        "checkout": (f"Check-out a las {kb['checkout_time']}. Para el check-out deja las llaves/controles en la caja, "
-                     "apaga el aire acondicionado y cierra el portón. ¡Gracias!"),
-        "amenities": f"Servicios incluidos: Wi-Fi (red: {ssid}, clave: {wifi_key}), A/C, cocina equipada, alberca, asador.",
-        "house_rules": "Reglas de la casa: No se permiten fiestas ni fumar dentro. Mascotas pequeñas con aviso previo. Silencio después de las 22:00.",
-        "contact_host": f"Te comunico con {kb['host']}. 🙋‍♀️ Le dejé aviso y te escribirá en breve. Teléfono: {kb['host_phone']} (ficticio). [TRANSFERENCIA A HUMANO]",
+        "greeting": f"¡Hola! 👋 Bienvenido a {kb['name']}, hotel boutique en Belén, Heredia. Puedo ayudarte con tarifas y pagos, disponibilidad, ubicación, check-in o contactarte con {host}.",
+        "rates": (f"La tarifa depende de la habitación ({kb['units']}) y de tus fechas. "
+                  f"Escríbenos a {email} o escribe 'hablar con {host}' y te enviamos la cotización."),
+        "payment": ("Puedes pagar por SINPE Móvil, transferencia BAC (colones o dólares) o tarjeta; los datos de pago "
+                    "llegan con tu confirmación de reserva. Emitimos factura electrónica si tienes datos fiscales en "
+                    "Costa Rica, o tiquete electrónico para huéspedes extranjeros."),
+        "location": (f"📍 Bosques de Doña Rosa, La Asunción, Belén, Heredia, Costa Rica, a pocos minutos del Aeropuerto "
+                     f"Internacional Juan Santamaría. Búscanos en Waze o Google Maps como '{kb['maps_name']}'. "
+                     "Si llegas en Uber, DiDi o taxi, sigue el mapa para no quedar en un lugar equivocado."),
+        "checkin_arrival": (f"Check-in desde las {kb['checkin_time']}; check-out a las {kb['checkout_time']}. "
+                            "Antes de llegar, envíanos una foto de la identificación o pasaporte de cada huésped (cubriendo los datos sensibles). "
+                            "En tu bienvenida recibes tu código de 4 dígitos: el mismo abre el acceso peatonal y tu habitación. "
+                            "Pasos: 1) caseta del residencial, 2) acceso peatonal, 3) cerradura de tu habitación. Pregúntame por cualquiera."),
+        "community_access": ("🛂 En la rotonda #2 del residencial el guardia solicitará la cédula del chofer. "
+                             "Indica el número de propiedad que viene en tu bienvenida."),
+        "door_lock": ("🔐 Acceso peatonal: coloca la mano sobre el teclado para activarlo (sonará), marca tu código de 4 dígitos "
+                      "y presiona la palomita ✓. Tu habitación usa el mismo código. Para cerrar: desde adentro gira la perilla "
+                      "hasta que quede bloqueada; desde afuera jala la puerta y coloca la palma sobre el teclado hasta que se bloquee."),
+        "parking_gate": ("🚗 Si llegas en vehículo, el portón se abre por dentro: gira la perilla y jala el portón. "
+                         "Para cerrarlo solo empújalo y verifica que quede completamente cerrado. Hay un espacio por "
+                         "habitación; tu número de espacio viene en la bienvenida."),
+        "checkout": (f"Check-out a las {kb['checkout_time']}. Antes de salir apaga el aire acondicionado, las luces y los aparatos, "
+                     "y verifica que la puerta principal y los portones queden cerrados. Check-out tardío según disponibilidad. ¡Gracias!"),
+        "amenities": ("Servicios: Internet de alta velocidad (la red y la clave están en los códigos QR de tu habitación), "
+                      "aire acondicionado, TV con streaming, mini refri, cocina compartida, comedor, sala de TV, terrazas, "
+                      "área de parrilla y parqueo privado. Bajo solicitud: desayuno, transporte al aeropuerto, lavandería "
+                      "y guarda de maletas. No tenemos piscina."),
+        "house_rules": ("Reglas: no se aceptan mascotas ni visitas; no se permiten fiestas ni eventos; prohibido fumar o vapear "
+                        "(hay un área para fumar en el parqueo); silencio de 22:00 a 8:00. Todos los huéspedes deben "
+                        "registrarse antes del check-in. Incumplir las reglas tiene una multa desde USD 100."),
+        "contact_host": f"Te comunico con {host}. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a {email}. [TRANSFERENCIA A HUMANO]",
         "thanks": "¡Con gusto! ¿Algo más en lo que te ayude?",
-        "goodbye": "¡Hasta pronto! Que disfrutes tu estancia. 🌴",
+        "goodbye": "¡Hasta pronto! Que disfrutes tu estancia. 🥑",
     }
 
 REPLIES = {"es": build_replies("es"), "en": build_replies("en")}
 
 FALLBACK = {
-    "es": ("Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, disponibilidad, "
-           "ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Marina."),
-    "en": ("Sorry, I didn't get that. 🤔 I can help with: rates, availability, location, "
-           "check-in (security booth, gate, door lock), check-out or talking to Marina."),
+    "es": ("Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, pagos, disponibilidad, "
+           "ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Lore."),
+    "en": ("Sorry, I didn't get that. 🤔 I can help with: rates, payments, availability, location, "
+           "check-in (security booth, gate, door lock), check-out or talking to Lore."),
 }
 ESCALATION = {
     "es": "No logro entender tu consulta. Para no hacerte esperar: ",
@@ -323,7 +346,7 @@ class RentalChatbot:
 def chat():
     """Interactive loop (Colab or terminal). Type 'salir' or 'exit' to quit."""
     bot = RentalChatbot()
-    print("Bot: ¡Hola! Soy el asistente de Casa Almendro. / Hi! I'm the Casa Almendro assistant. "
+    print("Bot: ¡Hola! Soy el asistente de Cas'aguacate. / Hi! I'm Cas'aguacate's assistant. "
           "Escribe 'salir' / type 'exit' para terminar.")
     while True:
         try:
@@ -342,7 +365,7 @@ def chat():
 CONVERSATIONS = {
     1: ("Saludo y tarifas", [("Hola, buenas tardes", "greeting", "es"), ("¿Cuánto cuesta la noche?", "rates", "es"), ("Gracias", "thanks", "es")]),
     2: ("Disponibilidad libre", [("Hola", "greeting", "es"), ("¿Está disponible el 14 de diciembre?", "availability", "es"),
-                                 ("Perfecto, quiero reservar, hablar con Marina", "contact_host", "es")]),
+                                 ("Perfecto, quiero reservar, hablar con Lore", "contact_host", "es")]),
     3: ("Disponibilidad ocupada", [("¿Tienen libre el 31 de octubre?", "availability", "es"),
                                    ("¿y el 7 de noviembre está disponible?", "availability", "es")]),
     4: ("Ubicación", [("¿Dónde están ubicados?", "location", "es"), ("¿Me pasas la dirección?", "location", "es")]),
@@ -360,7 +383,7 @@ CONVERSATIONS = {
     13: ("EN: Greeting and rates", [("Hello, good afternoon", "greeting", "en"), ("How much is it per night?", "rates", "en"),
                                     ("Thank you", "thanks", "en")]),
     14: ("EN: Available date", [("Hi", "greeting", "en"), ("Is December 14 available?", "availability", "en"),
-                                ("Perfect, I want to book, talk to Marina", "contact_host", "en")]),
+                                ("Perfect, I want to book, talk to Lore", "contact_host", "en")]),
     15: ("EN: Booked date", [("Is the 31st of October free?", "availability", "en"), ("What about Nov 7, is it available?", "availability", "en"),
                              ("And December 24th?", "availability", "en")]),
     16: ("EN: Location", [("Where are you located?", "location", "en"), ("Can you send me the address?", "location", "en")]),
@@ -376,7 +399,46 @@ CONVERSATIONS = {
                                            ("Do you sell concert tickets?", "fallback→contact_host", "en")]),
     24: ("Cambio de idioma ES → EN → ES", [("Hola, ¿tienen alberca?", "amenities", "es"), ("Sorry, do you speak English? What is the wifi password?", "amenities", "en"),
                                            ("¿Cuánto cuesta la noche?", "rates", "es")]),
+    25: ("Pagos y factura", [("¿Cómo puedo pagar?", "payment", "es"), ("¿Aceptan SINPE móvil?", "payment", "es"),
+                             ("¿Me pueden dar factura electrónica?", "payment", "es")]),
+    26: ("EN: Payment and pool", [("Can I pay by card?", "payment", "en"), ("Do you have a swimming pool?", "amenities", "en"),
+                                  ("Can I bring my dog?", "house_rules", "en")]),
 }
+
+# Business-data checks: what the bot must and must not say about Cas'aguacate.
+# (question, language, texts that must appear, texts that must NOT appear)
+BUSINESS_CHECKS = [
+    ("¿Aceptan mascotas?", "es", ["no se aceptan mascotas"], ["Mascotas pequeñas", "con aviso"]),
+    ("Can I bring my dog?", "en", ["pets and visitors are not allowed"], ["Small pets", "prior notice"]),
+    ("¿Tienen alberca?", "es", ["No tenemos piscina"], ["alberca,"]),
+    ("Do you have a pool?", "en", ["There is no swimming pool"], ["pool,"]),
+    ("¿Cuánto cuesta la noche?", "es", ["reservations.casaguacate@gmail.com"], ["MXN", "$"]),
+    ("How much is it per night?", "en", ["reservations.casaguacate@gmail.com"], ["MXN", "$"]),
+    ("¿Cómo puedo pagar?", "es", ["SINPE Móvil", "BAC", "tarjeta", "factura electrónica", "tiquete electrónico"], ["MXN"]),
+    ("Can I pay by card?", "en", ["SINPE Móvil", "BAC", "card"], ["MXN"]),
+    ("¿Dónde están ubicados?", "es", ["La Asunción, Belén, Heredia, Costa Rica"], ["Las Palmas", "Fraccionamiento"]),
+    ("Where are you located?", "en", ["La Asunción, Belén, Heredia, Costa Rica"], ["Las Palmas"]),
+    ("¿A qué hora es el check-in?", "es", ["15:00", "4 dígitos", "mismo"], []),
+    ("What time is check-out?", "en", ["11:00"], []),
+    ("Quiero hablar con la anfitriona", "es", ["Lore", "reservations.casaguacate@gmail.com"], ["Marina", "+52"]),
+]
+FORBIDDEN_ANYWHERE = ["MXN", "Las Palmas", "Almendro", "Marina", "+52", "alberca,", "Mascotas pequeñas", "Small pets"]
+
+
+def check_business_data() -> bool:
+    ok_all = True
+    for question, lang, must, must_not in BUSINESS_CHECKS:
+        bot = RentalChatbot()
+        bot.lang = lang
+        _, answer = bot.process(question)
+        ok = all(m in answer for m in must) and not any(m in answer for m in must_not)
+        ok_all &= ok
+        print(f"{'OK   ' if ok else 'FALLA'} {question}")
+    every_reply = [r for lang in REPLIES for r in REPLIES[lang].values()] + list(FALLBACK.values())
+    leaks = sorted({w for w in FORBIDDEN_ANYWHERE for r in every_reply if w in r})
+    print(f"{'OK   ' if not leaks else 'FALLA'} Ninguna respuesta menciona: {', '.join(FORBIDDEN_ANYWHERE)}"
+          + (f" (aparece: {', '.join(leaks)})" if leaks else ""))
+    return ok_all and not leaks
 
 # Language detection unit cases: (message, expected_language)
 LANGUAGE_CASES = [
@@ -388,7 +450,7 @@ LANGUAGE_CASES = [
 def run_tests() -> bool:
     import platform
     print(f"Python {platform.python_version()} | NLTK {nltk.__version__}")
-    print("Datos: DATOS DE EJEMPLO / FICTICIOS\n")
+    print("Datos del negocio: Cas'aguacate (con permiso de los anfitriones); noches ocupadas de ejemplo\n")
     turns, fallbacks, passed = 0, 0, 0
     for n, (title, messages) in CONVERSATIONS.items():
         bot = RentalChatbot()
@@ -416,7 +478,11 @@ def run_tests() -> bool:
     print(f"Resumen: {len(CONVERSATIONS)} conversaciones, {turns} turnos, {fallbacks} turnos en fallback (esperados).")
     print(f"Intención + idioma correctos: {passed}/{turns}")
     print(f"Detección de idioma: {lang_passed}/{len(LANGUAGE_CASES)}")
-    return passed == turns and lang_passed == len(LANGUAGE_CASES)
+    print("=" * 78)
+    print("Datos del negocio (Cas'aguacate)")
+    print("-" * 78)
+    business_ok = check_business_data()
+    return passed == turns and lang_passed == len(LANGUAGE_CASES) and business_ok
 
 if __name__ == "__main__":
     import sys

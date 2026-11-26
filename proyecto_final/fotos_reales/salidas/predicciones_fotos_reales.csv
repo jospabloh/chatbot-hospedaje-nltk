@@ -1,0 +1,78 @@
+archivo,clase,toma,descripcion,tipo,pred_base,conf_base,top_base,pred_cabeza,conf_cabeza
+IMG-20260930-WA0004.jpg,otro,marca,Logotipo y datos de contacto,pagina,controles,0.959,controles,otro,0.981
+IMG-20260930-WA0017.jpg,interior,comunes,Portada con recamara y sala,pagina,otro,0.586,controles,otro,0.89
+IMG-20260930-WA0018.jpg,interior,morfo,Apartamento Morfo: recamaras y lista de servicios,pagina,interior,0.949,interior,interior,0.767
+IMG-20260930-WA0019.jpg,otro,arbol,Nosotros (texto en espanol) con foto del arbol de aguacate,pagina,otro,0.386,controles,otro,0.984
+IMG-20260930-WA0020.jpg,interior,tucan,Suite Tucan: collage de recamara y bano,pagina,otro,0.535,interior,interior,0.983
+IMG-20260930-WA0021.jpg,otro,tortuga,Suite Tortuga: lista de servicios (texto),pagina,otro,0.586,porton,otro,0.996
+IMG-20260930-WA0022.jpg,otro,colibri,Suite Colibri: lista de servicios (texto),pagina,porton,0.728,porton,otro,0.997
+IMG-20260930-WA0023.jpg,interior,tortuga,Suite Tortuga: collage de recamara y bano,pagina,interior,0.898,interior,interior,0.99
+IMG-20260930-WA0024.jpg,otro,arbol,About (texto en ingles) con foto del arbol de aguacate,pagina,otro,0.388,caseta,otro,0.979
+IMG-20260930-WA0025.jpg,interior,colibri,Suite Colibri: collage de recamara y bano,pagina,interior,0.999,interior,interior,0.999
+IMG-20260930-WA0026.jpg,otro,tucan,Suite Tucan: lista de servicios (texto),pagina,otro,0.363,porton,otro,0.995
+IMG-20260930-WA0027.jpg,interior,morfo,Apartamento Morfo: sala cocina bano y entrada,pagina,interior,0.883,interior,interior,0.85
+IMG-20260930-WA0028.jpg,otro,alrededores,Alrededores: aeropuerto golf centro de convenciones estadio,pagina,caseta,0.784,caseta,otro,0.98
+IMG-20260930-WA0029.jpg,otro,instrucciones,Instrucciones de entrada Tucan (ingles),pagina,otro,0.56,controles,otro,0.978
+IMG-20260930-WA0030.jpg,otro,reglas,Reglas (espanol),pagina,otro,0.362,porton,otro,0.987
+IMG-20260930-WA0031.jpg,otro,instrucciones,Instrucciones de entrada Colibri (espanol),pagina,otro,0.544,controles,otro,0.99
+IMG-20260930-WA0032.jpg,otro,bienvenida,Bienvenida y ubicacion (ingles),pagina,otro,0.335,controles,otro,0.997
+IMG-20260930-WA0033.jpg,otro,servicios,Servicios adicionales (espanol),pagina,otro,0.309,porton,otro,0.994
+IMG-20260930-WA0034.jpg,otro,servicios,Guest services (ingles),pagina,otro,0.304,porton,otro,0.993
+IMG-20260930-WA0035.jpg,otro,reglas,Rules (ingles),pagina,otro,0.355,porton,otro,0.991
+IMG-20260930-WA0036.jpg,otro,amenidades,Amenidades: botellas de bano y posavasos,pagina,otro,0.537,controles,otro,0.532
+IMG-20260930-WA0037.jpg,otro,instrucciones,Instrucciones de entrada Morfo (ingles),pagina,otro,0.497,controles,otro,0.986
+IMG-20260930-WA0038.jpg,otro,instrucciones,Instrucciones de entrada Morfo (espanol),pagina,otro,0.59,controles,otro,0.987
+IMG-20260930-WA0039.jpg,otro,instrucciones,Instrucciones de entrada Tortuga (ingles),pagina,controles,0.626,controles,otro,0.987
+IMG-20260930-WA0040.jpg,interior,comunes,Areas comunes: sala de TV y comedor,pagina,interior,0.952,interior,otro,0.504
+IMG-20260930-WA0041.jpg,otro,exterior,Mapa con cerradura digital y estacionamiento (pagina mixta),pagina,controles,0.983,controles,controles,0.734
+IMG-20260930-WA0042.jpg,otro,bienvenida,Bienvenida y ubicacion (espanol),pagina,otro,0.433,controles,otro,0.998
+IMG-20260930-WA0043.jpg,interior,comunes,Areas comunes: cocina,pagina,controles,0.746,controles,otro,0.835
+IMG-20260930-WA0044.jpg,otro,instrucciones,Instrucciones de entrada Colibri (ingles),pagina,otro,0.474,controles,otro,0.992
+IMG-20260930-WA0045.jpg,otro,instrucciones,Instrucciones de entrada Tortuga (espanol),pagina,otro,0.465,controles,otro,0.991
+IMG-20260930-WA0046.jpg,otro,instrucciones,Instrucciones de entrada Tucan (espanol),pagina,otro,0.52,cerradura,otro,0.983
+IMG-20260930-WA0047.jpg,interior,comunes,Areas comunes y eventos: bano comedor exterior,pagina,controles,0.672,controles,otro,0.855
+IMG-20260930-WA0048.jpg,interior,comunes,Areas comunes: terrazas techadas,pagina,controles,0.648,controles,otro,0.91
+WA0017_r1.jpg,interior,comunes,Recamara y sala (dos fotos juntas),recorte,interior,1.0,interior,interior,0.999
+WA0018_r1.jpg,interior,morfo,Dos recamaras,recorte,interior,0.995,interior,interior,0.995
+WA0019_r1.jpg,otro,arbol,Arbol de aguacate en el jardin,recorte,porton,0.997,porton,porton,0.998
+WA0020_r1.jpg,interior,tucan,Recamara con escritorio,recorte,interior,0.985,interior,interior,0.993
+WA0020_r2.jpg,interior,tucan,Bano,recorte,interior,0.985,interior,interior,0.995
+WA0020_r3.jpg,interior,tucan,Recamara con TV y silla,recorte,interior,0.994,interior,interior,0.997
+WA0020_r4.jpg,interior,tucan,Recamara,recorte,interior,1.0,interior,interior,1.0
+WA0023_r2.jpg,interior,tortuga,Recamara y bano,recorte,interior,0.998,interior,interior,0.993
+WA0023_r3.jpg,interior,tortuga,Dos vistas de recamara,recorte,interior,0.992,interior,interior,0.99
+WA0024_r1.jpg,otro,arbol,Arbol de aguacate (misma foto que WA0019_r1),recorte,porton,0.997,porton,porton,0.998
+WA0025_r1.jpg,interior,colibri,Recamara,recorte,interior,1.0,interior,interior,1.0
+WA0025_r2.jpg,interior,colibri,Bano adaptado,recorte,interior,0.998,interior,interior,0.984
+WA0025_r3.jpg,interior,colibri,Recamara,recorte,interior,1.0,interior,interior,1.0
+WA0027_r1.jpg,interior,morfo,Sala,recorte,interior,1.0,interior,interior,0.984
+WA0027_r2.jpg,interior,morfo,Cocina,recorte,interior,0.886,interior,interior,0.968
+WA0027_r3.jpg,interior,morfo,Bano,recorte,interior,0.972,interior,interior,0.932
+WA0028_r1.jpg,otro,alrededores,Avion en el aeropuerto,recorte,caseta,0.992,caseta,caseta,0.891
+WA0028_r2.jpg,otro,alrededores,Campo de golf,recorte,caseta,0.636,caseta,otro,0.748
+WA0028_r3.jpg,otro,alrededores,Centro de convenciones,recorte,porton,0.841,porton,otro,0.49
+WA0028_r4.jpg,otro,alrededores,Estadio Nacional,recorte,otro,0.554,caseta,otro,0.742
+WA0036_r1.jpg,otro,amenidades,Botellas de shampoo y acondicionador,recorte,cerradura,0.994,cerradura,cerradura,0.966
+WA0036_r2.jpg,otro,amenidades,Posavasos con logotipo,recorte,cerradura,0.726,cerradura,cerradura,0.694
+WA0040_r1.jpg,otro,comunes,Adorno de flores (acercamiento),recorte,interior,0.66,interior,otro,0.736
+WA0040_r2.jpg,interior,comunes,Comedor y sala de TV,recorte,interior,0.97,interior,interior,0.967
+WA0040_r3.jpg,interior,comunes,Sala,recorte,interior,0.999,interior,interior,0.993
+WA0040_r4.jpg,otro,comunes,Florero (acercamiento),recorte,interior,0.618,interior,otro,0.923
+WA0041_r1.jpg,porton,exterior,Fachada con porton cafe del estacionamiento,recorte,interior,0.659,interior,otro,0.547
+WA0041_r2.jpg,cerradura,exterior,Puerta principal con cerradura digital,recorte,cerradura,0.934,cerradura,otro,0.393
+WA0041_r3.jpg,porton,exterior,Estacionamiento con portones numerados 1 a 4,recorte,otro,0.374,interior,caseta,0.72
+WA0043_r1.jpg,otro,comunes,Taza y adorno (acercamiento),recorte,otro,0.585,interior,otro,0.81
+WA0043_r2.jpg,interior,comunes,Barra de cocina con electrodomesticos,recorte,otro,0.328,interior,interior,0.736
+WA0043_r3.jpg,otro,comunes,Taza con planta (acercamiento),recorte,interior,0.89,interior,otro,0.765
+WA0043_r4.jpg,interior,comunes,Cocina,recorte,otro,0.545,interior,interior,0.877
+WA0043_r5.jpg,otro,comunes,Frutero (acercamiento),recorte,interior,0.853,interior,interior,0.691
+WA0043_r6.jpg,interior,comunes,Cocina,recorte,controles,0.62,controles,interior,0.722
+WA0047_r1.jpg,interior,comunes,Bano,recorte,interior,0.997,interior,interior,0.99
+WA0047_r2.jpg,porton,exterior,Estacionamiento con portones,recorte,interior,0.657,interior,otro,0.377
+WA0047_r3.jpg,otro,comunes,Mesa con comida y velas,recorte,interior,0.997,interior,interior,0.922
+WA0047_r4.jpg,interior,comunes,Sala de reuniones con mesa larga,recorte,otro,0.541,interior,interior,0.914
+WA0047_r5.jpg,otro,comunes,Pintura de quetzal,recorte,otro,0.306,porton,otro,0.837
+WA0047_r6.jpg,interior,comunes,Sala con juego de cartas,recorte,interior,0.897,interior,interior,0.718
+WA0047_r7.jpg,interior,comunes,Recamara decorada con globos,recorte,interior,1.0,interior,interior,0.998
+WA0048_r1.jpg,interior,comunes,Terraza techada con sala,recorte,cerradura,0.919,cerradura,interior,0.613
+WA0048_r3.jpg,interior,comunes,Terraza techada con mecedoras,recorte,interior,0.874,interior,interior,0.887

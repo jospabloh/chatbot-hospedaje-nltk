@@ -1,0 +1,10 @@
+# API REST + modelos (probado con Python 3.9 a 3.12)
+flask==3.1.3
+gunicorn==23.0.0
+numpy==1.26.4
+pandas==2.3.3
+scikit-learn==1.6.1
+joblib==1.5.3
+nltk==3.9.2
+pillow==11.3.0
+tensorflow==2.16.2

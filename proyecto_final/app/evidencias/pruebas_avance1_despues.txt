@@ -1,0 +1,359 @@
+Python 3.9.6 | NLTK 3.9.2
+Datos del negocio: Cas'aguacate (con permiso de los anfitriones); noches ocupadas de ejemplo
+
+==============================================================================
+Conversación 1: Saludo y tarifas
+------------------------------------------------------------------------------
+Usuario  : Hola, buenas tardes
+Idioma   : es | Intención: greeting | Esperado: greeting/es | OK
+Bot      : ¡Hola! 👋 Bienvenido a Cas'aguacate, hotel boutique en Belén, Heredia. Puedo ayudarte con tarifas y pagos, disponibilidad, ubicación, check-in o contactarte con Lore.
+
+Usuario  : ¿Cuánto cuesta la noche?
+Idioma   : es | Intención: rates | Esperado: rates/es | OK
+Bot      : La tarifa depende de la habitación (Apartamento Morfo y suites Tucán, Tortuga y Colibrí) y de tus fechas. Escríbenos a reservations.casaguacate@gmail.com o escribe 'hablar con Lore' y te enviamos la cotización.
+
+Usuario  : Gracias
+Idioma   : es | Intención: thanks | Esperado: thanks/es | OK
+Bot      : ¡Con gusto! ¿Algo más en lo que te ayude?
+
+==============================================================================
+Conversación 2: Disponibilidad libre
+------------------------------------------------------------------------------
+Usuario  : Hola
+Idioma   : es | Intención: greeting | Esperado: greeting/es | OK
+Bot      : ¡Hola! 👋 Bienvenido a Cas'aguacate, hotel boutique en Belén, Heredia. Puedo ayudarte con tarifas y pagos, disponibilidad, ubicación, check-in o contactarte con Lore.
+
+Usuario  : ¿Está disponible el 14 de diciembre?
+Idioma   : es | Intención: availability | Esperado: availability/es | OK
+Bot      : ¡Sí! La noche del 14/12/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Lore'.
+
+Usuario  : Perfecto, quiero reservar, hablar con Lore
+Idioma   : es | Intención: contact_host | Esperado: contact_host/es | OK
+Bot      : Te comunico con Lore. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a reservations.casaguacate@gmail.com. [TRANSFERENCIA A HUMANO]
+
+==============================================================================
+Conversación 3: Disponibilidad ocupada
+------------------------------------------------------------------------------
+Usuario  : ¿Tienen libre el 31 de octubre?
+Idioma   : es | Intención: availability | Esperado: availability/es | OK
+Bot      : Lo siento, la noche del 31/10/2026 ya está ocupada. ¿Quieres revisar otra fecha o que Lore te proponga opciones?
+
+Usuario  : ¿y el 7 de noviembre está disponible?
+Idioma   : es | Intención: availability | Esperado: availability/es | OK
+Bot      : ¡Sí! La noche del 07/11/2026 está disponible (sujeto a confirmación de la anfitriona). Para apartar, escribe 'hablar con Lore'.
+
+==============================================================================
+Conversación 4: Ubicación
+------------------------------------------------------------------------------
+Usuario  : ¿Dónde están ubicados?
+Idioma   : es | Intención: location | Esperado: location/es | OK
+Bot      : 📍 Bosques de Doña Rosa, La Asunción, Belén, Heredia, Costa Rica, a pocos minutos del Aeropuerto Internacional Juan Santamaría. Búscanos en Waze o Google Maps como 'CasAguacate Hotel Boutique'. Si llegas en Uber, DiDi o taxi, sigue el mapa para no quedar en un lugar equivocado.
+
+Usuario  : ¿Me pasas la dirección?
+Idioma   : es | Intención: location | Esperado: location/es | OK
+Bot      : 📍 Bosques de Doña Rosa, La Asunción, Belén, Heredia, Costa Rica, a pocos minutos del Aeropuerto Internacional Juan Santamaría. Búscanos en Waze o Google Maps como 'CasAguacate Hotel Boutique'. Si llegas en Uber, DiDi o taxi, sigue el mapa para no quedar en un lugar equivocado.
+
+==============================================================================
+Conversación 5: Llegada / check-in
+------------------------------------------------------------------------------
+Usuario  : ¿A qué hora es el check-in?
+Idioma   : es | Intención: checkin_arrival | Esperado: checkin_arrival/es | OK
+Bot      : Check-in desde las 15:00; check-out a las 11:00. Antes de llegar, envíanos una foto de la identificación o pasaporte de cada huésped (cubriendo los datos sensibles). En tu bienvenida recibes tu código de 4 dígitos: el mismo abre el acceso peatonal y tu habitación. Pasos: 1) caseta del residencial, 2) acceso peatonal, 3) cerradura de tu habitación. Pregúntame por cualquiera.
+
+Usuario  : ¿Qué instrucciones hay para la llegada?
+Idioma   : es | Intención: checkin_arrival | Esperado: checkin_arrival/es | OK
+Bot      : Check-in desde las 15:00; check-out a las 11:00. Antes de llegar, envíanos una foto de la identificación o pasaporte de cada huésped (cubriendo los datos sensibles). En tu bienvenida recibes tu código de 4 dígitos: el mismo abre el acceso peatonal y tu habitación. Pasos: 1) caseta del residencial, 2) acceso peatonal, 3) cerradura de tu habitación. Pregúntame por cualquiera.
+
+==============================================================================
+Conversación 6: Acceso al fraccionamiento
+------------------------------------------------------------------------------
+Usuario  : Ya estoy en la caseta del fraccionamiento, ¿qué le digo al guardia?
+Idioma   : es | Intención: community_access | Esperado: community_access/es | OK
+Bot      : 🛂 En la rotonda #2 del residencial el guardia solicitará la cédula del chofer. Indica el número de propiedad que viene en tu bienvenida.
+
+==============================================================================
+Conversación 7: Cerradura electrónica
+------------------------------------------------------------------------------
+Usuario  : No puedo abrir la puerta
+Idioma   : es | Intención: door_lock | Esperado: door_lock/es | OK
+Bot      : 🔐 Acceso peatonal: coloca la mano sobre el teclado para activarlo (sonará), marca tu código de 4 dígitos y presiona la palomita ✓. Tu habitación usa el mismo código. Para cerrar: desde adentro gira la perilla hasta que quede bloqueada; desde afuera jala la puerta y coloca la palma sobre el teclado hasta que se bloquee.
+
+Usuario  : ¿Cuál es el código de la cerradura?
+Idioma   : es | Intención: door_lock | Esperado: door_lock/es | OK
+Bot      : 🔐 Acceso peatonal: coloca la mano sobre el teclado para activarlo (sonará), marca tu código de 4 dígitos y presiona la palomita ✓. Tu habitación usa el mismo código. Para cerrar: desde adentro gira la perilla hasta que quede bloqueada; desde afuera jala la puerta y coloca la palma sobre el teclado hasta que se bloquee.
+
+==============================================================================
+Conversación 8: Portón del estacionamiento
+------------------------------------------------------------------------------
+Usuario  : ¿Dónde dejo el carro?
+Idioma   : es | Intención: parking_gate | Esperado: parking_gate/es | OK
+Bot      : 🚗 Si llegas en vehículo, el portón se abre por dentro: gira la perilla y jala el portón. Para cerrarlo solo empújalo y verifica que quede completamente cerrado. Hay un espacio por habitación; tu número de espacio viene en la bienvenida.
+
+Usuario  : ¿Cómo abro el portón?
+Idioma   : es | Intención: parking_gate | Esperado: parking_gate/es | OK
+Bot      : 🚗 Si llegas en vehículo, el portón se abre por dentro: gira la perilla y jala el portón. Para cerrarlo solo empújalo y verifica que quede completamente cerrado. Hay un espacio por habitación; tu número de espacio viene en la bienvenida.
+
+==============================================================================
+Conversación 9: Servicios y reglas
+------------------------------------------------------------------------------
+Usuario  : ¿Tienen wifi?
+Idioma   : es | Intención: amenities | Esperado: amenities/es | OK
+Bot      : Servicios: Internet de alta velocidad (la red y la clave están en los códigos QR de tu habitación), aire acondicionado, TV con streaming, mini refri, cocina compartida, comedor, sala de TV, terrazas, área de parrilla y parqueo privado. Bajo solicitud: desayuno, transporte al aeropuerto, lavandería y guarda de maletas. No tenemos piscina.
+
+Usuario  : ¿Aceptan mascotas?
+Idioma   : es | Intención: house_rules | Esperado: house_rules/es | OK
+Bot      : Reglas: no se aceptan mascotas ni visitas; no se permiten fiestas ni eventos; prohibido fumar o vapear (hay un área para fumar en el parqueo); silencio de 22:00 a 8:00. Todos los huéspedes deben registrarse antes del check-in. Incumplir las reglas tiene una multa desde USD 100.
+
+Usuario  : ¿Se puede fumar?
+Idioma   : es | Intención: house_rules | Esperado: house_rules/es | OK
+Bot      : Reglas: no se aceptan mascotas ni visitas; no se permiten fiestas ni eventos; prohibido fumar o vapear (hay un área para fumar en el parqueo); silencio de 22:00 a 8:00. Todos los huéspedes deben registrarse antes del check-in. Incumplir las reglas tiene una multa desde USD 100.
+
+==============================================================================
+Conversación 10: Check-out y despedida
+------------------------------------------------------------------------------
+Usuario  : ¿A qué hora es la salida?
+Idioma   : es | Intención: checkout | Esperado: checkout/es | OK
+Bot      : Check-out a las 11:00. Antes de salir apaga el aire acondicionado, las luces y los aparatos, y verifica que la puerta principal y los portones queden cerrados. Check-out tardío según disponibilidad. ¡Gracias!
+
+Usuario  : Gracias, adiós
+Idioma   : es | Intención: goodbye | Esperado: goodbye/es | OK
+Bot      : ¡Hasta pronto! Que disfrutes tu estancia. 🥑
+
+==============================================================================
+Conversación 11: Transferencia directa a la anfitriona
+------------------------------------------------------------------------------
+Usuario  : Tengo una emergencia, quiero hablar con la anfitriona
+Idioma   : es | Intención: contact_host | Esperado: contact_host/es | OK
+Bot      : Te comunico con Lore. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a reservations.casaguacate@gmail.com. [TRANSFERENCIA A HUMANO]
+
+==============================================================================
+Conversación 12: Mensajes no reconocidos → escalamiento
+------------------------------------------------------------------------------
+Usuario  : ¿Eres un bot?
+Idioma   : es | Intención: regex_chat | Esperado: regex_chat/es | OK
+Bot      : Soy el asistente virtual de Cas'aguacate. Respondo dudas sobre tarifas, pagos, disponibilidad, ubicación y check-in. Si lo prefieres, escribe 'hablar con Lore'.
+
+Usuario  : asdfgh
+Idioma   : es | Intención: fallback | Esperado: fallback/es | OK
+Bot      : Perdón, no entendí. 🤔 Puedo ayudarte con: tarifas, pagos, disponibilidad, ubicación, check-in (caseta, portón, cerradura), check-out o hablar con Lore.
+
+Usuario  : ¿venden boletos para el concierto?
+Idioma   : es | Intención: fallback→contact_host | Esperado: fallback→contact_host/es | OK
+Bot      : No logro entender tu consulta. Para no hacerte esperar: Te comunico con Lore. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a reservations.casaguacate@gmail.com. [TRANSFERENCIA A HUMANO]
+
+==============================================================================
+Conversación 13: EN: Greeting and rates
+------------------------------------------------------------------------------
+Usuario  : Hello, good afternoon
+Idioma   : en | Intención: greeting | Esperado: greeting/en | OK
+Bot      : Hi! 👋 Welcome to Cas'aguacate, a boutique hotel in Belén, Heredia. I can help with rates and payments, availability, location, check-in or put you in touch with Lore.
+
+Usuario  : How much is it per night?
+Idioma   : en | Intención: rates | Esperado: rates/en | OK
+Bot      : Rates depend on the room (the Morfo apartment and the Tucán, Tortuga and Colibrí suites) and on your dates. Write to reservations.casaguacate@gmail.com or type 'talk to Lore' and we'll send you a quote.
+
+Usuario  : Thank you
+Idioma   : en | Intención: thanks | Esperado: thanks/en | OK
+Bot      : You're welcome! Anything else I can help with?
+
+==============================================================================
+Conversación 14: EN: Available date
+------------------------------------------------------------------------------
+Usuario  : Hi
+Idioma   : en | Intención: greeting | Esperado: greeting/en | OK
+Bot      : Hi! 👋 Welcome to Cas'aguacate, a boutique hotel in Belén, Heredia. I can help with rates and payments, availability, location, check-in or put you in touch with Lore.
+
+Usuario  : Is December 14 available?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Yes! The night of 12/14/2026 is available (subject to the host's confirmation). To book it, type 'talk to Lore'.
+
+Usuario  : Perfect, I want to book, talk to Lore
+Idioma   : en | Intención: contact_host | Esperado: contact_host/en | OK
+Bot      : I'm connecting you with Lore. 🙋‍♀️ I've let her know and she'll message you shortly. You can also write to reservations.casaguacate@gmail.com. [HANDOFF TO HUMAN]
+
+==============================================================================
+Conversación 15: EN: Booked date
+------------------------------------------------------------------------------
+Usuario  : Is the 31st of October free?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Sorry, the night of 10/31/2026 is already booked. Would you like to check another date or have Lore suggest options?
+
+Usuario  : What about Nov 7, is it available?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Yes! The night of 11/07/2026 is available (subject to the host's confirmation). To book it, type 'talk to Lore'.
+
+Usuario  : And December 24th?
+Idioma   : en | Intención: availability | Esperado: availability/en | OK
+Bot      : Sorry, the night of 12/24/2026 is already booked. Would you like to check another date or have Lore suggest options?
+
+==============================================================================
+Conversación 16: EN: Location
+------------------------------------------------------------------------------
+Usuario  : Where are you located?
+Idioma   : en | Intención: location | Esperado: location/en | OK
+Bot      : 📍 Bosques de Doña Rosa, La Asunción, Belén, Heredia, Costa Rica, a few minutes from Juan Santamaría International Airport. Search for 'CasAguacate Hotel Boutique' on Waze or Google Maps. If you come by Uber, DiDi or taxi, follow the map so you aren't dropped off at the wrong place.
+
+Usuario  : Can you send me the address?
+Idioma   : en | Intención: location | Esperado: location/en | OK
+Bot      : 📍 Bosques de Doña Rosa, La Asunción, Belén, Heredia, Costa Rica, a few minutes from Juan Santamaría International Airport. Search for 'CasAguacate Hotel Boutique' on Waze or Google Maps. If you come by Uber, DiDi or taxi, follow the map so you aren't dropped off at the wrong place.
+
+==============================================================================
+Conversación 17: EN: Arrival / check-in
+------------------------------------------------------------------------------
+Usuario  : What time is check-in?
+Idioma   : en | Intención: checkin_arrival | Esperado: checkin_arrival/en | OK
+Bot      : Check-in from 15:00 (3:00 p.m.); check-out at 11:00 a.m. Before you arrive, please send us a photo of each guest's ID or passport (covering sensitive data). Your welcome message includes your 4-digit code: the same code opens the pedestrian gate and your room. Steps: 1) security at the gated community, 2) pedestrian gate, 3) your room's lock. Ask me about any of them.
+
+Usuario  : What are the arrival instructions?
+Idioma   : en | Intención: checkin_arrival | Esperado: checkin_arrival/en | OK
+Bot      : Check-in from 15:00 (3:00 p.m.); check-out at 11:00 a.m. Before you arrive, please send us a photo of each guest's ID or passport (covering sensitive data). Your welcome message includes your 4-digit code: the same code opens the pedestrian gate and your room. Steps: 1) security at the gated community, 2) pedestrian gate, 3) your room's lock. Ask me about any of them.
+
+==============================================================================
+Conversación 18: EN: Gated community
+------------------------------------------------------------------------------
+Usuario  : I'm at the security booth, what do I tell the guard?
+Idioma   : en | Intención: community_access | Esperado: community_access/en | OK
+Bot      : 🛂 At roundabout #2 of the gated community, the guard will ask for the driver's ID. Tell them the property number from your welcome message.
+
+==============================================================================
+Conversación 19: EN: Door lock and parking
+------------------------------------------------------------------------------
+Usuario  : I can't open the door
+Idioma   : en | Intención: door_lock | Esperado: door_lock/en | OK
+Bot      : 🔐 Pedestrian gate: place your hand on the keypad to wake it up (it beeps), enter your 4-digit code and press ✓. Your room uses the same code. To lock: from inside, turn the knob until it locks; from outside, pull the door closed and place your palm on the keypad until it locks.
+
+Usuario  : What is the lock code?
+Idioma   : en | Intención: door_lock | Esperado: door_lock/en | OK
+Bot      : 🔐 Pedestrian gate: place your hand on the keypad to wake it up (it beeps), enter your 4-digit code and press ✓. Your room uses the same code. To lock: from inside, turn the knob until it locks; from outside, pull the door closed and place your palm on the keypad until it locks.
+
+Usuario  : Where do I park the car?
+Idioma   : en | Intención: parking_gate | Esperado: parking_gate/en | OK
+Bot      : 🚗 If you come by car, the parking gate opens from the inside: turn the knob and pull the gate. To close it, push it until it is fully closed. There is one parking space per room; your space number is in your welcome message.
+
+==============================================================================
+Conversación 20: EN: Amenities and rules
+------------------------------------------------------------------------------
+Usuario  : Do you have wifi?
+Idioma   : en | Intención: amenities | Esperado: amenities/en | OK
+Bot      : Amenities: high-speed Wi-Fi (network and password are on the QR codes inside your room), A/C, TV with streaming, mini fridge, shared kitchen, dining area, TV lounge, terraces, BBQ area and private parking. On request: breakfast, airport transportation, laundry and luggage storage. There is no swimming pool.
+
+Usuario  : Are pets allowed?
+Idioma   : en | Intención: house_rules | Esperado: house_rules/en | OK
+Bot      : House rules: pets and visitors are not allowed; no parties or events; no smoking or vaping (there is a smoking booth in the parking area); quiet hours from 10 p.m. to 8 a.m. All guests must be registered before check-in. Breaking the rules carries a fine starting at USD 100.
+
+Usuario  : Can I smoke inside?
+Idioma   : en | Intención: house_rules | Esperado: house_rules/en | OK
+Bot      : House rules: pets and visitors are not allowed; no parties or events; no smoking or vaping (there is a smoking booth in the parking area); quiet hours from 10 p.m. to 8 a.m. All guests must be registered before check-in. Breaking the rules carries a fine starting at USD 100.
+
+==============================================================================
+Conversación 21: EN: Check-out and goodbye
+------------------------------------------------------------------------------
+Usuario  : What time is check-out?
+Idioma   : en | Intención: checkout | Esperado: checkout/en | OK
+Bot      : Check-out is at 11:00 a.m. Before leaving, turn off the A/C, lights and appliances, and make sure the main door and gates are closed. Late check-out is subject to availability. Thank you!
+
+Usuario  : Thanks, goodbye
+Idioma   : en | Intención: goodbye | Esperado: goodbye/en | OK
+Bot      : See you soon! Enjoy your stay. 🥑
+
+==============================================================================
+Conversación 22: EN: Emergency handoff
+------------------------------------------------------------------------------
+Usuario  : I have an emergency, I need to speak with the host
+Idioma   : en | Intención: contact_host | Esperado: contact_host/en | OK
+Bot      : I'm connecting you with Lore. 🙋‍♀️ I've let her know and she'll message you shortly. You can also write to reservations.casaguacate@gmail.com. [HANDOFF TO HUMAN]
+
+==============================================================================
+Conversación 23: EN: Unrecognized → escalation
+------------------------------------------------------------------------------
+Usuario  : Are you a bot?
+Idioma   : en | Intención: regex_chat | Esperado: regex_chat/en | OK
+Bot      : I'm Cas'aguacate's virtual assistant. I can help with rates, payments, availability, location and check-in. If you prefer, type 'talk to Lore'.
+
+Usuario  : qwerty
+Idioma   : en | Intención: fallback | Esperado: fallback/en | OK
+Bot      : Sorry, I didn't get that. 🤔 I can help with: rates, payments, availability, location, check-in (security booth, gate, door lock), check-out or talking to Lore.
+
+Usuario  : Do you sell concert tickets?
+Idioma   : en | Intención: fallback→contact_host | Esperado: fallback→contact_host/en | OK
+Bot      : I can't understand your request. So you don't have to wait: I'm connecting you with Lore. 🙋‍♀️ I've let her know and she'll message you shortly. You can also write to reservations.casaguacate@gmail.com. [HANDOFF TO HUMAN]
+
+==============================================================================
+Conversación 24: Cambio de idioma ES → EN → ES
+------------------------------------------------------------------------------
+Usuario  : Hola, ¿tienen alberca?
+Idioma   : es | Intención: amenities | Esperado: amenities/es | OK
+Bot      : Servicios: Internet de alta velocidad (la red y la clave están en los códigos QR de tu habitación), aire acondicionado, TV con streaming, mini refri, cocina compartida, comedor, sala de TV, terrazas, área de parrilla y parqueo privado. Bajo solicitud: desayuno, transporte al aeropuerto, lavandería y guarda de maletas. No tenemos piscina.
+
+Usuario  : Sorry, do you speak English? What is the wifi password?
+Idioma   : en | Intención: amenities | Esperado: amenities/en | OK
+Bot      : Amenities: high-speed Wi-Fi (network and password are on the QR codes inside your room), A/C, TV with streaming, mini fridge, shared kitchen, dining area, TV lounge, terraces, BBQ area and private parking. On request: breakfast, airport transportation, laundry and luggage storage. There is no swimming pool.
+
+Usuario  : ¿Cuánto cuesta la noche?
+Idioma   : es | Intención: rates | Esperado: rates/es | OK
+Bot      : La tarifa depende de la habitación (Apartamento Morfo y suites Tucán, Tortuga y Colibrí) y de tus fechas. Escríbenos a reservations.casaguacate@gmail.com o escribe 'hablar con Lore' y te enviamos la cotización.
+
+==============================================================================
+Conversación 25: Pagos y factura
+------------------------------------------------------------------------------
+Usuario  : ¿Cómo puedo pagar?
+Idioma   : es | Intención: payment | Esperado: payment/es | OK
+Bot      : Puedes pagar por SINPE Móvil, transferencia BAC (colones o dólares) o tarjeta; los datos de pago llegan con tu confirmación de reserva. Emitimos factura electrónica si tienes datos fiscales en Costa Rica, o tiquete electrónico para huéspedes extranjeros.
+
+Usuario  : ¿Aceptan SINPE móvil?
+Idioma   : es | Intención: payment | Esperado: payment/es | OK
+Bot      : Puedes pagar por SINPE Móvil, transferencia BAC (colones o dólares) o tarjeta; los datos de pago llegan con tu confirmación de reserva. Emitimos factura electrónica si tienes datos fiscales en Costa Rica, o tiquete electrónico para huéspedes extranjeros.
+
+Usuario  : ¿Me pueden dar factura electrónica?
+Idioma   : es | Intención: payment | Esperado: payment/es | OK
+Bot      : Puedes pagar por SINPE Móvil, transferencia BAC (colones o dólares) o tarjeta; los datos de pago llegan con tu confirmación de reserva. Emitimos factura electrónica si tienes datos fiscales en Costa Rica, o tiquete electrónico para huéspedes extranjeros.
+
+==============================================================================
+Conversación 26: EN: Payment and pool
+------------------------------------------------------------------------------
+Usuario  : Can I pay by card?
+Idioma   : en | Intención: payment | Esperado: payment/en | OK
+Bot      : You can pay by SINPE Móvil, BAC bank transfer (colones or dollars) or card; payment details are sent with your booking confirmation. We issue an electronic invoice (factura electrónica) if you have Costa Rican tax details, or an electronic receipt (tiquete electrónico) for international guests.
+
+Usuario  : Do you have a swimming pool?
+Idioma   : en | Intención: amenities | Esperado: amenities/en | OK
+Bot      : Amenities: high-speed Wi-Fi (network and password are on the QR codes inside your room), A/C, TV with streaming, mini fridge, shared kitchen, dining area, TV lounge, terraces, BBQ area and private parking. On request: breakfast, airport transportation, laundry and luggage storage. There is no swimming pool.
+
+Usuario  : Can I bring my dog?
+Idioma   : en | Intención: house_rules | Esperado: house_rules/en | OK
+Bot      : House rules: pets and visitors are not allowed; no parties or events; no smoking or vaping (there is a smoking booth in the parking area); quiet hours from 10 p.m. to 8 a.m. All guests must be registered before check-in. Breaking the rules carries a fine starting at USD 100.
+
+==============================================================================
+Pruebas de detección de idioma
+------------------------------------------------------------------------------
+OK    es (esperado es): Hola, ¿cómo estás?
+OK    es (esperado es): ¿Dónde está la casa?
+OK    es (esperado es): Quiero reservar para el fin de semana
+OK    en (esperado en): Hello, how are you?
+OK    en (esperado en): Where is the house?
+OK    en (esperado en): I want to book for the weekend
+OK    es (esperado es): Gracias
+OK    en (esperado en): Thanks
+OK    en (esperado en): Can I bring my dog?
+OK    es (esperado es): ¿Puedo llevar a mi perro?
+==============================================================================
+Resumen: 26 conversaciones, 61 turnos, 4 turnos en fallback (esperados).
+Intención + idioma correctos: 61/61
+Detección de idioma: 10/10
+==============================================================================
+Datos del negocio (Cas'aguacate)
+------------------------------------------------------------------------------
+OK    ¿Aceptan mascotas?
+OK    Can I bring my dog?
+OK    ¿Tienen alberca?
+OK    Do you have a pool?
+OK    ¿Cuánto cuesta la noche?
+OK    How much is it per night?
+OK    ¿Cómo puedo pagar?
+OK    Can I pay by card?
+OK    ¿Dónde están ubicados?
+OK    Where are you located?
+OK    ¿A qué hora es el check-in?
+OK    What time is check-out?
+OK    Quiero hablar con la anfitriona
+OK    Ninguna respuesta menciona: MXN, Las Palmas, Almendro, Marina, +52, alberca,, Mascotas pequeñas, Small pets

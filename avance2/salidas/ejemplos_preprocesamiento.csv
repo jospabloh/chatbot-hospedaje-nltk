@@ -1,0 +1,5 @@
+original,normalizado,tokens,sin_stopwords,stemming
+¿Cuánto cuesta la noche?,cuanto cuesta la noche,"['cuanto', 'cuesta', 'la', 'noche']",cuanto cuesta noche,cuant cuest noch
+No me abre la chapa!!,no me abre la chapa,"['no', 'me', 'abre', 'la', 'chapa']",no abre chapa,no abre chap
+"Holaaa, ¿a qué hora es el check-in?",hola   a que hora es el check in,"['hola', 'a', 'que', 'hora', 'es', 'el', 'check', 'in']",hola que hora check in,hol que hor check in
+El portón eléctrico no responde,el porton electrico no responde,"['el', 'porton', 'electrico', 'no', 'responde']",porton electrico no responde,porton electr no respond
