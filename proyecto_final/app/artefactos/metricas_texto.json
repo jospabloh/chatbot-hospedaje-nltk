@@ -1,0 +1,209 @@
+{
+ "semilla": 42,
+ "umbral_texto": 0.4,
+ "es": {
+  "frases": 681,
+  "n_prueba": 137,
+  "accuracy": 0.7518,
+  "f1_macro": 0.7462,
+  "f1_macro_cv": 0.7059,
+  "f1_macro_cv_std": 0.0535,
+  "por_intencion": {
+   "acceso_fraccionamiento": {
+    "precision": 0.444,
+    "recall": 0.571,
+    "f1-score": 0.5,
+    "support": 7.0
+   },
+   "cerradura": {
+    "precision": 0.8,
+    "recall": 0.923,
+    "f1-score": 0.857,
+    "support": 13.0
+   },
+   "contactar_anfitrion": {
+    "precision": 0.778,
+    "recall": 0.636,
+    "f1-score": 0.7,
+    "support": 11.0
+   },
+   "disponibilidad": {
+    "precision": 0.833,
+    "recall": 0.833,
+    "f1-score": 0.833,
+    "support": 6.0
+   },
+   "early_late_checkout": {
+    "precision": 0.667,
+    "recall": 0.8,
+    "f1-score": 0.727,
+    "support": 10.0
+   },
+   "horarios": {
+    "precision": 0.857,
+    "recall": 0.667,
+    "f1-score": 0.75,
+    "support": 9.0
+   },
+   "llegada_tarde": {
+    "precision": 0.571,
+    "recall": 0.8,
+    "f1-score": 0.667,
+    "support": 10.0
+   },
+   "porton_estacionamiento": {
+    "precision": 0.909,
+    "recall": 0.909,
+    "f1-score": 0.909,
+    "support": 11.0
+   },
+   "reglas": {
+    "precision": 1.0,
+    "recall": 0.667,
+    "f1-score": 0.8,
+    "support": 6.0
+   },
+   "reportar_problema": {
+    "precision": 0.636,
+    "recall": 0.7,
+    "f1-score": 0.667,
+    "support": 10.0
+   },
+   "saludo_cortesia": {
+    "precision": 1.0,
+    "recall": 0.9,
+    "f1-score": 0.947,
+    "support": 10.0
+   },
+   "servicios": {
+    "precision": 0.75,
+    "recall": 0.8,
+    "f1-score": 0.774,
+    "support": 15.0
+   },
+   "tarifas": {
+    "precision": 0.667,
+    "recall": 0.571,
+    "f1-score": 0.615,
+    "support": 7.0
+   },
+   "ubicacion": {
+    "precision": 0.875,
+    "recall": 0.583,
+    "f1-score": 0.7,
+    "support": 12.0
+   }
+  },
+  "cobertura_umbral": 0.8321,
+  "accuracy_cubierta": 0.8158,
+  "fuera_de_alcance_bajo_umbral": 0.125
+ },
+ "en": {
+  "frases": 350,
+  "n_prueba": 70,
+  "accuracy": 0.7286,
+  "f1_macro": 0.7204,
+  "f1_macro_cv": 0.6692,
+  "f1_macro_cv_std": 0.0353,
+  "por_intencion": {
+   "acceso_fraccionamiento": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1-score": 0.889,
+    "support": 5.0
+   },
+   "cerradura": {
+    "precision": 0.833,
+    "recall": 1.0,
+    "f1-score": 0.909,
+    "support": 5.0
+   },
+   "contactar_anfitrion": {
+    "precision": 0.833,
+    "recall": 1.0,
+    "f1-score": 0.909,
+    "support": 5.0
+   },
+   "disponibilidad": {
+    "precision": 0.625,
+    "recall": 1.0,
+    "f1-score": 0.769,
+    "support": 5.0
+   },
+   "early_late_checkout": {
+    "precision": 0.75,
+    "recall": 0.6,
+    "f1-score": 0.667,
+    "support": 5.0
+   },
+   "horarios": {
+    "precision": 1.0,
+    "recall": 0.6,
+    "f1-score": 0.75,
+    "support": 5.0
+   },
+   "llegada_tarde": {
+    "precision": 0.833,
+    "recall": 1.0,
+    "f1-score": 0.909,
+    "support": 5.0
+   },
+   "porton_estacionamiento": {
+    "precision": 0.714,
+    "recall": 1.0,
+    "f1-score": 0.833,
+    "support": 5.0
+   },
+   "reglas": {
+    "precision": 0.5,
+    "recall": 0.6,
+    "f1-score": 0.545,
+    "support": 5.0
+   },
+   "reportar_problema": {
+    "precision": 0.333,
+    "recall": 0.2,
+    "f1-score": 0.25,
+    "support": 5.0
+   },
+   "saludo_cortesia": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1-score": 1.0,
+    "support": 5.0
+   },
+   "servicios": {
+    "precision": 0.286,
+    "recall": 0.4,
+    "f1-score": 0.333,
+    "support": 5.0
+   },
+   "tarifas": {
+    "precision": 1.0,
+    "recall": 0.6,
+    "f1-score": 0.75,
+    "support": 5.0
+   },
+   "ubicacion": {
+    "precision": 1.0,
+    "recall": 0.4,
+    "f1-score": 0.571,
+    "support": 5.0
+   }
+  },
+  "cobertura_umbral": 0.6714,
+  "accuracy_cubierta": 0.8936,
+  "fuera_de_alcance_bajo_umbral": 1.0
+ },
+ "tono_es": {
+  "n_prueba": 36,
+  "accuracy": 0.6111,
+  "f1_macro": 0.6026
+ },
+ "tono_en": {
+  "n_prueba": 18,
+  "accuracy": 0.5556,
+  "f1_macro": 0.5571
+ },
+ "tono_desplegado": false
+}
