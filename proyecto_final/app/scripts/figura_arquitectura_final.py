@@ -29,7 +29,7 @@ box(26, 28, 22, 17, "Interfaz Streamlit", "Chat bilingüe, subida\nde foto, traz
 box(58, 28, 20, 17, "API REST Flask", "/health /chat /image\n/agent /metrics\nvalidación, logs JSON,\nmétricas, token", YELLOW)
 box(86, 46, 22, 22, "Agente híbrido", "Capa reactiva:\nurgencias, datos\nsensibles, pedir humano,\nfuera de alcance, política\nCapa deliberativa:\nestado y decisión", YELLOW)
 box(86, 4, 22, 18, "Clasificador visual", "EfficientNetB0 congelada\n(ImageNet) + capa de 6\nclases (5 + «otro»),\numbral 0.60", "#E8F0FB")
-box(116, 27, 23, 18, "Chatbot NLP", "TF-IDF (palabras +\ncaracteres) + SVM\ncalibrada por idioma\n14 intenciones, umbral 0.40", "#E8F0FB")
+box(116, 27, 23, 18, "Chatbot NLP", "TF-IDF (palabras +\ncaracteres) + SVM\ncalibrada por idioma\n15 intenciones, umbral 0.40", "#E8F0FB")
 box(116, 52, 23, 16, "Base de conocimiento", "Datos reales de\nCas'aguacate (sin\ncódigos ni Wi-Fi)", GREY)
 box(58, 4, 20, 14, "Anfitriona (Lore)", "El agente marca el caso\n(avisar_anfitriona) y lo\nregistra; el canal de\nenvío es mejora futura", RED)
 arrow(16, 36.5, 26, 36.5, "texto +\nfoto", dy=1.2)
