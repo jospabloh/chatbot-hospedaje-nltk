@@ -454,10 +454,10 @@ me das el numero de la dueña|contactar_anfitrion
 esto no lo resuelves tu, pasame con alguien|contactar_anfitrion
 que me contacte la anfitriona porfavor|contactar_anfitrion
 hablar con persona|contactar_anfitrion
-quiero cancelar mi reserva, con quien veo eso|contactar_anfitrion
-necesito un reembolso|contactar_anfitrion
+quiero cancelar mi reserva, con quien veo eso|cancelacion
+necesito un reembolso|cancelacion
 me pasas con atencion a clientes|contactar_anfitrion
-quiero hacer un cambio de fechas con la duena|contactar_anfitrion
+quiero hacer un cambio de fechas con la duena|cancelacion
 hay un encargado en sitio?|contactar_anfitrion
 tengo una emergencia, llamen a alguien|contactar_anfitrion
 quisiera que me llame alguien de ustedes|contactar_anfitrion
@@ -680,3 +680,33 @@ si reservamos seguido hay mejor precio|contactar_anfitrion
 necesito cotizacion para 5 personas de la empresa|contactar_anfitrion
 hay tarifa especial entre semana para trabajo|contactar_anfitrion
 podemos dejar un contrato abierto para colaboradores|contactar_anfitrion
+como puedo cancelar mi reservacion|cancelacion
+como cancelo mi reserva|cancelacion
+quiero cancelar mi reservacion|cancelacion
+necesito cancelar la reserva|cancelacion
+se puede cancelar la reserva|cancelacion
+puedo cancelar sin cargo|cancelacion
+hasta cuando puedo cancelar|cancelacion
+cual es la politica de cancelacion|cancelacion
+politica de cancelacion por favor|cancelacion
+cuanto cobran si cancelo|cancelacion
+me devuelven el dinero si cancelo|cancelacion
+hay reembolso si cancelo|cancelacion
+me hacen reembolso|cancelacion
+quiero que me reembolsen|cancelacion
+cuando me devuelven mi anticipo|cancelacion
+pierdo el anticipo si cancelo|cancelacion
+ya no voy a poder ir|cancelacion
+ya no vamos a ir|cancelacion
+al final no vamos a ir|cancelacion
+no podremos viajar y quiero cancelar|cancelacion
+tuve un imprevisto y no puedo ir|cancelacion
+quiero anular mi reservacion|cancelacion
+como anulo la reserva|cancelacion
+puedo cambiar las fechas de mi reservacion|cancelacion
+quiero reprogramar mi reserva|cancelacion
+se pueden mover las fechas|cancelacion
+puedo pasar mi reserva a otra fecha|cancelacion
+cancelacion gratuita|cancelacion
+como cancelo desde la plataforma|cancelacion
+que pasa si cancelo a ultima hora|cancelacion
