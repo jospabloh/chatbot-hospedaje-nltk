@@ -175,6 +175,22 @@ Plan: la UI en Streamlit Community Cloud y la API Flask en la Mac de JP expuesta
 
 Limitación: si la Mac o el túnel están apagados, la UI muestra el aviso de servicio no disponible.
 
+## Despliegue en la nube (Hugging Face Spaces, Docker)
+
+Archivos en `proyecto_final/deploy/`: `Dockerfile` (imagen con gunicorn, Flask y TensorFlow en CPU, puerto 7860), `preparar_contexto.sh` (arma la carpeta de construccion), `publicar_space.sh` y `publicar_space.py` (crean el Space con `huggingface_hub`, guardan el secreto `API_TOKEN` leido de un archivo y suben el codigo), `verificar_nube.sh` (prueba de humo publica) y `README_space.md` (cabecera del Space). La API en la nube se niega a arrancar sin `API_TOKEN` de al menos 32 caracteres (`app/arrancar_nube.sh`).
+
+Publicar (una vez, y cada vez que cambie el codigo):
+1. Iniciar sesion sin dejar el token en el historial: `hf auth login` (pega el token con permiso de escritura en el prompt; se guarda en `~/.cache/huggingface/token`). Si `hf` no esta instalado, `publicar_space.sh` crea un venv con `huggingface_hub` en `~/haru-work/pf-hf-venv` y ahi esta `bin/hf`.
+2. `proyecto_final/deploy/publicar_space.sh` (el usuario de Hugging Face sale de la sesion; el `API_TOKEN` se lee de `~/haru-work/pf-deploy/.env` y no se imprime). La URL queda `https://<usuario>-casaguacate-api.hf.space`.
+3. `proyecto_final/deploy/verificar_nube.sh https://<usuario>-casaguacate-api.hf.space` guarda `app/evidencias/prueba_humo_nube.txt`.
+4. Poner esa URL en el Secret `API_URL` de Streamlit Cloud.
+
+Antes de la demo: un Space gratuito se duerme por inactividad y tarda unos minutos en despertar. Abrir `https://<usuario>-casaguacate-api.hf.space/health` (o correr `verificar_nube.sh`, que espera hasta 4 minutos) y confirmar 200 antes de empezar.
+
+Al terminar la calificacion: revocar el token en https://huggingface.co/settings/tokens, correr `hf auth logout` y pausar o borrar el Space.
+
+Construccion local: `deploy/preparar_contexto.sh /tmp/ctx && docker build -t casaguacate-api /tmp/ctx`.
+
 ## Limitaciones conocidas
 
 - El aviso a la anfitriona está marcado y registrado (log `aviso_anfitriona` y métrica `avisar_anfitriona:si`), pero no hay un canal de envío conectado. Las respuestas dicen que se avisará; mientras no exista el canal, es trabajo futuro y debe decirse así en la demo.
