@@ -24,9 +24,11 @@ INTENT_TO_REPLY = {
     "tarifas": "rates", "ubicacion": "location", "cerradura": "door_lock", "porton_estacionamiento": "parking_gate",
     "acceso_fraccionamiento": "community_access", "servicios": "amenities", "reglas": "house_rules",
     "llegada_tarde": "checkin_arrival", "contactar_anfitrion": "contact_host",
+    "cancelacion": "cancellation",   # cancel / refund / change dates: general reply, no deadlines or amounts (see chatbot_hospedaje.py)
 }
 ACCESS_INTENTS = {"cerradura", "porton_estacionamiento", "acceso_fraccionamiento"}
 ESCALATE_INTENTS = {"early_late_checkout", "contactar_anfitrion"}
+NOTIFY_INTENTS = {"cancelacion"}   # answered by the bot, and the host is told too (she decides on cancellations and refunds)
 PROBLEM_INTENTS = ACCESS_INTENTS | {"reportar_problema"}
 IMAGE_TO_INTENT = {"cerradura": "cerradura", "porton": "porton_estacionamiento", "caseta": "acceso_fraccionamiento",
                    "controles": "reportar_problema", "interior": "reportar_problema"}

@@ -146,6 +146,15 @@ def test_cambio_de_idioma_de_la_interfaz(monkeypatch):
     assert not app.exception and "Cas'aguacate guest assistant" in app.title[0].value
 
 
+def test_aviso_de_demo_academica_visible_en_ambos_idiomas(monkeypatch):
+    # The public URL uses real business data: a real guest must see it is a demo and that no alert reaches the host
+    app = run_app(monkeypatch)
+    assert any("Demo académica" in w.value and "no envía avisos reales" in w.value for w in app.warning)
+    app.sidebar.selectbox[0].select("en").run()
+    assert not app.exception
+    assert any("Academic demo" in w.value and "does not send real alerts" in w.value for w in app.warning)
+
+
 def test_no_hay_campo_para_cambiar_la_url_de_la_api_en_la_ui_publica(monkeypatch):
     monkeypatch.setenv("API_TOKEN", "secreto")
     monkeypatch.setenv("ALLOW_API_URL_OVERRIDE", "1")   # even with the flag, a configured token disables the override

@@ -211,3 +211,17 @@ def test_answer_text_componente_chatbot_solo(services):
 def test_pagos_se_responden_aunque_el_corpus_no_tenga_intencion_de_pagos(agent):
     result = agent.run("como puedo pagar")
     assert result.action == "RESPONDER" and "SINPE" in result.reply
+
+
+# Cancelacion: antes el bot contestaba "Perdon, no entendi" a "¿como puedo cancelar mi reservacion?" (app viva, 27-nov).
+# Un huesped que quiere cancelar y recibe una aclaracion vacia se va a la plataforma o escribe molesto: la pregunta es frecuente
+# y tiene que tener respuesta. El repo no trae politica de cancelacion, asi que la respuesta no puede inventar plazos ni montos.
+@pytest.mark.parametrize("text,lang,pointer", [("como puedo cancelar mi reservacion", "es", "plataforma de reserva"),
+                                               ("how can i cancel my booking", "en", "booking platform")])
+def test_cancelacion_se_responde_sin_inventar_condiciones(agent, text, lang, pointer):
+    result = agent.run(text)
+    assert result.action == "RESPONDER_Y_AVISAR" and result.final_intent == "cancelacion" and result.lang == lang
+    assert result.notify_host and result.state.escalada, "la anfitriona decide cancelaciones y reembolsos: debe recibir aviso"
+    assert pointer in result.reply and "Lore" in result.reply
+    assert not re.search(r"\d", result.reply), "no debe dar plazos, porcentajes ni montos"
+    assert "no entend" not in result.reply.lower() and "did not quite get" not in result.reply
