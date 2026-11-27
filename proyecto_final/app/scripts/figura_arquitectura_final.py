@@ -8,7 +8,7 @@ from matplotlib.patches import FancyBboxPatch
 
 OUT = Path(__file__).resolve().parents[1] / "docs" / "arquitectura_final.png"
 fig, ax = plt.subplots(figsize=(14, 7.4))
-ax.set_xlim(0, 140); ax.set_ylim(0, 74); ax.axis("off")
+ax.set_xlim(0, 143); ax.set_ylim(-3, 74); ax.axis("off")
 
 
 def box(x, y, w, h, title, text, color="#E8F0FB"):
@@ -24,6 +24,9 @@ def arrow(x1, y1, x2, y2, label="", dy=1.3, dx=0.0):
 
 
 GREY, GREEN, RED, YELLOW = "#EDEDED", "#E3F1E3", "#FBE3E0", "#FFF2CC"
+# Contenedor unico de Streamlit Community Cloud: interfaz, API Flask, agente y modelos.
+ax.add_patch(FancyBboxPatch((23, 2.0), 117.5, 67.5, boxstyle="round,pad=0.3,rounding_size=1.5", fc="none", ec="#555555", lw=1.2, ls="--"))
+ax.text(24.5, 66.5, "Contenedor único en Streamlit Community Cloud", ha="left", va="top", fontsize=8.5, style="italic", family="serif")
 box(1, 28, 15, 17, "Huésped", "Escribe en\nespañol o inglés\ny adjunta\nuna foto", GREY)
 box(26, 28, 22, 17, "Interfaz Streamlit", "Chat bilingüe, subida\nde foto, traza del\nagente, estado del\nservicio (Cloud)", GREEN)
 box(58, 28, 20, 17, "API REST Flask", "/health /chat /image\n/agent /metrics\nvalidación, logs JSON,\nmétricas, token", YELLOW)
@@ -31,18 +34,18 @@ box(86, 46, 22, 22, "Agente híbrido", "Capa reactiva:\nurgencias, datos\nsensib
 box(86, 4, 22, 18, "Clasificador visual", "EfficientNetB0 congelada\n(ImageNet) + capa de 6\nclases (5 + «otro»),\numbral 0.60", "#E8F0FB")
 box(116, 27, 23, 18, "Chatbot NLP", "TF-IDF (palabras +\ncaracteres) + SVM\ncalibrada por idioma\n15 intenciones, umbral 0.40", "#E8F0FB")
 box(116, 52, 23, 16, "Base de conocimiento", "Datos reales de\nCas'aguacate (sin\ncódigos ni Wi-Fi)", GREY)
-box(58, 4, 20, 14, "Anfitriona (Lore)", "El agente marca el caso\n(avisar_anfitriona) y lo\nregistra; el canal de\nenvío es mejora futura", RED)
+box(1, 4, 19, 16, "Anfitriona (Lore)", "El agente marca el caso\n(avisar_anfitriona) y lo\nregistra; el canal de\nenvío es mejora futura", RED)
 arrow(16, 36.5, 26, 36.5, "texto +\nfoto", dy=1.2)
-arrow(48, 36.5, 58, 36.5, "HTTPS", dy=1.2)
+arrow(48, 36.5, 58, 36.5, "HTTP\nlocal", dy=1.2)
 arrow(78, 40, 86, 55, "texto, foto,\nestado", dy=2, dx=-6.5)
 arrow(86, 50, 78, 36, "decisión\n+ traza", dy=-6.5, dx=2.5)
 arrow(97, 46, 97, 22, "foto", dy=0, dx=2.5)
 arrow(108, 54, 116, 40, "texto", dy=3.5, dx=1)
 arrow(127, 45, 127, 52, "intención", dy=0, dx=5)
 arrow(108, 62, 116, 62, "respuesta", dy=1.2)
-arrow(68, 28, 68, 18, "escala", dy=0, dx=3)
+arrow(58, 29, 20, 15, "escala", dy=-2.5, dx=4)
 ax.text(70, 71.5, "Arquitectura final: asistente de check-in de Cas'aguacate", ha="center", fontsize=12.5, weight="bold", family="serif")
-ax.text(70, 1.2, "La UI vive en Streamlit Community Cloud; la API Flask y los modelos corren en Hugging Face Spaces (HTTPS, contenedor Docker). "
+ax.text(70, -1.5, "La interfaz, la API Flask (que escucha en 127.0.0.1) y los modelos corren en el mismo contenedor de Streamlit Community Cloud. "
         "Nada del huésped se guarda en el servidor.", ha="center", fontsize=8, family="serif", style="italic")
 OUT.parent.mkdir(exist_ok=True)
 plt.savefig(OUT, dpi=150, bbox_inches="tight")

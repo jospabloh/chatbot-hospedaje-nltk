@@ -4,7 +4,7 @@
 
 <h1 class="titulo-doc">Asistente inteligente de check-in para Cas'aguacate</h1>
 
-<p class="subt">Aplicación web con chatbot de PLN, clasificador visual y agente híbrido, desplegada con API REST</p>
+<p class="subt">Aplicación web con chatbot de PLN, clasificador visual y agente híbrido, desplegada con su API REST integrada en Streamlit</p>
 
 <p class="datos"><strong>Proyecto Final</strong><br>
 Curso: Desarrollo de aplicaciones con inteligencia artificial (CC.MBIA2602FLE)</p>
@@ -25,7 +25,7 @@ Curso: Desarrollo de aplicaciones con inteligencia artificial (CC.MBIA2602FLE)</
 
 ## Resumen
 
-Este documento describe el diseño, la implementación, la evaluación y el despliegue de un asistente de check-in para Cas'aguacate, un hospedaje pequeño ubicado en La Asunción de Belén, Heredia, Costa Rica. El sistema integra tres componentes de inteligencia artificial en una aplicación web: un chatbot de procesamiento de lenguaje natural (PLN) bilingüe (español e inglés) que clasifica 15 intenciones, un clasificador visual basado en EfficientNetB0 que reconoce fotografías de los accesos de la propiedad, y un agente híbrido que combina una capa reactiva de reglas de seguridad con una capa deliberativa que decide si responder, pedir una foto, aclarar o escalar el caso a la anfitriona. La interfaz está construida con Streamlit y consume una API REST en Flask con validación de entradas, códigos de error estables, límite de peticiones, registros estructurados y un endpoint de métricas.
+Este documento describe el diseño, la implementación, la evaluación y el despliegue de un asistente de check-in para Cas'aguacate, un hospedaje pequeño ubicado en La Asunción de Belén, Heredia, Costa Rica. El sistema integra tres componentes de inteligencia artificial en una aplicación web: un chatbot de procesamiento de lenguaje natural (PLN) bilingüe (español e inglés) que clasifica 15 intenciones, un clasificador visual basado en EfficientNetB0 que reconoce fotografías de los accesos de la propiedad, y un agente híbrido que combina una capa reactiva de reglas de seguridad con una capa deliberativa que decide si responder, pedir una foto, aclarar o escalar el caso a la anfitriona. La interfaz está construida con Streamlit y consume por HTTP una API REST en Flask con validación de entradas, códigos de error estables, límite de peticiones, registros estructurados y un endpoint de métricas. Toda la solución se despliega en Streamlit Community Cloud: la API corre dentro del mismo contenedor de la aplicación y no se expone en una URL pública separada (sección 10.2).
 
 En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 (español) y 0.773 (inglés), con F1 macro por validación cruzada de 0.704 y 0.700 y AUC OvR macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza 0.974 sobre 39 imágenes de Wikimedia y 0.841 sobre 44 recortes reales del hotel, con la advertencia de que estas últimas tienen clases con uno a tres ejemplos. Pasan las 218 pruebas automatizadas y la prueba de humo de 9 comprobaciones. El documento analiza además desempeño, escalabilidad, mantenibilidad, ética, sesgos, limitaciones y mejoras futuras.
 
@@ -57,41 +57,40 @@ Construir y desplegar una aplicación web que atienda el check-in de Cas'aguacat
 2. Reconocer fotografías de los accesos (cerradura, portón, caseta, controles, interior) y rechazar las que no pertenecen al dominio mediante una clase «otro» y un umbral de confianza.
 3. Implementar un agente que perciba, decida y actúe, con reglas de seguridad que no dependan de los modelos de aprendizaje.
 4. Exponer los servicios mediante una API REST con manejo de errores, validación, registros y métricas, y consumirla desde una interfaz Streamlit.
-5. Desplegar la aplicación con una URL pública y reunir evidencias de pruebas y de despliegue.
+5. Desplegar toda la solución, interfaz y API REST, en Streamlit Community Cloud con una única URL pública, y reunir evidencias de pruebas y de despliegue.
 6. Analizar desempeño, escalabilidad, mantenibilidad, ética y sesgos, y proponer mejoras.
 
 ## 3. Metodología
 
 ### 3.1 Datos
 
-El corpus de intenciones fue elaborado para el proyecto y contiene 711 frases en español y 375 en inglés, distribuidas en 15 intenciones (tarifas, ubicación, cerradura, portón y estacionamiento, acceso al fraccionamiento, servicios, reglas, horarios, llegada tarde, early o late check-out, disponibilidad, reportar un problema, contactar a la anfitriona, saludo y cortesía, y cancelación). La intención de cancelación se incorporó durante el Proyecto Final a partir de un hallazgo de pruebas: la interfaz pública respondía «no entendí» a la pregunta de cómo cancelar una reservación. La respuesta de cancelación es general y no incluye plazos ni montos, porque el repositorio no contiene una política de cancelación del negocio.
+El corpus de intenciones fue elaborado para el proyecto y contiene 711 frases en español y 375 en inglés, distribuidas en 15 intenciones (tarifas, ubicación, cerradura, portón y estacionamiento, acceso al fraccionamiento, servicios, reglas, horarios, llegada tarde, early o late check-out, disponibilidad, reportar un problema, contactar a la anfitriona, saludo y cortesía, y cancelación). La intención de cancelación se incorporó durante el Proyecto Final a partir de un hallazgo de pruebas (la interfaz respondía «no entendí» a cómo cancelar una reservación); su respuesta es general, sin plazos ni montos, porque el repositorio no contiene una política de cancelación del negocio.
 
-Para visión se usan dos fuentes. La primera es un conjunto de imágenes públicas de Wikimedia Commons (256 imágenes únicas tras eliminar casi duplicados con un hash perceptual, y 6 imágenes fuera de dominio), cuyos créditos están en el repositorio. La segunda son las imágenes reales que envió el negocio: 33 páginas de un folleto del hotel, de las cuales se extrajeron 44 recortes útiles (25 de interiores, 15 de otro tipo, 3 de portón y 1 de cerradura). No hay recortes de caseta ni de controles. Las páginas del folleto y sus recortes no se publican en el repositorio porque muestran accesos de la propiedad; solo se guardan las etiquetas y las métricas. Las imágenes de galería pública de Wikimedia Commons sí están en el repositorio (`avance2/datos`).
+Para visión se usan dos fuentes. La primera es un conjunto de imágenes públicas de Wikimedia Commons (256 imágenes únicas tras eliminar casi duplicados con un hash perceptual, y 6 fuera de dominio), cuyos créditos están en el repositorio (`avance2/datos`). La segunda son las imágenes reales que envió el negocio: 33 páginas de un folleto del hotel, de las cuales se extrajeron 44 recortes útiles (25 de interiores, 15 de otro tipo, 3 de portón y 1 de cerradura), sin recortes de caseta ni de controles. Esos recortes no se publican porque muestran accesos de la propiedad; solo se guardan las etiquetas y las métricas.
 
 ### 3.2 Partición, semillas y métricas
 
-Todas las particiones son reproducibles con la semilla 42. El texto se divide 80/20 con estratificación por intención. Las imágenes de Wikimedia se dividen 70/15/15, también estratificadas. Para las fotografías reales se usa validación dejando fuera una toma completa por vez, de modo que una misma escena nunca esté en entrenamiento y en prueba a la vez. Las métricas de clasificación son exactitud, precisión, exhaustividad (recall), F1 por clase y F1 macro, matriz de confusión, AUC uno contra el resto y precisión promedio (Fawcett, 2006; Saito y Rehmsmeier, 2015). Dado que las clases están desbalanceadas, se prefiere el F1 macro a la exactitud para comparar versiones (He y Garcia, 2009).
+Todas las particiones son reproducibles con la semilla 42. El texto se divide 80/20 con estratificación por intención; las imágenes de Wikimedia, 70/15/15, también estratificadas; y con las fotografías reales se deja fuera una toma completa por vez, de modo que una misma escena nunca esté en entrenamiento y en prueba a la vez. Las métricas son exactitud, precisión, exhaustividad, F1 por clase y macro, matriz de confusión, AUC uno contra el resto y precisión promedio (Fawcett, 2006; Saito y Rehmsmeier, 2015); con clases desbalanceadas se prefiere el F1 macro a la exactitud (He y Garcia, 2009).
 
 ### 3.3 Herramientas
 
-El núcleo está escrito en Python. El PLN usa scikit-learn (Pedregosa et al., 2011) y NLTK (Bird et al., 2009); la visión usa TensorFlow y Keras (Abadi et al., 2016; Chollet, 2015); la API usa Flask (Pallets, s. f.) y gunicorn; la interfaz usa Streamlit (Streamlit, s. f.); las pruebas usan pytest; y el despliegue de la API usa Docker y Hugging Face Spaces (antes, Cloudflare Tunnel). Las versiones fijadas están en `proyecto_final/app/requirements.txt` (Flask 3.1.3, gunicorn 23.0.0, scikit-learn 1.6.1, TensorFlow 2.16.2, NLTK 3.9.2).
+El núcleo está escrito en Python: scikit-learn (Pedregosa et al., 2011) y NLTK (Bird et al., 2009) para el PLN; TensorFlow y Keras (Abadi et al., 2016; Chollet, 2015) para la visión; Flask (Pallets, s. f.) y gunicorn para la API; Streamlit (Streamlit, s. f.) para la interfaz y el despliegue (Docker con Hugging Face Spaces y Cloudflare Tunnel se evaluaron y se descartaron, sección 10.2); y pytest para las pruebas. Las versiones fijadas están en `proyecto_final/app/requirements.txt` (Flask 3.1.3, gunicorn 23.0.0, scikit-learn 1.6.1, TensorFlow 2.16.2, NLTK 3.9.2).
 
-[NOTA_USO_IA]
 
 ## 4. Arquitectura general
 
-El sistema se organiza en capas con responsabilidades separadas (figura 1). El huésped interactúa con una interfaz Streamlit, que envía texto, fotografía opcional y el estado de la conversación a una API REST en Flask. La API valida las entradas y entrega el caso al agente híbrido, que consulta al chatbot de PLN, al clasificador visual y a la base de conocimiento, y devuelve una acción, una respuesta y una traza de decisiones.
+El sistema se organiza en capas con responsabilidades separadas (figura 1). El huésped interactúa con una interfaz Streamlit, que envía texto, fotografía opcional y el estado de la conversación, por HTTP, a una API REST en Flask que corre dentro del mismo contenedor de la aplicación (sección 10.2). La API valida las entradas y entrega el caso al agente híbrido, que consulta al chatbot de PLN, al clasificador visual y a la base de conocimiento, y devuelve una acción, una respuesta y una traza de decisiones.
 
 <figure>
 <img src="../app/docs/arquitectura_final.png" alt="Arquitectura final del sistema">
-<figcaption><strong>Figura 1.</strong> Arquitectura final. Fuente: <code>app/docs/arquitectura_final.png</code>, generada con <code>scripts/figura_arquitectura_final.py</code>.</figcaption>
+<figcaption><strong>Figura 1.</strong> Arquitectura final. La API y la interfaz comparten un único despliegue en Streamlit Community Cloud. Fuente: <code>app/docs/arquitectura_final.png</code>, generada con <code>scripts/figura_arquitectura_final.py</code>.</figcaption>
 </figure>
 
 Tres decisiones de diseño merecen explicación.
 
-**La API no guarda nada del huésped.** El estado de la conversación (idioma, número de turnos, fallos consecutivos, si ya se pidió una foto, intención pendiente y si ya se escaló) viaja en cada petición y regresa en la respuesta. El cliente lo conserva. Esto simplifica el despliegue, elimina una base de datos con datos personales y facilita las pruebas, a costa de que el servidor no pueda reconstruir una conversación por su cuenta.
+**La API no guarda nada del huésped.** El estado de la conversación (idioma, número de turnos, fallos consecutivos, si ya se pidió una foto, intención pendiente y si ya se escaló) viaja en cada petición y regresa en la respuesta. El cliente lo conserva. Esto simplifica el despliegue, elimina una base de datos con datos personales y facilita las pruebas, a costa de que el servidor no reconstruya una conversación por su cuenta.
 
-**Los modelos se cargan una vez y se comparten.** El clasificador de intenciones (un archivo `.joblib` por idioma) y la cabeza del clasificador visual (unos 90 KB) están en el repositorio; los pesos del backbone de imágenes se descargan de Keras la primera vez. Si el backbone no se puede cargar, la API arranca de todos modos, `/health` lo informa y las fotografías reciben una respuesta amable en lugar de un error.
+**Los modelos se cargan una vez y se comparten.** El clasificador de intenciones (un archivo `.joblib` por idioma) y la cabeza del clasificador visual (unos 90 KB) están en el repositorio; los pesos del backbone de imágenes se descargan de Keras la primera vez. Si el backbone no se carga, la API arranca igual, `/health` lo informa y las fotografías reciben una respuesta amable.
 
 **La base de conocimiento es única.** Las respuestas viven en el módulo del Avance 1, de modo que los datos del negocio tienen una sola fuente. Los códigos de acceso, las claves de Wi-Fi y los números de propiedad nunca se escriben ahí: el huésped los recibe en su mensaje de bienvenida y las respuestas solo indican dónde encontrarlos.
 
@@ -266,7 +265,7 @@ En esos casos, quien decidió fue el texto (12), la coincidencia de texto e imag
 
 ### 8.1 Interfaz Streamlit
 
-La interfaz está en `app/ui/streamlit_app.py` y consume la API sin cargar ningún modelo. Usa `st.session_state` para conservar entre ejecuciones el idioma, el historial de mensajes, el estado del agente, un identificador de sesión generado por huésped y los resultados de salud y métricas. Para la fotografía usa `st.file_uploader` restringido a jpg, jpeg y png; después de enviar, se incrementa una clave del cargador para limpiarlo. El chat se construye con `st.chat_message`, y cada respuesta del agente tiene un panel desplegable con la traza de decisiones (componente, evento y datos), lo que da transparencia sobre por qué se respondió o se escaló. Los errores de la API se muestran como advertencias en lenguaje amable, con el código estable como referencia, y un indicador en la barra lateral muestra si la API está conectada. La interfaz tiene cuatro pestañas (Asistente, Cómo funciona, Estado del servicio y Privacidad y ética), es bilingüe, informa desde el primer mensaje que el huésped habla con una inteligencia artificial y puede pedir hablar con una persona, y muestra un aviso fijo de demostración académica.
+La interfaz está en `app/ui/streamlit_app.py` y consume la API por HTTP sin cargar ningún modelo; usa el mismo cliente tanto si la API corre embebida en la aplicación como si es externa (sección 10.2). Con `st.session_state` conserva entre ejecuciones el idioma, el historial, el estado del agente, un identificador de sesión por huésped y los resultados de salud y métricas. Para la fotografía usa `st.file_uploader` restringido a jpg, jpeg y png, que se limpia tras cada envío. Cada respuesta del agente tiene un panel desplegable con la traza de decisiones (componente, evento y datos), lo que da transparencia sobre por qué se respondió o se escaló. Los errores de la API se muestran como advertencias amables con el código estable como referencia, y un indicador en la barra lateral muestra si la API está conectada. Las cuatro pestañas (Asistente, Cómo funciona, Estado del servicio y Privacidad y ética) son bilingües; la interfaz informa desde el primer mensaje que el huésped habla con una inteligencia artificial, permite pedir hablar con una persona y muestra un aviso fijo de demostración académica.
 
 La pantalla ofrece retroalimentación inmediata (indicador de «pensando»), control del usuario (nueva conversación, selector de idioma, revisar conexión) y mensajes comprensibles ante fallas. La figura 6 es una captura de la interfaz publicada.
 
@@ -289,9 +288,11 @@ La API (`app/casaguacate/api.py`, punto de entrada `app/servidor.py`) expone cin
 | `/agent` | POST JSON o multipart | `texto`, `estado` y foto opcional: devuelve acción, respuesta, traza y estado actualizado |
 | `/metrics` | GET | Conteos, errores y latencia p50 y p95 por ruta |
 
-El **manejo de errores** es explícito. Las entradas se validan antes de llegar a los modelos: el texto tiene un máximo de 500 caracteres; las imágenes deben ser jpg, jpeg o png, pesar a lo más 5 MB, tener un lado mínimo de 32 píxeles y a lo más 25 millones de píxeles, y se verifica su formato real y no solo su extensión, de modo que un archivo corrupto devuelve 415 con el código `imagen_corrupta`. Toda falla se devuelve como un objeto JSON con un código estable, un mensaje en español y el identificador de la petición. Los códigos usados son 400, 401, 413, 415, 422, 429, 503 y 500, y cada respuesta lleva el encabezado `X-Request-ID`, que permite rastrear un caso en los registros. Existen manejadores para errores de la aplicación, errores HTTP genéricos y excepciones no previstas, de modo que el cliente nunca recibe una traza de Python.
+El **manejo de errores** es explícito. Las entradas se validan antes de llegar a los modelos: el texto tiene un máximo de 500 caracteres; las imágenes deben ser jpg, jpeg o png, pesar a lo más 5 MB, tener un lado mínimo de 32 píxeles y a lo más 25 millones de píxeles, y se verifica su formato real y no solo su extensión, de modo que un archivo corrupto devuelve 415 con el código `imagen_corrupta`. Toda falla se devuelve como un objeto JSON con un código estable, un mensaje en español y el identificador de la petición. Los códigos usados son 400, 401, 413, 415, 422, 429, 503 y 500, y cada respuesta lleva el encabezado `X-Request-ID`, que permite rastrear un caso en los registros. Manejadores para errores de la aplicación, HTTP y excepciones no previstas evitan que el cliente reciba una traza de Python.
 
-La **seguridad** se resuelve con dos mecanismos opcionales. Si se define `API_TOKEN`, la API exige el encabezado `X-API-Token` y lo compara en tiempo constante; si no coincide, responde 401. El límite de peticiones (60 por minuto por defecto) se cuenta por huésped cuando hay un token válido, usando el identificador de sesión que genera la interfaz, y por dirección IP cuando no lo hay; esta distinción es necesaria porque, detrás de Streamlit Community Cloud, todos los huéspedes comparten la misma IP. `/metrics` tiene su propio contador para no consumir el cupo del chat, y `/health` no cuenta. Los registros son JSON estructurados y no contienen el texto del huésped.
+La **seguridad** se resuelve con dos mecanismos opcionales. Si se define `API_TOKEN`, la API exige el encabezado `X-API-Token` y lo compara en tiempo constante; si no coincide, responde 401. El límite de peticiones (60 por minuto por defecto) se cuenta por huésped cuando hay un token válido, usando el identificador de sesión que genera la interfaz, y por dirección IP cuando no lo hay; esta distinción es necesaria porque, con la API dentro de la aplicación, todas las peticiones llegan desde la misma dirección local y, con una API externa detrás de Streamlit Community Cloud, todos los huéspedes comparten la misma IP. En el modo integrado el token se genera por proceso al arrancar y lo comparten la interfaz y la API, sin intervención del usuario. `/metrics` tiene su propio contador para no consumir el cupo del chat, y `/health` no cuenta. Los registros son JSON estructurados y no contienen el texto del huésped.
+
+La API no se expone en una URL pública propia; la decisión y su alcance se explican en la sección 10.2.
 
 **Ejemplo de petición y respuesta.** La prueba de humo (`app/evidencias/prueba_humo_local.txt`) ejercita la API en ejecución; entre sus 9 comprobaciones están:
 
@@ -315,27 +316,59 @@ La combinación de evidencias sigue un principio sencillo: la foto aporta lo que
 
 ### 10.1 Topología
 
-La interfaz se publica en Streamlit Community Cloud, desde el repositorio de GitHub, rama `proyecto-final`, archivo principal `proyecto_final/app/ui/streamlit_app.py` y dependencias en `proyecto_final/app/ui/requirements.txt`. Los secretos `API_URL` y `API_TOKEN` se definen en la configuración de la aplicación, no en el repositorio. La URL pública de la interfaz es **https://hospedaje-asistente-ia.streamlit.app**.
+Toda la solución se publica en Streamlit Community Cloud, desde el repositorio de GitHub, rama `proyecto-final`, archivo principal `proyecto_final/app/ui/streamlit_app.py` y dependencias en `proyecto_final/app/ui/requirements.txt`. La interfaz y la API Flask corren dentro del mismo contenedor: si no está definida la variable `API_URL`, la aplicación arranca la API en un hilo propio, escuchando solo en `127.0.0.1`, con un token generado por proceso; si `API_URL` está definida, la interfaz usa esa API externa. La única URL pública es la de la interfaz: **https://hospedaje-asistente-ia.streamlit.app**.
 
-La API Flask se sirve con gunicorn, con un solo proceso y cuatro hilos (`gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app`). Se usa un solo proceso porque el limitador de peticiones y las métricas viven en memoria y se perderían o se duplicarían con varios procesos. Como antecedente, en una primera etapa la API corrió en una computadora local expuesta con Cloudflare Tunnel (Cloudflare, s. f.); según el README del proyecto, el 23 de noviembre se publicó con un túnel rápido y su prueba de humo pública pasó 9 de 9, pero esa ejecución no tiene evidencia guardada en el repositorio, y con ese tipo de túnel la URL cambia en cada reinicio.
+Fuera de Streamlit, la API Flask se sirve con gunicorn, con un solo proceso y cuatro hilos (`gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app`). Se usa un solo proceso porque el limitador de peticiones y las métricas viven en memoria y se perderían o se duplicarían con varios procesos; la API embebida respeta esa misma restricción. Como antecedente, el 23 de noviembre la API se publicó desde una computadora local con un túnel rápido de Cloudflare (Cloudflare, s. f.) y su prueba de humo pública pasó 9 de 9, según el README, sin evidencia guardada en el repositorio.
 
-Para obtener una URL estable, la API se empaqueta en un contenedor Docker (Docker, s. f.) y se despliega en un Space de Hugging Face (Hugging Face, s. f.). El Space es de tipo Docker, escucha en el puerto 7860 y recibe el secreto `API_TOKEN` desde su configuración, no desde el repositorio. Es de nivel gratuito, por lo que se duerme tras un periodo de inactividad y se despierta con la primera petición, con un arranque en frío de varios segundos por la carga de los modelos (en la prueba local, la primera llamada tardó 6.2 s); por eso se despierta antes de cada demostración. URL pública de la API: **[URL_API_NUBE]**. La interfaz de Streamlit apunta a esa URL mediante el secreto `API_URL`.
+### 10.2 Decisión de despliegue: API REST integrada en Streamlit
 
-### 10.2 Evidencias
+**Qué pide el rubro.** Que los servicios de inteligencia artificial se expongan mediante una API con rutas definidas, validación, manejo de errores, seguridad básica y pruebas, y que la aplicación la consuma (objetivo específico 4).
+
+**Qué cambió respecto al plan original.** El plan era empaquetar la API en un contenedor Docker (Docker, s. f.), alojarla en un Space de Hugging Face (Hugging Face, s. f.) y apuntar la interfaz a esa URL pública mediante `API_URL`. Decidí en cambio desplegar todo en Streamlit Community Cloud: la API Flask no se elimina, se levanta dentro del mismo contenedor de la aplicación (escucha en `127.0.0.1`) y la interfaz la sigue consumiendo por HTTP con el mismo cliente. Ya no se expone en una URL pública separada. Si no hay `API_URL`, la aplicación arranca la API embebida en un hilo, con un token generado por proceso; si hay `API_URL`, usa una API externa.
+
+**Por qué.** El fundamento es la sesión en vivo del 26 de noviembre de 2026 (grabación del canal General del curso en Teams). Según lo que el profesor indicó, basta con entregar la aplicación funcionando en Streamlit; la parte de la API no es obligatoria para esta entrega por el tiempo disponible y el tema se verá en la sesión del 3 de diciembre; la evaluación se hace con el código fuente y la URL pública, que él mismo prueba, y el video es opcional. No se ofreció un servidor del curso: cada estudiante elige dónde montar la aplicación. Aun así conservé la API. Además hay tres razones prácticas:
+
+1. Evita un gasto adicional de USD 9 al mes: el alojamiento como contenedor Docker en Hugging Face Spaces hoy exige una suscripción de pago (el intento de crear el Space devolvió el error 402).
+2. Evita depender de que mi equipo personal esté encendido y con un túnel activo durante la evaluación; la alternativa sin costo era servir la API desde mi computadora con un túnel de Cloudflare (Cloudflare, s. f.), cuya URL es temporal.
+3. Mantiene una sola URL pública estable para que el profesor pruebe.
+
+**Cómo se cumple el rubro.** La API existe, está documentada con sus rutas (tabla 5) y la interfaz la consume por HTTP.
+
+**Tabla 5b.** Rubro de API REST en el despliegue integrado. Fuente: `proyecto_final/README.md` y `app/evidencias/`.
+
+| Rubro de la rúbrica | Cómo se cumple | Evidencia |
+|---|---|---|
+| Rutas y documentación | Cinco endpoints (`/health`, `/chat`, `/image`, `/agent`, `/metrics`) descritos en la tabla 5 y en el README | Sección 8.2; `README.md` |
+| Validación y errores | Límites de texto e imagen, formato real, códigos estables y `X-Request-ID` | Sección 8.2; pruebas de API y de validación |
+| Seguridad | Token `X-API-Token` y límite de peticiones por huésped | Sección 8.2; 218 pruebas aprobadas (`pruebas_pytest.txt`) |
+| Observabilidad | `/health`, `/metrics` y registros JSON sin el texto del huésped | Sección 10.4 |
+| Consumo desde la interfaz | La interfaz llama a la API por HTTP con el mismo cliente, embebida o externa | Sección 8.1; [EVIDENCIA_HUMO_INTEGRADA] |
+
+**Qué se pierde.** Un tercero ya no puede llamar a la API directamente desde fuera, porque no tiene URL pública. Para reproducirla, se ejecuta en local con `python servidor.py` (o con gunicorn, sección 10.1) desde `proyecto_final/app`:
+
+```
+python servidor.py                      # http://127.0.0.1:5000
+curl -s localhost:5000/chat -H 'Content-Type: application/json' \
+  -d '{"texto": "a que hora es el check-in?"}'
+curl -s localhost:5000/image -F file=@foto.jpg   # con API_TOKEN: -H "X-API-Token: $API_TOKEN"
+```
+
+**Cómo se revertiría.** Bastaría definir `API_URL` (y `API_TOKEN`) como secretos de la aplicación para que la misma interfaz use una API externa, sin cambiar código; la API se empaqueta con Docker o se sirve con gunicorn y se prueba con `scripts/prueba_humo.py --api <url>`.
+
+### 10.3 Evidencias
 
 El repositorio conserva las evidencias de cada etapa en `proyecto_final/app/evidencias/`:
 
 - `pruebas_pytest.txt`: salida de la suite, 218 pruebas aprobadas.
 - `prueba_humo_local.txt`: 9 de 9 comprobaciones contra la API local. El resultado igual por la URL pública el 23 de noviembre es un antecedente citado del README, sin evidencia guardada.
-- `prueba_humo_nube.txt`: prueba de humo contra la API en la nube. **[EVIDENCIA_HUMO_NUBE]**
-- `entrenamiento_vision.txt`: comparación de backbones y elección del modelo de despliegue.
+- `prueba_humo_integrada.txt`: prueba de humo contra el despliegue integrado en Streamlit Community Cloud. **[EVIDENCIA_HUMO_INTEGRADA]**
+- `entrenamiento_vision.txt`: comparación de backbones y modelo de despliegue.
 - `metricas_evaluacion_texto.json`, `matriz_confusion_es.png`, `matriz_confusion_en.png`, `matriz_confusion_vision.png`, `gradcam_efficientnetb0.png`: métricas y figuras del Tema 10.
-- `regresion_avance2.csv`: comparación caso por caso contra el Avance 2.
-- `captura_ui_inicio.png`: captura de la interfaz publicada.
+- `regresion_avance2.csv` (comparación contra el Avance 2) y `captura_ui_inicio.png` (captura de la interfaz publicada).
 
-### 10.3 Monitoreo
+### 10.4 Monitoreo
 
-La API ofrece tres mecanismos de observabilidad. `/health` informa si la API está viva, su versión, su tiempo en línea y qué modelos cargó (intenciones, tono y visión, con el backbone en uso), de modo que un backbone que no pudo cargarse es visible sin que la API caiga. `/metrics` devuelve, por ruta, el número de peticiones, los errores 4xx y 5xx desglosados por código, la latencia (media, p50, p95 y máximo) sobre una ventana de las últimas 500 muestras, y contadores de eventos como acciones del agente, idiomas, avisos a la anfitriona y peticiones rechazadas por el límite. Los registros son líneas JSON con marca de tiempo, el identificador de la petición y metadatos técnicos de cada llamada (por ejemplo idioma, número de caracteres, intención o acción y dimensiones de la imagen), nunca el texto del huésped. La pestaña «Estado del servicio» de la interfaz lee `/metrics` para mostrarlo a quien lo consulte. Todo vive en memoria, de modo que se reinicia con el proceso; la persistencia de métricas es una mejora futura (sección 16).
+La API ofrece tres mecanismos de observabilidad. `/health` informa si está viva, su versión, su tiempo en línea y qué modelos cargó (intenciones, tono y visión, con el backbone en uso), de modo que un backbone que no pudo cargarse es visible sin que la API caiga. `/metrics` devuelve, por ruta, el número de peticiones, los errores 4xx y 5xx por código, la latencia (media, p50, p95 y máximo) sobre las últimas 500 muestras y contadores de eventos (acciones del agente, idiomas, avisos a la anfitriona y peticiones rechazadas por el límite). Los registros son líneas JSON con marca de tiempo, identificador de la petición y metadatos técnicos, nunca el texto del huésped. Todo vive en memoria y se reinicia con el proceso; la persistencia es una mejora futura (sección 16).
 
 ## 11. Pruebas y resultados
 
@@ -360,28 +393,28 @@ Cuando se corrigió un defecto, la prueba se escribió de modo que falle sin la 
 
 ### 11.2 Prueba de humo y regresión
 
-La prueba de humo (`scripts/prueba_humo.py`) ejercita la API en ejecución con nueve comprobaciones: salud, chat, imagen, agente con texto en inglés, agente con texto y foto, urgencia, texto demasiado largo, foto corrupta y métricas. Pasaron las nueve en local; el README del proyecto reporta el mismo resultado por la URL pública el 23 de noviembre (antecedente sin evidencia guardada). La regresión contra el Avance 2 reproduce 29 casos y documenta los seis cambios de comportamiento deliberados descritos en la sección 7.4. Como la cabeza de visión final se entrena con todas las imágenes, esas pruebas validan la política del agente y no la capacidad de generalizar del modelo; esta se mide con la partición de Wikimedia y con la validación dejando una toma fuera.
+La prueba de humo (`scripts/prueba_humo.py`) ejercita la API en ejecución con nueve comprobaciones: salud, chat, imagen, agente con texto en inglés, agente con texto y foto, urgencia, texto demasiado largo, foto corrupta y métricas. Pasaron las nueve en local; el README reporta el mismo resultado por la URL pública el 23 de noviembre (antecedente sin evidencia guardada). La regresión contra el Avance 2 reproduce 29 casos y documenta los seis cambios de comportamiento deliberados de la sección 7.4. Como la cabeza de visión final se entrena con todas las imágenes, esas pruebas validan la política del agente y no la capacidad de generalizar del modelo, que se mide con la partición de Wikimedia y con la validación dejando una toma fuera.
 
 ## 12. Desempeño, escalabilidad y mantenibilidad
 
 ### 12.1 Desempeño
 
-Se distinguen la latencia de los modelos y la latencia de la API. Las mediciones locales de la prueba de humo, que son llamadas individuales y por tanto indicativas y no estadísticas, fueron de 16 ms para `/chat`, 6 ms para un mensaje del agente en inglés, 2 ms para una urgencia (que no consulta modelos), 128 ms para `/image` y 112 ms para un mensaje del agente con foto. Esto confirma lo esperable: la parte de texto es prácticamente instantánea y el costo está en la extracción de características de la imagen, medida en la tabla 3 en 128.1 ms de media y 206.7 ms de p95 en CPU para EfficientNetB0. La primera llamada de la prueba de humo, a `/health`, tardó 6.2 segundos y coincidió con el arranque y la carga de los modelos (el tiempo en línea reportado fue de 4.3 s); el arranque en frío es, por tanto, el momento más lento.
+Se distinguen la latencia de los modelos y la de la API. Las mediciones locales de la prueba de humo, que son llamadas individuales y por tanto indicativas y no estadísticas, fueron de 16 ms para `/chat`, 6 ms para un mensaje del agente en inglés, 2 ms para una urgencia (que no consulta modelos), 128 ms para `/image` y 112 ms para un mensaje del agente con foto. La parte de texto es prácticamente instantánea y el costo está en la extracción de características de la imagen, medida en la tabla 3 en 128.1 ms de media y 206.7 ms de p95 en CPU para EfficientNetB0. La primera llamada, a `/health`, tardó 6.2 segundos y coincidió con la carga de los modelos (tiempo en línea de 4.3 s): el arranque en frío es el momento más lento.
 
-En el despliegue público la latencia incluye además el trayecto de red (interfaz en Streamlit Cloud, túnel o servicio en la nube, y regreso). Las latencias medidas sobre la API desplegada, tomadas de `/metrics`, son: **[LATENCIA_NUBE_P50/P95]**. La comparación entre las latencias locales y las del despliegue permite aislar el costo de red del costo de cómputo.
+En el despliegue público la API corre en el mismo contenedor que la interfaz, de modo que el trayecto entre ambas es local y la latencia agrega solo el trayecto entre el navegador y Streamlit Community Cloud. Las latencias medidas sobre la API integrada, tomadas de `/metrics`, son: **[LATENCIA_INTEGRADA_P50/P95]**. La comparación con las latencias locales permite estimar el costo de compartir recursos con la interfaz.
 
 ### 12.2 Escalabilidad
 
 El sistema está dimensionado para una propiedad y pocos huéspedes simultáneos, y su diseño permite identificar con claridad qué habría que cambiar para crecer.
 
-- **Un proceso y cuatro hilos.** El limitador de peticiones y las métricas viven en memoria, así que más procesos darían contadores independientes e inconsistentes. Con una estimación simple, si cada foto toma unos 128 ms de CPU, un proceso procesa en el orden de 8 imágenes por segundo en serie (1000 / 128), y mucho más para texto. Es una estimación de capacidad a partir de las latencias medidas, no el resultado de una prueba de carga, que no se realizó y se incluye en el plan de mejoras.
-- **Sin estado en el servidor.** Como la conversación viaja con la petición, la API puede replicarse horizontalmente detrás de un balanceador sin sesiones pegajosas. Lo único que impide hacerlo hoy es el almacenamiento en memoria de contadores y límites, que habría que mover a un almacén compartido, por ejemplo Redis.
-- **Memoria.** El backbone de EfficientNetB0 tiene un pico de 378 MB (tabla 3), que determina el tamaño mínimo de la máquina. Si se necesitara menos memoria o más velocidad, MobileNetV2 (9 MB, 51.1 ms) es la alternativa, con la pérdida de exactitud ya reportada.
-- **Costo por petición.** El máximo de 5 MB por imagen y el tope de 25 millones de píxeles acotan lo que una sola petición puede costar, y el límite de 60 peticiones por minuto reparte la capacidad entre huéspedes legítimos. No es una defensa contra abuso general: esa función la cumple el token de acceso (`API_TOKEN`), sin el cual la API pública responde 401.
+- **Un proceso y cuatro hilos.** El limitador y las métricas viven en memoria, así que más procesos darían contadores inconsistentes. Si cada foto toma unos 128 ms de CPU, un proceso atiende en el orden de 8 imágenes por segundo en serie (1000 / 128), y mucho más para texto; es una estimación a partir de las latencias medidas, no una prueba de carga, que se incluye en el plan de mejoras.
+- **Sin estado en el servidor.** Como la conversación viaja con la petición, la API puede replicarse detrás de un balanceador sin sesiones pegajosas; solo lo impide el almacenamiento en memoria de contadores y límites, que habría que mover a un almacén compartido, por ejemplo Redis.
+- **Memoria.** El backbone de EfficientNetB0 tiene un pico de 378 MB (tabla 3), que determina el tamaño mínimo de la máquina; en el despliegue integrado se suma el consumo de la interfaz, que no se midió. Si se necesitara menos memoria o más velocidad, MobileNetV2 (9 MB, 51.1 ms) es la alternativa, con la pérdida de exactitud ya reportada.
+- **Costo por petición.** El máximo de 5 MB y el tope de 25 millones de píxeles acotan el costo de una petición, y el límite de 60 por minuto reparte la capacidad entre huéspedes legítimos. No es una defensa contra abuso general: esa función la cumple el token de acceso (`API_TOKEN`), sin el cual una API expuesta responde 401; en el despliegue integrado, además, la API escucha solo en `127.0.0.1` y no es alcanzable desde fuera.
 
 ### 12.3 Mantenibilidad
 
-El código se organiza en módulos con una sola responsabilidad: configuración (`config.py`), texto, visión, reglas, agente, base de conocimiento, validación, métricas y la API. Los umbrales y los límites están en un solo archivo y se pueden sobrescribir con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras), lo que permite cambiar de modelo o de límites sin tocar el código. Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest), hay un archivo de dependencias de desarrollo aparte, y cada script de entrenamiento y evaluación documenta su propósito y su forma de uso. Las 218 pruebas y la suite de regresión protegen el comportamiento existente. Por último, la base de conocimiento tiene una sola fuente, de modo que actualizar una tarifa o una regla de la casa no requiere reentrenar nada: solo los cambios en las intenciones o en las clases de imagen exigen reentrenar, y para ello existen scripts reproducibles con semilla fija.
+El código se organiza en módulos con una sola responsabilidad (configuración, texto, visión, reglas, agente, base de conocimiento, validación, métricas y API). Los umbrales y límites están en un solo archivo y se sobrescriben con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras). Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest) y las 218 pruebas y la suite de regresión protegen el comportamiento existente. La base de conocimiento tiene una sola fuente, así que actualizar una tarifa no requiere reentrenar; solo los cambios en las intenciones o en las clases de imagen lo exigen, con scripts reproducibles de semilla fija.
 
 ## 13. Ética y sesgos
 
@@ -393,31 +426,26 @@ El código se organiza en módulos con una sola responsabilidad: configuración 
 
 **Sesgos identificados.**
 
-1. *Idioma.* El corpus en inglés tiene 375 frases frente a 711 en español, y su partición de prueba solo 75 frases (5 por intención). La exactitud en inglés es menor (0.773 contra 0.818) y su desviación en validación cruzada es mayor (0.056 contra 0.041). Un huésped angloparlante recibe, en promedio, un servicio peor, y el aviso de que el modelo duda es más frecuente (cobertura 0.720 contra 0.804). Además, el corpus fue redactado por una sola persona, por lo que su vocabulario puede no cubrir el español regional de los huéspedes ni el inglés de hablantes no nativos. Un tercer idioma, como el francés, no está soportado: el detector solo distingue español e inglés.
-2. *Pocas fotografías reales.* Hay 44 recortes, con clases de 1 a 3 ejemplos, ninguno de caseta ni de controles, provenientes de un folleto de marketing y no de fotografías de huéspedes. El modelo se apoya en imágenes de Wikimedia (propiedades de otros lugares) para las clases de acceso, y puede fallar con la iluminación nocturna, con ángulos cerrados o con teléfonos de baja calidad. Esto se mitiga con el umbral de 0.60 y la clase «otro», que prefieren escalar a adivinar, pero no se elimina.
+1. *Idioma.* El corpus en inglés tiene 375 frases frente a 711 en español, y su partición de prueba solo 75 frases (5 por intención). La exactitud en inglés es menor (0.773 contra 0.818) y su desviación en validación cruzada es mayor (0.056 contra 0.041). Un huésped angloparlante recibe, en promedio, un servicio peor, y el aviso de que el modelo duda es más frecuente (cobertura 0.720 contra 0.804). Además, el corpus fue redactado por una sola persona, por lo que su vocabulario puede no cubrir el español regional ni el inglés de hablantes no nativos, y un tercer idioma no está soportado: el detector solo distingue español e inglés.
+2. *Pocas fotografías reales.* Hay 44 recortes, con clases de 1 a 3 ejemplos, ninguno de caseta ni de controles, provenientes de un folleto de marketing y no de fotografías de huéspedes. El modelo se apoya en imágenes de Wikimedia (propiedades de otros lugares) para las clases de acceso y puede fallar con iluminación nocturna, ángulos cerrados o teléfonos de baja calidad; el umbral de 0.60 y la clase «otro» prefieren escalar a adivinar, pero el riesgo no se elimina.
 3. *Sesgo de automatización.* Un huésped puede confiar en una respuesta solo porque viene de un asistente. La mitigación es la transparencia sobre la naturaleza del sistema y la ruta explícita para hablar con una persona.
 
-La limitación de estas evidencias es que ningún sesgo se midió con huéspedes reales: lo que se documenta es el diseño de la muestra, no el efecto observado en la operación.
+Ningún sesgo se midió con huéspedes reales: se documenta el diseño de la muestra, no el efecto observado en la operación.
 
 ## 14. Campo de aplicación
 
-El proyecto se ubica en turismo y hospitalidad, un sector con rasgos que favorecen este tipo de asistente: consultas repetitivas con respuestas definidas, atención en varios idiomas, picos de demanda a cualquier hora, y un costo moderado de una respuesta que se escala a un humano. El error tiene un costo real pero acotado (una persona esperando en una puerta), y ese costo se mitiga con el escalamiento.
-
-Frente al comercio minorista (retail), el problema cambia de naturaleza: hay catálogos grandes y dinámicos, datos de compra que alimentan recomendaciones y errores de bajo costo individual; ahí convendría aprender de datos históricos, justo lo que aquí no existe. En salud, el monitoreo y el triaje manejan datos sensibles bajo regulación estricta, con errores de alto costo y validación clínica; el mismo principio de diseño (reglas de seguridad primero, escalar ante la duda) aplicaría, con exigencias muy superiores de explicabilidad, trazabilidad y cumplimiento.
+El proyecto se ubica en turismo y hospitalidad, un sector con consultas repetitivas de respuesta definida, varios idiomas, picos de demanda a cualquier hora y un error de costo real pero acotado, que el escalamiento mitiga. En comercio minorista, con catálogos dinámicos y errores de bajo costo individual, convendría aprender de datos históricos, que aquí no existen; en salud, con datos sensibles y errores de alto costo, aplicaría el mismo principio (reglas de seguridad primero, escalar ante la duda) con mayor exigencia de explicabilidad y cumplimiento.
 
 ## 15. Limitaciones
 
-- **El aviso a la anfitriona no tiene canal de envío.** Está marcado, registrado (evento `aviso_anfitriona` y métrica `avisar_anfitriona:si`) y las respuestas dicen que se avisará, pero no hay un servicio que lo entregue. Debe decirse así en cualquier demostración.
-- **Pocas fotografías reales** y de un dominio distinto al de uso (sección 6.3); la exactitud de 0.841 es indicativa.
-- **El corpus es pequeño y de un solo autor**, y la partición de prueba en inglés tiene 5 frases por intención, así que las métricas por clase son ruidosas.
-- **No hay conversaciones reales.** Todas las métricas provienen de frases redactadas para el proyecto y de casos de prueba; el comportamiento con tráfico real no está medido.
+- **El aviso a la anfitriona no tiene canal de envío.** Está marcado y registrado (evento `aviso_anfitriona`) y las respuestas dicen que se avisará, pero ningún servicio lo entrega; debe decirse así en cualquier demostración.
+- **Pocas fotografías reales**, de un dominio distinto al de uso (sección 6.3), y **un corpus pequeño y de un solo autor** (5 frases por intención en la prueba en inglés): el 0.841 es indicativo y las métricas por clase son ruidosas.
+- **No hay conversaciones reales**: las métricas provienen de frases redactadas y casos de prueba.
 - **Cancelaciones sin política.** La respuesta es general porque el repositorio no tiene una política de plazos ni montos.
-- **El modelo de tono no se despliega** (F1 macro de 0.603 y 0.557); el tono lo cubre un léxico.
-- **El ensamble con MiniLM del Avance 2 no se despliega** por su peso y sus dependencias.
-- **Alcance de una sola propiedad**: la base de conocimiento es la de Cas'aguacate.
-- **Métricas en memoria**, que se pierden al reiniciar, y **ninguna prueba de carga** realizada.
-- **Arranque en frío del Space gratuito.** Tras un periodo de inactividad el Space se duerme y la primera petición tarda varios segundos; debe despertarse antes de la demostración y no sirve para atención continua.
-- **Dependencia del servicio de despliegue.** Si la API no está disponible, la interfaz lo informa con un aviso, pero no responde consultas.
+- **El modelo de tono y el ensamble con MiniLM del Avance 2 no se despliegan** (F1 macro de tono de 0.603 y 0.557; peso y dependencias del ensamble); el tono lo cubre un léxico.
+- **Alcance de una sola propiedad** (la base de conocimiento es la de Cas'aguacate), **métricas en memoria** y **ninguna prueba de carga**.
+- **Arranque en frío.** Tras un periodo de inactividad la aplicación se duerme y la primera visita tarda varios segundos en despertarla y cargar los modelos; debe visitarse antes de la demostración.
+- **API no expuesta y recursos compartidos.** La API ya no tiene URL pública (sección 10.2), así que un tercero solo puede probarla en local, y comparte memoria y CPU con la interfaz sin que se haya medido el consumo del contenedor.
 
 ## 16. Plan de mejoras futuras
 
@@ -442,9 +470,9 @@ Las mejoras se ordenan por impacto sobre el riesgo del huésped y por la facilid
 
 El proyecto cumplió su objetivo: una aplicación web que atiende el check-in de Cas'aguacate integrando un chatbot bilingüe, un clasificador visual y un agente híbrido, con un flujo documentado, una API con manejo de errores, 218 pruebas que pasan, una interfaz pública y evidencias de pruebas y despliegue.
 
-Tres aprendizajes resumen el trabajo. El primero es que, en un servicio con consecuencias reales para una persona, el diseño más importante no es el del modelo sino el de lo que ocurre cuando el modelo duda: la capa reactiva, el umbral de confianza, la clase «otro» y el escalamiento aportan más seguridad que cualquier punto adicional de exactitud. El segundo es que las métricas deben leerse con su contexto: una exactitud de 0.841 con fotografías reales es una cifra honesta solo si se dice que hay 44 imágenes, que 25 son interiores y que hay clases con un ejemplo. El tercero es que el sesgo por idioma y por pocos datos no se resuelve con una técnica, sino midiendo, documentando y proponiendo cómo reunir mejores datos.
+Tres aprendizajes resumen el trabajo. El primero es que, en un servicio con consecuencias reales para una persona, lo más importante no es el modelo sino lo que ocurre cuando duda: la capa reactiva, el umbral de confianza, la clase «otro» y el escalamiento aportan más seguridad que cualquier punto adicional de exactitud. El segundo es que las métricas deben leerse con su contexto: el 0.841 con fotografías reales es honesto solo si se dice que hay 44 imágenes, 25 de interiores y clases con un ejemplo. El tercero es que el sesgo por idioma y por pocos datos no se resuelve con una técnica, sino midiendo, documentando y proponiendo cómo reunir mejores datos.
 
-Los resultados más sólidos son el clasificador de intenciones (F1 macro por validación cruzada cercano a 0.70 en ambos idiomas y AUC OvR macro cercano a 0.97) y el clasificador visual sobre imágenes públicas (0.974). Los menos sólidos, por falta de datos y no de método, son el desempeño con fotografías reales de los accesos y el comportamiento con conversaciones reales. El plan de mejoras prioriza justamente cerrar esas brechas: entregar los avisos a la anfitriona, reunir fotografías y conversaciones reales, y medir sesgos y carga con evidencia de operación.
+Los resultados más sólidos son el clasificador de intenciones (F1 macro por validación cruzada cercano a 0.70 en ambos idiomas y AUC OvR macro cercano a 0.97) y el clasificador visual sobre imágenes públicas (0.974); los menos sólidos, por falta de datos y no de método, son el desempeño con fotografías reales de los accesos y con conversaciones reales. El plan de mejoras prioriza cerrar esas brechas: entregar los avisos a la anfitriona, reunir fotografías y conversaciones reales, y medir sesgos y carga en operación.
 
 ## Referencias
 

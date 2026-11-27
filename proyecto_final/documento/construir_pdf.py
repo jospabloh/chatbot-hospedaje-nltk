@@ -41,7 +41,9 @@ pre { background: #f5f5f5; border: 1px solid #bbb; border-radius: 2pt; padding: 
       line-height: 1.22; white-space: pre-wrap; text-align: left; break-inside: avoid; }
 pre code { background: none; padding: 0; font-size: 8pt; }
 table { border-collapse: collapse; width: 100%; margin: 5pt 0 8pt; font-size: 8.4pt; line-height: 1.15;
-        font-family: Georgia, serif; text-align: left; break-inside: avoid; }
+        font-family: Georgia, serif; text-align: left; break-inside: auto; }
+thead { display: table-header-group; }
+tr { break-inside: avoid; }
 th { background: #d9d9d9; color: #000; padding: 2.5pt 3.5pt; border: 1px solid #777; }
 td { padding: 1.6pt 3.5pt; border: 1px solid #999; }
 tr:nth-child(even) td { background: #f4f4f4; }
