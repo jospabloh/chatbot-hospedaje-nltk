@@ -54,6 +54,8 @@ DEFAULT_TABLE = {
     "hola": ("saludo_cortesia", 0.90),
     "gracias": ("saludo_cortesia", 0.85),
     "tienen alberca": ("servicios", 0.70),
+    "como puedo cancelar mi reservacion": ("cancelacion", 0.85),
+    "how can i cancel my booking": ("cancelacion", 0.78),
 }
 
 
