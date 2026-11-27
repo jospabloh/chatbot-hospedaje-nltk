@@ -33,7 +33,7 @@ box(116, 27, 23, 18, "Chatbot NLP", "TF-IDF (palabras +\ncaracteres) + SVM\ncali
 box(116, 52, 23, 16, "Base de conocimiento", "Datos reales de\nCas'aguacate (sin\ncódigos ni Wi-Fi)", GREY)
 box(58, 4, 20, 14, "Anfitriona (Lore)", "El agente marca el caso\n(avisar_anfitriona) y lo\nregistra; el canal de\nenvío es mejora futura", RED)
 arrow(16, 36.5, 26, 36.5, "texto +\nfoto", dy=1.2)
-arrow(48, 36.5, 58, 36.5, "HTTPS\n(túnel)", dy=1.2)
+arrow(48, 36.5, 58, 36.5, "HTTPS", dy=1.2)
 arrow(78, 40, 86, 55, "texto, foto,\nestado", dy=2, dx=-6.5)
 arrow(86, 50, 78, 36, "decisión\n+ traza", dy=-6.5, dx=2.5)
 arrow(97, 46, 97, 22, "foto", dy=0, dx=2.5)
@@ -42,7 +42,7 @@ arrow(127, 45, 127, 52, "intención", dy=0, dx=5)
 arrow(108, 62, 116, 62, "respuesta", dy=1.2)
 arrow(68, 28, 68, 18, "escala", dy=0, dx=3)
 ax.text(70, 71.5, "Arquitectura final: asistente de check-in de Cas'aguacate", ha="center", fontsize=12.5, weight="bold", family="serif")
-ax.text(70, 1.2, "La UI vive en Streamlit Community Cloud; la API y los modelos corren en la computadora de JP, expuestos con Cloudflare Tunnel. "
+ax.text(70, 1.2, "La UI vive en Streamlit Community Cloud; la API Flask y los modelos corren en Hugging Face Spaces (HTTPS, contenedor Docker). "
         "Nada del huésped se guarda en el servidor.", ha="center", fontsize=8, family="serif", style="italic")
 OUT.parent.mkdir(exist_ok=True)
 plt.savefig(OUT, dpi=150, bbox_inches="tight")

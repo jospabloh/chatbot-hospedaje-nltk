@@ -27,7 +27,7 @@ Curso: Desarrollo de aplicaciones con inteligencia artificial (CC.MBIA2602FLE)</
 
 Este documento describe el diseño, la implementación, la evaluación y el despliegue de un asistente de check-in para Cas'aguacate, un hospedaje pequeño ubicado en La Asunción de Belén, Heredia, Costa Rica. El sistema integra tres componentes de inteligencia artificial en una aplicación web: un chatbot de procesamiento de lenguaje natural (PLN) bilingüe (español e inglés) que clasifica 15 intenciones, un clasificador visual basado en EfficientNetB0 que reconoce fotografías de los accesos de la propiedad, y un agente híbrido que combina una capa reactiva de reglas de seguridad con una capa deliberativa que decide si responder, pedir una foto, aclarar o escalar el caso a la anfitriona. La interfaz está construida con Streamlit y consume una API REST en Flask con validación de entradas, códigos de error estables, límite de peticiones, registros estructurados y un endpoint de métricas.
 
-En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 en español y 0.773 en inglés sobre particiones de prueba de 143 y 75 frases, con un F1 macro por validación cruzada de 0.704 y 0.700, y un área bajo la curva ROC uno contra el resto (AUC OvR) macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza una exactitud de 0.974 sobre una partición de 39 imágenes de Wikimedia Commons y de 0.841 sobre 44 recortes de fotografías reales del hotel, con la advertencia explícita de que estas últimas tienen clases con uno a tres ejemplos. La suite de pruebas automatizadas consta de 218 pruebas que pasan, y una prueba de humo de 9 comprobaciones contra la API en ejecución pasó completa. El documento también analiza desempeño, escalabilidad, mantenibilidad, ética y sesgos, reconoce las limitaciones del sistema y propone un plan de mejoras futuras.
+En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 (español) y 0.773 (inglés), con F1 macro por validación cruzada de 0.704 y 0.700 y AUC OvR macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza 0.974 sobre 39 imágenes de Wikimedia y 0.841 sobre 44 recortes reales del hotel, con la advertencia de que estas últimas tienen clases con uno a tres ejemplos. Pasan las 218 pruebas automatizadas y la prueba de humo de 9 comprobaciones. El documento analiza además desempeño, escalabilidad, mantenibilidad, ética, sesgos, limitaciones y mejoras futuras.
 
 **Palabras clave:** agente inteligente, chatbot, visión por computadora, Grad-CAM, Flask, Streamlit, despliegue.
 
@@ -38,8 +38,6 @@ Cas'aguacate es un hospedaje de escala pequeña en el que la anfitriona atiende 
 El propósito del sistema es automatizar la parte repetible de esa atención, sin sustituir a la anfitriona en lo que le corresponde. El criterio de diseño se resume en una frase: el asistente responde solo cuando puede hacerlo con datos reales del negocio y con suficiente confianza, y en cualquier otro caso escala. Esta decisión es deliberada. En un servicio donde un huésped puede estar frente a un portón cerrado por la noche, una respuesta inventada es más costosa que una respuesta que dice «voy a avisar a la anfitriona».
 
 El trabajo se desarrolló a lo largo del certificado en tres entregas. El Avance 1 produjo un chatbot basado en reglas con la base de conocimiento del negocio. El Avance 2 incorporó el clasificador de intenciones con aprendizaje automático, un clasificador de imágenes y su integración. El Proyecto Final, que se documenta aquí, agrega el agente híbrido, la API REST, la interfaz web, las pruebas, el despliegue y el análisis de calidad. La aplicación es una demostración académica; así lo declara un aviso fijo en la interfaz y no envía mensajes reales a la anfitriona.
-
-El resto del documento se organiza de la siguiente manera. La sección 2 formula el problema y los objetivos. La sección 3 describe la metodología. Las secciones 4 a 8 presentan la arquitectura y cada componente. La sección 9 explica el flujo de integración, la sección 10 el despliegue, y las secciones 11 y 12 las pruebas, las métricas y el análisis de desempeño, escalabilidad y mantenibilidad. Las secciones 13 a 15 tratan la ética, el campo de aplicación y las limitaciones; la 16 presenta el plan de mejoras futuras, y la 17 las conclusiones.
 
 ## 2. Problema y objetivos
 
@@ -68,7 +66,7 @@ Construir y desplegar una aplicación web que atienda el check-in de Cas'aguacat
 
 El corpus de intenciones fue elaborado para el proyecto y contiene 711 frases en español y 375 en inglés, distribuidas en 15 intenciones (tarifas, ubicación, cerradura, portón y estacionamiento, acceso al fraccionamiento, servicios, reglas, horarios, llegada tarde, early o late check-out, disponibilidad, reportar un problema, contactar a la anfitriona, saludo y cortesía, y cancelación). La intención de cancelación se incorporó durante el Proyecto Final a partir de un hallazgo de pruebas: la interfaz pública respondía «no entendí» a la pregunta de cómo cancelar una reservación. La respuesta de cancelación es general y no incluye plazos ni montos, porque el repositorio no contiene una política de cancelación del negocio.
 
-Para visión se usan dos fuentes. La primera es un conjunto de imágenes públicas de Wikimedia Commons (256 imágenes únicas tras eliminar casi duplicados con un hash perceptual, y 6 imágenes fuera de dominio), cuyos créditos están en el repositorio. La segunda son las imágenes reales que envió el negocio: 33 páginas de un folleto del hotel, de las cuales se extrajeron 44 recortes útiles (25 de interiores, 15 de otro tipo, 3 de portón y 1 de cerradura). No hay recortes de caseta ni de controles. Estas fotografías no se publican en el repositorio porque muestran accesos de la propiedad; solo se guardan las etiquetas y las métricas.
+Para visión se usan dos fuentes. La primera es un conjunto de imágenes públicas de Wikimedia Commons (256 imágenes únicas tras eliminar casi duplicados con un hash perceptual, y 6 imágenes fuera de dominio), cuyos créditos están en el repositorio. La segunda son las imágenes reales que envió el negocio: 33 páginas de un folleto del hotel, de las cuales se extrajeron 44 recortes útiles (25 de interiores, 15 de otro tipo, 3 de portón y 1 de cerradura). No hay recortes de caseta ni de controles. Las páginas del folleto y sus recortes no se publican en el repositorio porque muestran accesos de la propiedad; solo se guardan las etiquetas y las métricas. Las imágenes de galería pública de Wikimedia Commons sí están en el repositorio (`avance2/datos`).
 
 ### 3.2 Partición, semillas y métricas
 
@@ -76,7 +74,7 @@ Todas las particiones son reproducibles con la semilla 42. El texto se divide 80
 
 ### 3.3 Herramientas
 
-El núcleo está escrito en Python. El PLN usa scikit-learn (Pedregosa et al., 2011) y NLTK (Bird et al., 2009); la visión usa TensorFlow y Keras (Abadi et al., 2016; Chollet, 2015); la API usa Flask y gunicorn; la interfaz usa Streamlit; las pruebas usan pytest; y el túnel de acceso usa Cloudflare Tunnel. Las versiones fijadas están en `proyecto_final/app/requirements.txt` (Flask 3.1.3, gunicorn 23.0.0, scikit-learn 1.6.1, TensorFlow 2.16.2, NLTK 3.9.2).
+El núcleo está escrito en Python. El PLN usa scikit-learn (Pedregosa et al., 2011) y NLTK (Bird et al., 2009); la visión usa TensorFlow y Keras (Abadi et al., 2016; Chollet, 2015); la API usa Flask (Pallets, s. f.) y gunicorn; la interfaz usa Streamlit (Streamlit, s. f.); las pruebas usan pytest; y el despliegue de la API usa Docker y Hugging Face Spaces (antes, Cloudflare Tunnel). Las versiones fijadas están en `proyecto_final/app/requirements.txt` (Flask 3.1.3, gunicorn 23.0.0, scikit-learn 1.6.1, TensorFlow 2.16.2, NLTK 3.9.2).
 
 [NOTA_USO_IA]
 
@@ -93,7 +91,7 @@ Tres decisiones de diseño merecen explicación.
 
 **La API no guarda nada del huésped.** El estado de la conversación (idioma, número de turnos, fallos consecutivos, si ya se pidió una foto, intención pendiente y si ya se escaló) viaja en cada petición y regresa en la respuesta. El cliente lo conserva. Esto simplifica el despliegue, elimina una base de datos con datos personales y facilita las pruebas, a costa de que el servidor no pueda reconstruir una conversación por su cuenta.
 
-**Los modelos se cargan una vez y se comparten.** El clasificador de intenciones (un archivo `.joblib` por idioma) y la cabeza del clasificador visual (100 KB) están en el repositorio; los pesos del backbone de imágenes se descargan de Keras la primera vez. Si el backbone no se puede cargar, la API arranca de todos modos, `/health` lo informa y las fotografías reciben una respuesta amable en lugar de un error.
+**Los modelos se cargan una vez y se comparten.** El clasificador de intenciones (un archivo `.joblib` por idioma) y la cabeza del clasificador visual (unos 90 KB) están en el repositorio; los pesos del backbone de imágenes se descargan de Keras la primera vez. Si el backbone no se puede cargar, la API arranca de todos modos, `/health` lo informa y las fotografías reciben una respuesta amable en lugar de un error.
 
 **La base de conocimiento es única.** Las respuestas viven en el módulo del Avance 1, de modo que los datos del negocio tienen una sola fuente. Los códigos de acceso, las claves de Wi-Fi y los números de propiedad nunca se escriben ahí: el huésped los recibe en su mensaje de bienvenida y las respuestas solo indican dónde encontrarlos.
 
@@ -152,9 +150,9 @@ En español las confusiones más frecuentes son «reglas» clasificada como «ea
 
 ### 5.4 Desbalance e hiperparámetros del texto
 
-Las intenciones no tienen el mismo número de frases (en el corpus del Avance 2, de 30 para «reglas» a 73 para «servicios»). Por eso se reportan el F1 macro y la precisión promedio, que no dejan que las clases grandes oculten el mal desempeño de las pequeñas. Los hiperparámetros (C = 0.5, n-gramas de palabras de 1 a 2, n-gramas de caracteres de 2 a 5, calibración con 5 particiones) se fijaron a partir del Avance 2, donde una ablación sobre 681 frases mostró que cada paso de preprocesamiento aporta poco por sí solo y que los n-gramas de caracteres son el cambio que más mejora: el F1 macro pasa de 0.633 con texto crudo a 0.723 con la configuración final (fuente: `avance2/salidas/resumen.json`). En el Avance 2 también se comparó Naive Bayes (F1 macro CV 0.660) con la SVM lineal (0.706), y se eligió esta última. No se realizó una búsqueda exhaustiva de hiperparámetros con el corpus actual; se declara como mejora futura.
+Las intenciones no tienen el mismo número de frases (en el corpus del Avance 2, de 30 para «reglas» a 73 para «servicios»), por lo que se reportan el F1 macro y la precisión promedio. Los hiperparámetros (C = 0.5, n-gramas de palabras de 1 a 2 y de caracteres de 2 a 5, calibración con 5 particiones) provienen del Avance 2, cuya ablación sobre 681 frases mostró que los n-gramas de caracteres son el cambio que más mejora (F1 macro de 0.633 con texto crudo a 0.723; fuente: `avance2/salidas/resumen.json`); allí también se prefirió la SVM lineal (F1 macro CV 0.706) sobre Naive Bayes (0.660). No se hizo una búsqueda exhaustiva con el corpus actual (mejora futura).
 
-El tono de la conversación se intentó modelar con el mismo enfoque, pero la exactitud fue de 0.611 en español (n = 36) y 0.556 en inglés (n = 18), con F1 macro de 0.603 y 0.557. Con tan pocos datos el modelo es demasiado débil, así que no se despliega y el tono molesto se detecta con un léxico en la capa reactiva. El ensamble con MiniLM del Avance 2 tampoco se despliega por su peso y sus dependencias; se cita solo como referencia.
+El modelo de tono (exactitud 0.611 en español, n = 36, y 0.556 en inglés, n = 18; F1 macro 0.603 y 0.557) es demasiado débil y no se despliega: el tono lo detecta un léxico reactivo. El ensamble con MiniLM del Avance 2 tampoco se despliega, por su peso y sus dependencias.
 
 ## 6. Módulo de visión por computadora
 
@@ -162,7 +160,7 @@ El tono de la conversación se intentó modelar con el mismo enfoque, pero la ex
 
 El clasificador visual reconoce seis clases: cerradura, portón, caseta, controles, interior y «otro». Se usa un backbone preentrenado en ImageNet (Deng et al., 2009) y congelado, con entrada de 160 x 160 píxeles, que produce un vector de características por promedio global. Sobre ese vector se entrena una cabeza pequeña: estandarización (StandardScaler) y regresión logística con C = 0.1 y `class_weight="balanced"`, que pondera las clases de forma inversa a su frecuencia para atender el desbalance. Si la confianza de la clase ganadora es menor que 0.60, la foto se trata como «otro»: no se etiqueta y se escala a la anfitriona.
 
-Se optó por congelar el backbone y entrenar solo la cabeza por tres razones: el conjunto de imágenes propias es muy pequeño y un ajuste fino completo tendería a sobreajustarse; el artefacto que se versiona pesa 100 KB en lugar de decenas de megabytes; y el entrenamiento y la evaluación se reproducen en minutos en una computadora sin GPU. La contrapartida es que las características no se adaptan al dominio, lo que se refleja en el desempeño con fotografías reales.
+Se optó por congelar el backbone y entrenar solo la cabeza por tres razones: el conjunto de imágenes propias es muy pequeño y un ajuste fino completo tendería a sobreajustarse; el artefacto que se versiona pesa unos 90 KB en lugar de decenas de megabytes; y el entrenamiento y la evaluación se reproducen en minutos en una computadora sin GPU. La contrapartida es que las características no se adaptan al dominio, lo que se refleja en el desempeño con fotografías reales.
 
 ### 6.2 Comparación de backbones
 
@@ -194,7 +192,7 @@ La exactitud de 0.841 sobre fotografías reales debe leerse con cautela. El conj
 Para inspeccionar en qué se fija el modelo se calculó Grad-CAM (Selvaraju et al., 2017): el gradiente del puntaje de la clase ganadora respecto al último mapa convolucional da un peso por canal, y la combinación ponderada de los canales, filtrada por una ReLU, indica las zonas que empujan la decisión hacia esa clase. Como la cabeza es un modelo lineal sobre el promedio global del mapa, el puntaje se reconstruye en TensorFlow con los coeficientes de la cabeza y se deriva con `GradientTape`. El mapa de EfficientNetB0 con entrada de 160 x 160 tiene solo 5 x 5 celdas, por lo que se interpola y las zonas resultan amplias.
 
 <figure>
-<img src="../app/evidencias/gradcam_efficientnetb0.png" alt="Mapas Grad-CAM de tres imágenes" style="max-height:11cm">
+<img src="../app/evidencias/gradcam_efficientnetb0.png" alt="Mapas Grad-CAM de tres imágenes" style="max-height:9cm">
 <figcaption><strong>Figura 4.</strong> Grad-CAM con la cabeza de despliegue. Arriba: recorte real de una recámara y sala. Centro: recorte real del árbol de aguacate del jardín. Abajo: imagen de prueba de Wikimedia (portón). Fuente: <code>app/evidencias/gradcam_efficientnetb0.png</code> y <code>figuras_vision_resumen.json</code>, generados con <code>scripts/figuras_vision.py</code>.</figcaption>
 </figure>
 
@@ -270,10 +268,10 @@ En esos casos, quien decidió fue el texto (12), la coincidencia de texto e imag
 
 La interfaz está en `app/ui/streamlit_app.py` y consume la API sin cargar ningún modelo. Usa `st.session_state` para conservar entre ejecuciones el idioma, el historial de mensajes, el estado del agente, un identificador de sesión generado por huésped y los resultados de salud y métricas. Para la fotografía usa `st.file_uploader` restringido a jpg, jpeg y png; después de enviar, se incrementa una clave del cargador para limpiarlo. El chat se construye con `st.chat_message`, y cada respuesta del agente tiene un panel desplegable con la traza de decisiones (componente, evento y datos), lo que da transparencia sobre por qué se respondió o se escaló. Los errores de la API se muestran como advertencias en lenguaje amable, con el código estable como referencia, y un indicador en la barra lateral muestra si la API está conectada. La interfaz tiene cuatro pestañas (Asistente, Cómo funciona, Estado del servicio y Privacidad y ética), es bilingüe, informa desde el primer mensaje que el huésped habla con una inteligencia artificial y puede pedir hablar con una persona, y muestra un aviso fijo de demostración académica.
 
-Siguiendo criterios de interfaz amigable, la pantalla ofrece retroalimentación inmediata (indicador de «pensando» durante la consulta), control del usuario (botón de nueva conversación, selector de idioma, botón para revisar la conexión) y mensajes comprensibles ante fallas. La figura 6 es una captura de la interfaz publicada.
+La pantalla ofrece retroalimentación inmediata (indicador de «pensando»), control del usuario (nueva conversación, selector de idioma, revisar conexión) y mensajes comprensibles ante fallas. La figura 6 es una captura de la interfaz publicada.
 
 <figure>
-<img src="../app/evidencias/captura_ui_inicio.png" alt="Captura de la interfaz publicada" style="max-height:7.5cm">
+<img src="../app/evidencias/captura_ui_inicio.png" alt="Captura de la interfaz publicada" style="max-height:6cm">
 <figcaption><strong>Figura 6.</strong> Interfaz publicada en Streamlit Community Cloud, capturada el 27 de noviembre de 2026: aviso de demostración, selector de idioma, cargador de foto, indicador «Conectado al asistente» y pestañas. Fuente: <code>app/evidencias/captura_ui_inicio.png</code>.</figcaption>
 </figure>
 
@@ -311,34 +309,25 @@ POST /chat   texto de más de 500 caracteres            -> 400 texto_demasiado_l
 
 La integración ocurre en el endpoint `/agent`, que es el único que usa los tres componentes. El huésped escribe un mensaje y, si quiere, adjunta una foto. La interfaz envía el texto, la imagen y el estado almacenado en `st.session_state`. La API valida (longitud, formato real de la imagen, estructura del estado) y entrega al agente el texto limpio, la imagen ya decodificada y el estado. El agente ejecuta la capa reactiva; si ninguna regla aplica, consulta al chatbot (que devuelve intención, confianza y las tres mejores candidatas) y al clasificador visual (clase, confianza y las tres mejores, con «otro» cuando la confianza es menor que 0.60), y la capa deliberativa combina ambas evidencias con el estado. Con la intención final, la base de conocimiento arma la respuesta bilingüe. La respuesta regresa con la acción, la traza y el estado nuevo; además se registra un evento y se actualizan los contadores de `/metrics`, siempre sin el texto del huésped.
 
-**Tabla 6.** Qué recibe y qué devuelve cada componente. Fuente: `app/docs/flujo_coordinacion.md`.
-
-| Componente | Entrada | Salida |
-|---|---|---|
-| Capa reactiva | texto normalizado | regla activada o ninguna, y marca de tono molesto |
-| Chatbot NLP | texto, idioma | intención (15 en el corpus actual), confianza, tres mejores |
-| Clasificador visual | foto de 160 x 160 | clase (cerradura, portón, caseta, controles, interior, otro), confianza, tres mejores |
-| Capa deliberativa | salidas anteriores y estado | acción, intención final, quién decidió, motivo |
-| Base de conocimiento | intención final, texto, idioma | texto de respuesta, sin códigos de acceso ni claves |
-
 La combinación de evidencias sigue un principio sencillo: la foto aporta lo que el texto no puede decir. Si el huésped escribe «no me abre» y la foto muestra un portón, el agente responde como portón; si el texto y la foto coinciden, la traza lo registra como «texto e imagen coinciden». En los 29 casos de regresión, la imagen decidió sola en 4 y coincidió con el texto en 5 (tabla 4). Cuando el texto es ambiguo sobre un acceso y no hay foto, el agente la pide, una sola vez.
-
-Un ejemplo de traza de una petición con texto y foto muestra la secuencia de componentes: Agente, Capa reactiva, Chatbot NLP, Clasificador visual y Capa deliberativa. Esa traza es la que la interfaz muestra en el panel desplegable y es también la herramienta principal de depuración, ya que cada paso registra su evento y sus datos.
 
 ## 10. Despliegue y evidencias
 
 ### 10.1 Topología
 
-La interfaz se publica en Streamlit Community Cloud, desde el repositorio de GitHub, rama `proyecto-final`, archivo principal `proyecto_final/app/ui/streamlit_app.py` y dependencias en `proyecto_final/app/ui/requirements.txt`, con Python 3.12. Los secretos `API_URL` y `API_TOKEN` se definen en la configuración de la aplicación, no en el repositorio. La URL pública de la interfaz es **https://hospedaje-asistente-ia.streamlit.app**.
+La interfaz se publica en Streamlit Community Cloud, desde el repositorio de GitHub, rama `proyecto-final`, archivo principal `proyecto_final/app/ui/streamlit_app.py` y dependencias en `proyecto_final/app/ui/requirements.txt`. Los secretos `API_URL` y `API_TOKEN` se definen en la configuración de la aplicación, no en el repositorio. La URL pública de la interfaz es **https://hospedaje-asistente-ia.streamlit.app**.
 
-La API Flask se sirve con gunicorn, con un solo proceso y cuatro hilos (`gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app`). Se usa un solo proceso porque el limitador de peticiones y las métricas viven en memoria y se perderían o se duplicarían con varios procesos. En la primera etapa del despliegue la API corrió en una computadora local expuesta con Cloudflare Tunnel (Cloudflare, s. f.): el 23 de noviembre se publicó con un túnel rápido y la prueba de humo contra la URL pública pasó 9 de 9; con ese tipo de túnel la URL cambia en cada reinicio, lo que obliga a actualizar el secreto de la interfaz. Para obtener una URL estable, la API se despliega además en la nube: **[URL_API_NUBE]**.
+La API Flask se sirve con gunicorn, con un solo proceso y cuatro hilos (`gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app`). Se usa un solo proceso porque el limitador de peticiones y las métricas viven en memoria y se perderían o se duplicarían con varios procesos. Como antecedente, en una primera etapa la API corrió en una computadora local expuesta con Cloudflare Tunnel (Cloudflare, s. f.); según el README del proyecto, el 23 de noviembre se publicó con un túnel rápido y su prueba de humo pública pasó 9 de 9, pero esa ejecución no tiene evidencia guardada en el repositorio, y con ese tipo de túnel la URL cambia en cada reinicio.
+
+Para obtener una URL estable, la API se empaqueta en un contenedor Docker (Docker, s. f.) y se despliega en un Space de Hugging Face (Hugging Face, s. f.). El Space es de tipo Docker, escucha en el puerto 7860 y recibe el secreto `API_TOKEN` desde su configuración, no desde el repositorio. Es de nivel gratuito, por lo que se duerme tras un periodo de inactividad y se despierta con la primera petición, con un arranque en frío de varios segundos por la carga de los modelos (en la prueba local, la primera llamada tardó 6.2 s); por eso se despierta antes de cada demostración. URL pública de la API: **[URL_API_NUBE]**. La interfaz de Streamlit apunta a esa URL mediante el secreto `API_URL`.
 
 ### 10.2 Evidencias
 
 El repositorio conserva las evidencias de cada etapa en `proyecto_final/app/evidencias/`:
 
 - `pruebas_pytest.txt`: salida de la suite, 218 pruebas aprobadas.
-- `prueba_humo_local.txt`: 9 de 9 comprobaciones contra la API local (la ejecución contra la URL pública del 23 de noviembre dio el mismo resultado, según el README del proyecto).
+- `prueba_humo_local.txt`: 9 de 9 comprobaciones contra la API local. El resultado igual por la URL pública el 23 de noviembre es un antecedente citado del README, sin evidencia guardada.
+- `prueba_humo_nube.txt`: prueba de humo contra la API en la nube. **[EVIDENCIA_HUMO_NUBE]**
 - `entrenamiento_vision.txt`: comparación de backbones y elección del modelo de despliegue.
 - `metricas_evaluacion_texto.json`, `matriz_confusion_es.png`, `matriz_confusion_en.png`, `matriz_confusion_vision.png`, `gradcam_efficientnetb0.png`: métricas y figuras del Tema 10.
 - `regresion_avance2.csv`: comparación caso por caso contra el Avance 2.
@@ -354,7 +343,7 @@ La API ofrece tres mecanismos de observabilidad. `/health` informa si la API est
 
 La suite de pytest consta de 218 pruebas que pasan en 19.64 segundos (`app/evidencias/pruebas_pytest.txt`). Se organizan por componente, y las pruebas con modelos reales llevan la marca `modelos` para poder omitirlas en entornos sin TensorFlow (`pytest -m "not modelos"`).
 
-**Tabla 7.** Pruebas por módulo. Fuente: `proyecto_final/README.md`.
+**Tabla 6.** Pruebas por módulo. Fuente: `proyecto_final/README.md`.
 
 | Módulo | Pruebas | Qué verifica |
 |---|---|---|
@@ -367,23 +356,11 @@ La suite de pytest consta de 218 pruebas que pasan en 19.64 segundos (`app/evide
 | Regresión Avance 2 | 5 | Comportamiento frente a los casos del Avance 2 |
 | **Total** | **218** | |
 
-Se aplicó un criterio de prueba que conviene mencionar: cuando se corrigió un defecto, la prueba se escribió de forma que falle sin la corrección. Así ocurrió con el aviso a la anfitriona en las cancelaciones, donde la prueba falla si la acción vuelve a ser un simple `RESPONDER`. Además, las pruebas del Avance 1 dan el mismo resultado antes y después de la integración (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`), lo que evidencia que el chatbot original no se degradó.
+Cuando se corrigió un defecto, la prueba se escribió de modo que falle sin la corrección (por ejemplo, el aviso a la anfitriona en las cancelaciones). Las pruebas del Avance 1 dan el mismo resultado antes y después de la integración (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`), así que el chatbot original no se degradó.
 
 ### 11.2 Prueba de humo y regresión
 
-La prueba de humo (`scripts/prueba_humo.py`) ejercita la API en ejecución con nueve comprobaciones: salud, chat, imagen, agente con texto en inglés, agente con texto y foto, urgencia, texto demasiado largo, foto corrupta y métricas. Pasaron las nueve, tanto en local como, el 23 de noviembre, por la URL pública. La regresión contra el Avance 2 reproduce 29 casos y documenta los seis cambios de comportamiento deliberados descritos en la sección 7.4. Como la cabeza de visión final se entrena con todas las imágenes, esas pruebas validan la política del agente y no la capacidad de generalizar del modelo; esta se mide con la partición de Wikimedia y con la validación dejando una toma fuera.
-
-### 11.3 Resumen de métricas
-
-**Tabla 8.** Resumen de métricas de clasificación. Fuentes: `metricas_texto.json`, `vision_meta.json`.
-
-| Componente | Datos de evaluación | Exactitud | F1 macro | Observación |
-|---|---|---|---|---|
-| Intenciones, español | 143 frases de prueba | 0.818 | 0.792 (CV 0.704) | AUC OvR macro 0.963 |
-| Intenciones, inglés | 75 frases de prueba | 0.773 | 0.777 (CV 0.700) | AUC OvR macro 0.968 |
-| Visión, Wikimedia | 39 imágenes de prueba | 0.974 | 0.975 | Cinco clases |
-| Visión, fotos reales | 44 recortes, una toma fuera | 0.841 | 0.597 | Clases de exterior con 1 a 3 ejemplos |
-| Agente | 29 casos de regresión | no aplica | no aplica | 44.8 % de los casos avisan a la anfitriona |
+La prueba de humo (`scripts/prueba_humo.py`) ejercita la API en ejecución con nueve comprobaciones: salud, chat, imagen, agente con texto en inglés, agente con texto y foto, urgencia, texto demasiado largo, foto corrupta y métricas. Pasaron las nueve en local; el README del proyecto reporta el mismo resultado por la URL pública el 23 de noviembre (antecedente sin evidencia guardada). La regresión contra el Avance 2 reproduce 29 casos y documenta los seis cambios de comportamiento deliberados descritos en la sección 7.4. Como la cabeza de visión final se entrena con todas las imágenes, esas pruebas validan la política del agente y no la capacidad de generalizar del modelo; esta se mide con la partición de Wikimedia y con la validación dejando una toma fuera.
 
 ## 12. Desempeño, escalabilidad y mantenibilidad
 
@@ -400,11 +377,11 @@ El sistema está dimensionado para una propiedad y pocos huéspedes simultáneos
 - **Un proceso y cuatro hilos.** El limitador de peticiones y las métricas viven en memoria, así que más procesos darían contadores independientes e inconsistentes. Con una estimación simple, si cada foto toma unos 128 ms de CPU, un proceso procesa en el orden de 8 imágenes por segundo en serie (1000 / 128), y mucho más para texto. Es una estimación de capacidad a partir de las latencias medidas, no el resultado de una prueba de carga, que no se realizó y se incluye en el plan de mejoras.
 - **Sin estado en el servidor.** Como la conversación viaja con la petición, la API puede replicarse horizontalmente detrás de un balanceador sin sesiones pegajosas. Lo único que impide hacerlo hoy es el almacenamiento en memoria de contadores y límites, que habría que mover a un almacén compartido, por ejemplo Redis.
 - **Memoria.** El backbone de EfficientNetB0 tiene un pico de 378 MB (tabla 3), que determina el tamaño mínimo de la máquina. Si se necesitara menos memoria o más velocidad, MobileNetV2 (9 MB, 51.1 ms) es la alternativa, con la pérdida de exactitud ya reportada.
-- **Protección contra abuso.** El límite de 60 peticiones por minuto por huésped, el máximo de 5 MB por imagen y el tope de 25 millones de píxeles acotan el costo que un solo cliente puede imponer.
+- **Costo por petición.** El máximo de 5 MB por imagen y el tope de 25 millones de píxeles acotan lo que una sola petición puede costar, y el límite de 60 peticiones por minuto reparte la capacidad entre huéspedes legítimos. No es una defensa contra abuso general: esa función la cumple el token de acceso (`API_TOKEN`), sin el cual la API pública responde 401.
 
 ### 12.3 Mantenibilidad
 
-El código se organiza en módulos con una sola responsabilidad: configuración (`config.py`), texto, visión, reglas, agente, base de conocimiento, validación, métricas y la API. Los umbrales y los límites están en un solo archivo y se pueden sobrescribir con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras), lo que permite cambiar de modelo o de límites sin tocar el código. Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 a 3.12, hay un archivo de dependencias de desarrollo aparte, y cada script de entrenamiento y evaluación documenta su propósito y su forma de uso. Las 218 pruebas y la suite de regresión protegen el comportamiento existente. Por último, la base de conocimiento tiene una sola fuente, de modo que actualizar una tarifa o una regla de la casa no requiere reentrenar nada: solo los cambios en las intenciones o en las clases de imagen exigen reentrenar, y para ello existen scripts reproducibles con semilla fija.
+El código se organiza en módulos con una sola responsabilidad: configuración (`config.py`), texto, visión, reglas, agente, base de conocimiento, validación, métricas y la API. Los umbrales y los límites están en un solo archivo y se pueden sobrescribir con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras), lo que permite cambiar de modelo o de límites sin tocar el código. Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest), hay un archivo de dependencias de desarrollo aparte, y cada script de entrenamiento y evaluación documenta su propósito y su forma de uso. Las 218 pruebas y la suite de regresión protegen el comportamiento existente. Por último, la base de conocimiento tiene una sola fuente, de modo que actualizar una tarifa o una regla de la casa no requiere reentrenar nada: solo los cambios en las intenciones o en las clases de imagen exigen reentrenar, y para ello existen scripts reproducibles con semilla fija.
 
 ## 13. Ética y sesgos
 
@@ -426,17 +403,7 @@ La limitación de estas evidencias es que ningún sesgo se midió con huéspedes
 
 El proyecto se ubica en turismo y hospitalidad, un sector con rasgos que favorecen este tipo de asistente: consultas repetitivas con respuestas definidas, atención en varios idiomas, picos de demanda a cualquier hora, y un costo moderado de una respuesta que se escala a un humano. El error tiene un costo real pero acotado (una persona esperando en una puerta), y ese costo se mitiga con el escalamiento.
 
-Comparado con el comercio minorista (retail), donde el caso típico es la recomendación de productos o el soporte posventa, el problema cambia de naturaleza: hay catálogos grandes y dinámicos, datos de compra de los clientes que alimentan modelos de recomendación, y errores de bajo costo individual (una mala recomendación). Un asistente de retail se beneficiaría de aprendizaje con datos históricos y de refuerzo, justo lo que aquí no existe. En salud, en cambio, el monitoreo de pacientes y el triaje manejan datos sensibles bajo regulación estricta, con errores de alto costo y con necesidad de validación clínica; el mismo principio de diseño (reglas de seguridad primero, escalar ante la duda) aplicaría, pero con exigencias de explicabilidad, trazabilidad y cumplimiento muy superiores. La tabla 9 resume la comparación.
-
-**Tabla 9.** Comparación cualitativa de campos de aplicación. Elaboración propia.
-
-| Aspecto | Turismo y hospitalidad (este proyecto) | Retail | Salud |
-|---|---|---|---|
-| Tarea principal | Responder el check-in y escalar | Recomendar y dar soporte | Monitorear y apoyar el triaje |
-| Costo del error | Moderado y acotado | Bajo por caso | Alto |
-| Datos sensibles | Pocos (se evita guardarlos) | Compras y perfiles | Historiales clínicos |
-| Regulación | Protección de datos básica | Protección de datos, consumo | Estricta, con validación clínica |
-| Enfoque adecuado | Híbrido con reglas de seguridad | Recomendación y aprendizaje con datos | Híbrido con supervisión clínica |
+Frente al comercio minorista (retail), el problema cambia de naturaleza: hay catálogos grandes y dinámicos, datos de compra que alimentan recomendaciones y errores de bajo costo individual; ahí convendría aprender de datos históricos, justo lo que aquí no existe. En salud, el monitoreo y el triaje manejan datos sensibles bajo regulación estricta, con errores de alto costo y validación clínica; el mismo principio de diseño (reglas de seguridad primero, escalar ante la duda) aplicaría, con exigencias muy superiores de explicabilidad, trazabilidad y cumplimiento.
 
 ## 15. Limitaciones
 
@@ -449,13 +416,14 @@ Comparado con el comercio minorista (retail), donde el caso típico es la recome
 - **El ensamble con MiniLM del Avance 2 no se despliega** por su peso y sus dependencias.
 - **Alcance de una sola propiedad**: la base de conocimiento es la de Cas'aguacate.
 - **Métricas en memoria**, que se pierden al reiniciar, y **ninguna prueba de carga** realizada.
+- **Arranque en frío del Space gratuito.** Tras un periodo de inactividad el Space se duerme y la primera petición tarda varios segundos; debe despertarse antes de la demostración y no sirve para atención continua.
 - **Dependencia del servicio de despliegue.** Si la API no está disponible, la interfaz lo informa con un aviso, pero no responde consultas.
 
 ## 16. Plan de mejoras futuras
 
 Las mejoras se ordenan por impacto sobre el riesgo del huésped y por la facilidad de ejecutarlas. La columna de esfuerzo es una estimación cualitativa del autor, no una medición.
 
-**Tabla 10.** Plan de mejoras futuras.
+**Tabla 7.** Plan de mejoras futuras.
 
 | # | Mejora | Problema que resuelve | Cómo se sabrá que funcionó | Esfuerzo |
 |---|---|---|---|---|
@@ -478,28 +446,11 @@ Tres aprendizajes resumen el trabajo. El primero es que, en un servicio con cons
 
 Los resultados más sólidos son el clasificador de intenciones (F1 macro por validación cruzada cercano a 0.70 en ambos idiomas y AUC OvR macro cercano a 0.97) y el clasificador visual sobre imágenes públicas (0.974). Los menos sólidos, por falta de datos y no de método, son el desempeño con fotografías reales de los accesos y el comportamiento con conversaciones reales. El plan de mejoras prioriza justamente cerrar esas brechas: entregar los avisos a la anfitriona, reunir fotografías y conversaciones reales, y medir sesgos y carga con evidencia de operación.
 
-## Anexo A. Cómo reproducir los resultados
-
-Desde `proyecto_final/app`, con Python 3.9 o superior:
-
-```
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements-dev.txt
-pytest                                           # 218 pruebas
-python scripts/entrenar_texto.py                 # reentrena los modelos de texto
-python scripts/metricas_evaluacion.py            # matrices, AUC, precisión promedio (texto)
-python scripts/entrenar_vision.py --crops <carpeta>   # compara backbones y exporta cabezas
-python scripts/figuras_vision.py --crops <carpeta>    # matriz de visión y Grad-CAM
-python servidor.py                               # API en http://127.0.0.1:5000
-API_URL=http://127.0.0.1:5000 streamlit run ui/streamlit_app.py
-python scripts/prueba_humo.py --api http://127.0.0.1:5000
-```
-
 ## Referencias
 
 Abadi, M., Barham, P., Chen, J., Chen, Z., Davis, A., Dean, J., Devin, M., Ghemawat, S., Irving, G., Isard, M., Kudlur, M., Levenberg, J., Monga, R., Moore, S., Murray, D. G., Steiner, B., Tucker, P., Vasudevan, V., Warden, P., … Zheng, X. (2016). TensorFlow: A system for large-scale machine learning. En *Proceedings of the 12th USENIX Symposium on Operating Systems Design and Implementation (OSDI 16)* (pp. 265-283). USENIX Association.
 
-Asamblea Legislativa de la República de Costa Rica. (2011). *Ley N.º 8968: Protección de la persona frente al tratamiento de sus datos personales*.
+Asamblea Legislativa de la República de Costa Rica. (2011). *Ley N.º 8968: Protección de la persona frente al tratamiento de sus datos personales*. La Gaceta N.º 170, 5 de septiembre de 2011.
 
 Bird, S., Klein, E., y Loper, E. (2009). *Natural language processing with Python*. O'Reilly Media.
 
@@ -507,15 +458,19 @@ Chollet, F. (2015). *Keras* [Software]. https://keras.io
 
 Cloudflare. (s. f.). *Cloudflare Tunnel*. https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/
 
-Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., y Fei-Fei, L. (2009). ImageNet: A large-scale hierarchical image database. En *2009 IEEE Conference on Computer Vision and Pattern Recognition* (pp. 248-255). IEEE.
+Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., y Fei-Fei, L. (2009). ImageNet: A large-scale hierarchical image database. En *2009 IEEE Conference on Computer Vision and Pattern Recognition* (pp. 248-255). IEEE. https://doi.org/10.1109/CVPR.2009.5206848
 
-Fawcett, T. (2006). An introduction to ROC analysis. *Pattern Recognition Letters, 27*(8), 861-874.
+Docker. (s. f.). *Docker documentation*. https://docs.docker.com
 
-He, H., y Garcia, E. A. (2009). Learning from imbalanced data. *IEEE Transactions on Knowledge and Data Engineering, 21*(9), 1263-1284.
+Fawcett, T. (2006). An introduction to ROC analysis. *Pattern Recognition Letters, 27*(8), 861-874. https://doi.org/10.1016/j.patrec.2005.10.010
 
-He, K., Zhang, X., Ren, S., y Sun, J. (2016). Deep residual learning for image recognition. En *2016 IEEE Conference on Computer Vision and Pattern Recognition* (pp. 770-778). IEEE.
+He, H., y Garcia, E. A. (2009). Learning from imbalanced data. *IEEE Transactions on Knowledge and Data Engineering, 21*(9), 1263-1284. https://doi.org/10.1109/TKDE.2008.239
 
-Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., y Gebru, T. (2019). Model cards for model reporting. En *Proceedings of the Conference on Fairness, Accountability, and Transparency* (pp. 220-229). ACM.
+He, K., Zhang, X., Ren, S., y Sun, J. (2016). Deep residual learning for image recognition. En *2016 IEEE Conference on Computer Vision and Pattern Recognition* (pp. 770-778). IEEE. https://doi.org/10.1109/CVPR.2016.90
+
+Hugging Face. (s. f.). *Spaces* [Documentación]. https://huggingface.co/docs/hub/spaces
+
+Mitchell, M., Wu, S., Zaldivar, A., Barnes, P., Vasserman, L., Hutchinson, B., Spitzer, E., Raji, I. D., y Gebru, T. (2019). Model cards for model reporting. En *Proceedings of the Conference on Fairness, Accountability, and Transparency* (pp. 220-229). ACM. https://doi.org/10.1145/3287560.3287596
 
 Pallets. (s. f.). *Flask* [Software]. https://flask.palletsprojects.com
 
@@ -529,9 +484,9 @@ Russell, S., y Norvig, P. (2021). *Artificial intelligence: A modern approach* (
 
 Saito, T., y Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. *PLOS ONE, 10*(3), e0118432. https://doi.org/10.1371/journal.pone.0118432
 
-Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., y Chen, L.-C. (2018). MobileNetV2: Inverted residuals and linear bottlenecks. En *2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition* (pp. 4510-4520). IEEE.
+Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., y Chen, L.-C. (2018). MobileNetV2: Inverted residuals and linear bottlenecks. En *2018 IEEE/CVF Conference on Computer Vision and Pattern Recognition* (pp. 4510-4520). IEEE. https://doi.org/10.1109/CVPR.2018.00474
 
-Selvaraju, R. R., Cogswell, M., Das, A., Vedantam, R., Parikh, D., y Batra, D. (2017). Grad-CAM: Visual explanations from deep networks via gradient-based localization. En *2017 IEEE International Conference on Computer Vision* (pp. 618-626). IEEE.
+Selvaraju, R. R., Cogswell, M., Das, A., Vedantam, R., Parikh, D., y Batra, D. (2017). Grad-CAM: Visual explanations from deep networks via gradient-based localization. En *2017 IEEE International Conference on Computer Vision* (pp. 618-626). IEEE. https://doi.org/10.1109/ICCV.2017.74
 
 Streamlit. (s. f.). *Streamlit documentation*. https://docs.streamlit.io
 

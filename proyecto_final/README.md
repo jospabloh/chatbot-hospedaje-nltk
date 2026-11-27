@@ -134,7 +134,7 @@ Backbone congelado a 160x160 con cabeza StandardScaler + regresión logística (
 
 Criterio: el más ligero en memoria con accuracy a menos de 0.02 de ResNet50. EfficientNetB0 empata en exactitud, pesa casi 6 veces menos y usa menos memoria pico, lo que cabe mejor en la Mac que sirve la API. No es más rápido que ResNet50. MobileNetV2 es el más veloz pero pierde 7.7 puntos en Wikimedia.
 
-Aclaración sobre los datos: solo se guarda la cabeza (100 KB), los pesos del backbone se descargan. El F1 macro en fotos reales es bajo porque hay clases con 1 a 3 ejemplos; la exactitud en esa prueba es indicativa, no concluyente.
+Aclaración sobre los datos: solo se guarda la cabeza (unos 90 KB), los pesos del backbone se descargan. El F1 macro en fotos reales es bajo porque hay clases con 1 a 3 ejemplos; la exactitud en esa prueba es indicativa, no concluyente.
 
 ### Pruebas
 
@@ -153,27 +153,25 @@ Se reproducen los casos de integración del Avance 2 (`app/evidencias/regresion_
 
 Como la cabeza de visión final se entrena con todas las imágenes, estas pruebas validan la política del agente, no la generalización del modelo. La generalización se mide con la partición Wikimedia y la validación dejando una toma fuera.
 
-## Despliegue (parcial)
+## Despliegue
 
-Plan: la UI en Streamlit Community Cloud y la API Flask en una computadora local expuesta con Cloudflare Tunnel. Estado: la API se publicó el 23-nov con gunicorn y un túnel rápido, y la prueba de humo por la URL pública pasó 9 de 9; el túnel rápido se detuvo el 24-nov y su URL cambia en cada arranque. Falta la UI en Streamlit Community Cloud y un túnel con nombre para tener una URL estable.
+Dos piezas. La UI está publicada en Streamlit Community Cloud (https://hospedaje-asistente-ia.streamlit.app, rama `proyecto-final`, archivo `proyecto_final/app/ui/streamlit_app.py`, dependencias `proyecto_final/app/ui/requirements.txt`) y lleva un aviso fijo de demostración académica. La API Flask tuvo una primera etapa en una computadora local con Cloudflare Tunnel (el 23-nov se publicó con un túnel rápido y su prueba de humo pública dio 9 de 9; no hay evidencia guardada de esa ejecución, y la URL de un túnel rápido cambia en cada reinicio). Para una URL estable, el PR #8 agrega un Dockerfile y scripts para desplegarla en un Space de Hugging Face (puerto 7860, secreto `API_TOKEN`; el Space gratuito se duerme por inactividad y se despierta antes de la demo).
 
-1. API en la Mac:
+1. API (local o en contenedor):
    ```bash
    cd proyecto_final/app && source .venv/bin/activate
    export API_TOKEN=<token largo aleatorio>
    gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app
    ```
    Usar un solo worker: el limitador de tasa y las métricas viven en memoria.
-2. Túnel: `cloudflared tunnel --url http://127.0.0.1:5000` (rápido, URL `trycloudflare.com` cambia en cada arranque) o un túnel con nombre para URL estable.
-3. Verificar: `python scripts/prueba_humo.py --api https://<url-del-tunel> --token <API_TOKEN>`.
-4. Streamlit Community Cloud: nueva app desde este repo, rama a desplegar, archivo principal `proyecto_final/app/ui/streamlit_app.py`, dependencias `proyecto_final/app/ui/requirements.txt`, y en Secrets:
+2. Verificar: `python scripts/prueba_humo.py --api https://<url-de-la-api> --token <API_TOKEN>`.
+3. Streamlit Community Cloud, Secrets:
    ```toml
-   API_URL = "https://<url-del-tunel>"
+   API_URL = "https://<url-de-la-api>"
    API_TOKEN = "<mismo token>"
    ```
-5. Guardar la URL pública, capturas y la salida de la prueba de humo como evidencia de despliegue.
 
-Limitación: si la Mac o el túnel están apagados, la UI muestra el aviso de servicio no disponible.
+Limitación: si la API está dormida o apagada, la UI muestra el aviso de servicio no disponible.
 
 ## Limitaciones conocidas
 
@@ -195,11 +193,11 @@ Limitación: si la Mac o el túnel están apagados, la UI muestra el aviso de se
 
 | # | Producto | Estado | Evidencia o pendiente |
 |---|---|---|---|
-| 1 | PDF técnico de 15 a 20 páginas | Esqueleto | `documento/esqueleto_documento_tecnico.md` (secciones, extensión y fuentes); falta redactar |
+| 1 | PDF técnico de 15 a 20 páginas | Listo | `documento/Proyecto_Final_Jose_Pablo_Herrera_Fernandez.pdf` (texto fuente `documento/documento_tecnico.md`; se reconstruye con `documento/construir_pdf.py`). Quedan marcadores de datos de la nube y la nota de uso de IA |
 | 2 | Repositorio en GitHub | Listo | Este repo, rama `proyecto-final` |
-| 3 | Video demo de 5 a 10 min | Pendiente | Grabar después del despliegue |
-| 4 | URL pública | Parcial | API publicada el 23-nov por túnel rápido; falta la UI en Streamlit Cloud y una URL estable |
+| 3 | Video demo de 5 a 10 min | En Drive | Grabación de pantalla con guion; el enlace lo entrega JP |
+| 4 | URL pública | Parcial | UI en https://hospedaje-asistente-ia.streamlit.app; API en la nube en el PR #8 (Hugging Face Spaces) |
 | 5 | Diagrama de arquitectura final | Listo | `app/docs/arquitectura_final.png`, `app/docs/flujo_coordinacion.md` |
-| 6 | Evidencia de pruebas y despliegue | Parcial | Pruebas listas en `app/evidencias/`; falta evidencia del despliegue |
-| 7 | Métricas de clasificación y chatbot | Listo | Secciones Resultados, `app/artefactos/*.json` y `app/evidencias/metricas_evaluacion_texto.json` (matriz de confusión, AUC uno contra el resto, precisión promedio) |
-| 8 | Plan de mejoras futuras | Parcial | Ver Limitaciones; falta redactarlo como plan en el PDF |
+| 6 | Evidencia de pruebas y despliegue | Parcial | Pruebas en `app/evidencias/`; falta la prueba de humo contra la API en la nube |
+| 7 | Métricas de clasificación y chatbot | Listo | Secciones Resultados, `app/artefactos/*.json`, `app/evidencias/metricas_evaluacion_texto.json`, `matriz_confusion_vision.png` y `gradcam_efficientnetb0.png` |
+| 8 | Plan de mejoras futuras | Listo | Sección 16 del PDF (tabla de 10 mejoras) |

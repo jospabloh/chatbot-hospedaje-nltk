@@ -183,7 +183,7 @@ def gradcam_figure(out: Path, crops: str) -> list:
         row[0].set_title(titulo, fontsize=9)
         row[1].imshow(arr.astype("uint8"))
         row[1].imshow(heat, cmap="jet", alpha=0.45)
-        row[1].set_title(f"Grad-CAM: {clase} ({conf:.2f})", fontsize=9)
+        row[1].set_title(f"Grad-CAM: {clase} ({conf:.3f})", fontsize=9)
         for a in row:
             a.axis("off")
         resumen.append({"imagen": titulo, "clase": clase, "confianza": round(conf, 3),
