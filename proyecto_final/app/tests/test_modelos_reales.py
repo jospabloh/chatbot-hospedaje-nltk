@@ -96,3 +96,24 @@ def test_latencia_aceptable_en_cpu(real_client):
                          content_type="multipart/form-data")
         timings.append((time.perf_counter() - start) * 1000)
     assert sorted(timings)[len(timings) // 2] < 1500, timings  # median under 1.5 s on a laptop CPU
+
+
+# La intencion `cancelacion` existe porque la app viva respondia "Perdon, no entendi" a "¿Como puedo cancelar mi reservacion?".
+# Esta prueba usa el modelo entrenado real: si alguien reentrena sin las frases de cancelacion (o las mezcla con otra
+# intencion), el huesped vuelve a recibir una aclaracion en lugar de la respuesta, y aqui se nota.
+@pytest.mark.parametrize("text", ["¿Cómo puedo cancelar mi reservación?", "quiero un reembolso", "ya no voy a ir",
+                                  "puedo cambiar las fechas de mi reserva", "how can I cancel my booking?",
+                                  "is there a refund if I cancel"])
+def test_la_cancelacion_se_reconoce_con_el_modelo_real(real_services, text):
+    from casaguacate.agente import HybridAgent
+    result = HybridAgent(real_services).run(text)
+    assert result.final_intent == "cancelacion", result.trace
+    assert result.action == "RESPONDER" and "no entend" not in result.reply.lower()
+
+
+# Agregar una intencion no puede quitarle frases a las otras (check-in y mascotas eran los casos que ya funcionaban).
+@pytest.mark.parametrize("text,lang,intent", [("¿A qué hora es el check in?", "es", "horarios"), ("¿aceptan mascotas?", "es", "reglas"),
+                                              ("¿cuánto cuesta la noche?", "es", "tarifas"), ("what time is check in", "en", "horarios"),
+                                              ("¿hay estacionamiento?", "es", "porton_estacionamiento")])
+def test_agregar_cancelacion_no_rompe_otras_intenciones(real_services, text, lang, intent):
+    assert real_services.intents.predict(text, lang).label == intent

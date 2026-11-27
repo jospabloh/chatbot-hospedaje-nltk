@@ -265,6 +265,11 @@ def build_replies(lang: str) -> dict:
                             "(there is a smoking booth in the parking area); quiet hours from 10 p.m. to 8 a.m. "
                             "All guests must be registered before check-in. Breaking the rules carries a fine starting at USD 100."),
             "contact_host": f"I'm connecting you with {host}. 🙋‍♀️ I've let her know and she'll message you shortly. You can also write to {email}. [HANDOFF TO HUMAN]",
+            # Cancellation / refund / date change. Used by the proyecto_final agent (intent "cancelacion"). The repo has no
+            # cancellation policy, so this reply states NO deadlines or amounts: it points to the booking channel and the host.
+            "cancellation": (f"To cancel or change the dates of your reservation, please do it through the same channel you booked with "
+                             f"(the booking platform, or directly with {host}). Cancellation and refund conditions depend on your booking "
+                             f"and its policy, and I cannot confirm deadlines or amounts. If you prefer, type 'talk to {host}' or write to {email}."),
             "thanks": "You're welcome! Anything else I can help with?",
             "goodbye": "See you soon! Enjoy your stay. 🥑",
         }
@@ -300,6 +305,11 @@ def build_replies(lang: str) -> dict:
                         "(hay un área para fumar en el parqueo); silencio de 22:00 a 8:00. Todos los huéspedes deben "
                         "registrarse antes del check-in. Incumplir las reglas tiene una multa desde USD 100."),
         "contact_host": f"Te comunico con {host}. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a {email}. [TRANSFERENCIA A HUMANO]",
+        # Cancelacion / reembolso / cambio de fechas. Lo usa el agente de proyecto_final (intencion "cancelacion"). El repo no tiene
+        # politica de cancelacion, asi que esta respuesta NO da plazos ni montos: remite al canal de reserva y a la anfitriona.
+        "cancellation": (f"Para cancelar o cambiar las fechas de tu reservación, hazlo por el mismo canal donde reservaste "
+                         f"(la plataforma de reserva, o directamente con {host}). Las condiciones de cancelación y reembolso dependen de tu "
+                         f"reserva y de su política, y yo no puedo confirmar plazos ni montos. Si prefieres, escribe 'hablar con {host}' o a {email}."),
         "thanks": "¡Con gusto! ¿Algo más en lo que te ayude?",
         "goodbye": "¡Hasta pronto! Que disfrutes tu estancia. 🥑",
     }
