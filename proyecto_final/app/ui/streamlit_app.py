@@ -30,6 +30,8 @@ TEXTS = {
         "title": "Asistente de huéspedes de Cas'aguacate",
         "subtitle": "Hotel boutique en Belén, Heredia, Costa Rica. Escribe en español o en inglés; puedes adjuntar una foto de lo que no funciona.",
         "ai_notice": "Soy una inteligencia artificial. Si prefieres hablar con una persona, escribe «hablar con Lore».",
+        # Fixed banner: this public app is the academic demo, not Cas'aguacate's real guest channel
+        "demo_notice": "Demo académica (Proyecto Final, Maestría en IA, Tecmilenio). No es el canal oficial de Cas'aguacate y no envía avisos reales a la anfitriona. Si eres huésped, escríbele a Lore por WhatsApp.",
         "chat_tab": "Asistente", "how_tab": "Cómo funciona", "metrics_tab": "Estado del servicio", "ethics_tab": "Privacidad y ética",
         "input": "Escribe tu mensaje (por ejemplo: ¿a qué hora es el check-in?)",
         "welcome": "¡Hola! Soy el asistente virtual de Cas'aguacate. Pregúntame por tarifas, ubicación, check-in, acceso o reglas. Si algo no abre o no funciona, puedes mandarme una foto.",
@@ -57,6 +59,7 @@ TEXTS = {
         "title": "Cas'aguacate guest assistant",
         "subtitle": "Boutique hotel in Belén, Heredia, Costa Rica. Write in Spanish or English; you can attach a photo of what is not working.",
         "ai_notice": "I am an artificial intelligence. If you prefer a person, type “talk to Lore”.",
+        "demo_notice": "Academic demo (Final Project, M.Sc. in AI, Tecmilenio). This is not Cas'aguacate's official channel and it does not send real alerts to the host. If you are a guest, message Lore on WhatsApp.",
         "chat_tab": "Assistant", "how_tab": "How it works", "metrics_tab": "Service status", "ethics_tab": "Privacy and ethics",
         "input": "Type your message (for example: what time is check-in?)",
         "welcome": "Hi! I am Cas'aguacate's virtual assistant. Ask me about rates, location, check-in, access or house rules. If something will not open or does not work, you can send me a photo.",
@@ -214,6 +217,8 @@ def main() -> None:
     t = TEXTS[st.session_state["lang"]]
     sidebar(t)
     t = TEXTS[st.session_state["lang"]]   # the language may have just changed
+    # Shown before everything else on every page load so a real guest never mistakes the demo for the live service
+    st.warning(t["demo_notice"])
     st.title(f"🥑 {t['title']}")
     st.caption(t["subtitle"])
     chat_tab, how_tab, metrics_tab_, ethics_tab = st.tabs([t["chat_tab"], t["how_tab"], t["metrics_tab"], t["ethics_tab"]])
