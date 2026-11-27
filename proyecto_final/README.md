@@ -175,6 +175,10 @@ Plan: la UI en Streamlit Community Cloud y la API Flask en la Mac de JP expuesta
 
 Limitación: si la Mac o el túnel están apagados, la UI muestra el aviso de servicio no disponible.
 
+## Despliegue en la nube (Hugging Face Spaces, Docker)
+
+Archivos en `proyecto_final/deploy/`: `Dockerfile` (imagen con gunicorn, Flask y TensorFlow en CPU, puerto 7860), `preparar_contexto.sh` (arma la carpeta de construccion), `publicar_space.sh` (crea el Space, sube el secreto `API_TOKEN` desde un archivo y empuja el codigo) y `README_space.md` (cabecera del Space). Local: `deploy/preparar_contexto.sh /tmp/ctx && docker build -t casaguacate-api /tmp/ctx`. Nube: `HF_USER=<usuario> HF_TOKEN=<token con escritura> deploy/publicar_space.sh`; la URL queda `https://<usuario>-casaguacate-api.hf.space`.
+
 ## Limitaciones conocidas
 
 - El aviso a la anfitriona está marcado y registrado (log `aviso_anfitriona` y métrica `avisar_anfitriona:si`), pero no hay un canal de envío conectado. Las respuestas dicen que se avisará; mientras no exista el canal, es trabajo futuro y debe decirse así en la demo.
