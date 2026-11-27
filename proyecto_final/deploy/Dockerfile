@@ -1,4 +1,4 @@
-# Dockerfile de la API Flask del Proyecto Final (Casa Aguacate) para correr en la nube.
+# Dockerfile de la API Flask del Proyecto Final (Cas'aguacate) para correr en la nube.
 # Sirve para: construir la imagen que ejecuta gunicorn + Flask + TensorFlow (CPU) en Hugging Face Spaces
 # (SDK Docker, puerto 7860, usuario 1000) o en cualquier proveedor que ejecute contenedores.
 # El contexto de construccion lo arma preparar_contexto.sh (carpeta con casaguacate/, artefactos/, servidor.py,

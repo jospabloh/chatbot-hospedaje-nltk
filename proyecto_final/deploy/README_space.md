@@ -1,5 +1,5 @@
 ---
-title: Casa Aguacate API
+title: "Cas'aguacate API"
 emoji: 🏡
 colorFrom: green
 colorTo: yellow
@@ -8,7 +8,7 @@ app_port: 7860
 pinned: false
 ---
 
-# Casa Aguacate API
+# Cas'aguacate API
 
 API REST (Flask) del Proyecto Final de la maestria en IA (Tecmilenio): chatbot NLP (TF-IDF + SVM por idioma),
 clasificador de fotos (EfficientNetB0 + cabeza) y agente. Endpoints: `/health`, `/chat`, `/image`, `/agent`, `/metrics`.
