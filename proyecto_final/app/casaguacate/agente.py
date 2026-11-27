@@ -216,6 +216,9 @@ class HybridAgent:
         reply = kb.reply_for(final, text, lang)
         if reply is None:
             return "ESCALAR", kb.message("escalate", lang), "sin respuesta en la base de conocimiento"
+        if final in kb.NOTIFY_INTENTS:
+            return ("RESPONDER_Y_AVISAR", reply + kb.message("notice", lang),
+                    "respuesta de la base de conocimiento; la anfitriona decide cancelaciones y reembolsos, tambien se le avisa")
         return "RESPONDER", reply, "respuesta de la base de conocimiento"
 
 

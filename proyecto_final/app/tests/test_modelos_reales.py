@@ -108,7 +108,7 @@ def test_la_cancelacion_se_reconoce_con_el_modelo_real(real_services, text):
     from casaguacate.agente import HybridAgent
     result = HybridAgent(real_services).run(text)
     assert result.final_intent == "cancelacion", result.trace
-    assert result.action == "RESPONDER" and "no entend" not in result.reply.lower()
+    assert result.action == "RESPONDER_Y_AVISAR" and result.notify_host and "no entend" not in result.reply.lower()
 
 
 # Agregar una intencion no puede quitarle frases a las otras (check-in y mascotas eran los casos que ya funcionaban).
