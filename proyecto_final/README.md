@@ -117,8 +117,10 @@ TF-IDF (palabras 1-2 gramas y caracteres 2-5) con LinearSVC calibrado, un modelo
 
 | Idioma | Frases | Accuracy | F1 macro | F1 macro CV (5) | Cobertura con umbral 0.40 | Accuracy cubierta |
 |---|---|---|---|---|---|---|
-| ES | 681 | 0.752 | 0.746 | 0.706 ± 0.054 | 0.832 | 0.816 |
-| EN | 350 | 0.729 | 0.720 | 0.669 ± 0.035 | 0.671 | 0.894 |
+| ES | 711 | 0.818 | 0.792 | 0.704 ± 0.041 | 0.804 | 0.887 |
+| EN | 375 | 0.773 | 0.777 | 0.700 ± 0.056 | 0.720 | 0.833 |
+
+El corpus incluye la intención `cancelacion` (cancelar, reembolso, cambio de fechas). Al agregarla cambió la partición de prueba (ES 137 a 143 frases, EN 70 a 75), así que la accuracy de prueba no es comparable uno a uno con la versión anterior (ES 0.752). La medida estable entre versiones es el F1 macro con validación cruzada de 5 particiones (ES 0.706 a 0.704, EN 0.669 a 0.700); es la que conviene citar en el documento técnico. Las cifras salen de `app/artefactos/metricas_texto.json`.
 
 ### Visión: ResNet50 (referencia) contra modelo de despliegue
 
@@ -136,7 +138,7 @@ Aclaración sobre los datos: solo se guarda la cabeza (100 KB), los pesos del ba
 
 ### Pruebas
 
-`pytest`: 204 pruebas pasan (reglas 69, agente 40, API 36, validación 22, interfaz 26, modelos reales 6, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
+`pytest`: 218 pruebas pasan (reglas 69, agente 42, API 36, validación 22, interfaz 27, modelos reales 17, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
 
 Las pruebas con modelos reales llevan la marca `modelos`; para omitirlas: `pytest -m "not modelos"`.
 

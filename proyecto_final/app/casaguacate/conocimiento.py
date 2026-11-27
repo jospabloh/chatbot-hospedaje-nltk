@@ -28,6 +28,7 @@ INTENT_TO_REPLY = {
 }
 ACCESS_INTENTS = {"cerradura", "porton_estacionamiento", "acceso_fraccionamiento"}
 ESCALATE_INTENTS = {"early_late_checkout", "contactar_anfitrion"}
+NOTIFY_INTENTS = {"cancelacion"}   # answered by the bot, and the host is told too (she decides on cancellations and refunds)
 PROBLEM_INTENTS = ACCESS_INTENTS | {"reportar_problema"}
 IMAGE_TO_INTENT = {"cerradura": "cerradura", "porton": "porton_estacionamiento", "caseta": "acceso_fraccionamiento",
                    "controles": "reportar_problema", "interior": "reportar_problema"}

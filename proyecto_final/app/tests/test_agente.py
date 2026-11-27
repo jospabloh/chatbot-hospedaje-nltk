@@ -220,7 +220,8 @@ def test_pagos_se_responden_aunque_el_corpus_no_tenga_intencion_de_pagos(agent):
                                                ("how can i cancel my booking", "en", "booking platform")])
 def test_cancelacion_se_responde_sin_inventar_condiciones(agent, text, lang, pointer):
     result = agent.run(text)
-    assert result.action == "RESPONDER" and result.final_intent == "cancelacion" and result.lang == lang
+    assert result.action == "RESPONDER_Y_AVISAR" and result.final_intent == "cancelacion" and result.lang == lang
+    assert result.notify_host and result.state.escalada, "la anfitriona decide cancelaciones y reembolsos: debe recibir aviso"
     assert pointer in result.reply and "Lore" in result.reply
     assert not re.search(r"\d", result.reply), "no debe dar plazos, porcentajes ni montos"
     assert "no entend" not in result.reply.lower() and "did not quite get" not in result.reply
