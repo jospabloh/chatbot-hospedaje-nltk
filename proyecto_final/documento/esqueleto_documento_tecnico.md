@@ -29,7 +29,7 @@ Total objetivo: 18 cuartillas de texto y figuras, sin portada ni referencias.
 - Preprocesamiento (normalización, stopwords NLTK, stemming), TF-IDF de palabras y caracteres, LinearSVC calibrado, un modelo por idioma.
 - Umbral 0.40 y cobertura; frases fuera de alcance.
 - Métricas (Tema 10): accuracy, F1 macro, F1 macro CV, precisión, recall y F1 por intención, matriz de confusión, AUC uno contra el resto y precisión promedio (`app/evidencias/metricas_evaluacion_texto.json`, `matriz_confusion_es.png`, `matriz_confusion_en.png`, generados con `scripts/metricas_evaluacion.py`).
-- Resultados: ES accuracy 0.752, F1 macro 0.746, AUC OvR macro 0.974, AP macro 0.820; EN accuracy 0.729, F1 macro 0.720, AUC OvR macro 0.966, AP macro 0.826.
+- Resultados (modelo con la intención `cancelacion`): ES accuracy 0.818, F1 macro 0.792 (F1 macro CV 0.704 ± 0.041), AUC OvR macro 0.963, AP macro 0.829; EN accuracy 0.773, F1 macro 0.777 (F1 macro CV 0.700 ± 0.056), AUC OvR macro 0.968, AP macro 0.813. La partición de prueba cambió al agregar la intención, así que se cita también el F1 macro CV.
 - Análisis de errores: confusiones principales (ES: ubicación con llegada tarde, problemas con servicios; EN: horarios con disponibilidad, tarifas con servicios).
 - Falta: redactar el análisis y una tabla corta por intención.
 
@@ -63,7 +63,7 @@ Total objetivo: 18 cuartillas de texto y figuras, sin portada ni referencias.
 - Falta: interfaz en Streamlit Community Cloud, túnel con nombre para URL estable y capturas.
 
 ## 10. Resultados (2 cuartillas)
-- Pruebas: 204 con pytest (reglas, agente, API, validación, interfaz, modelos reales, regresión contra el Avance 2) y prueba de humo 9/9.
+- Pruebas: 218 con pytest (reglas, agente, API, validación, interfaz, modelos reales, regresión contra el Avance 2) y prueba de humo 9/9.
 - Métricas de clasificación (texto y visión) y del chatbot (cobertura con umbral, fuera de alcance bajo umbral).
 - Análisis que pide la rúbrica (Tema 14): desempeño (latencia p50 y p95 de `/metrics`), escalabilidad (un worker por el limitador en memoria; qué cambiar para más carga) y mantenibilidad (módulos, pruebas, configuración por variables).
 - Falta: medir latencia p50 y p95 en el despliegue público y redactar los tres análisis con esos números.
