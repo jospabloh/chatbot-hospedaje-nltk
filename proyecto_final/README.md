@@ -25,7 +25,7 @@ proyecto_final/
     casaguacate/   nucleo (config, texto, vision, reglas, agente, api, validacion, metricas, servicios)
     artefactos/    modelos ligeros (.joblib) y metricas (.json)
     scripts/       entrenamiento, prueba de humo, figura de arquitectura
-    ui/            streamlit_app.py, cliente_api.py, requirements.txt
+    ui/            streamlit_app.py, cliente_api.py, api_integrada.py (API embebida), requirements.txt
     tests/         pytest
     evidencias/    resultados guardados
     docs/          flujo_coordinacion.md, arquitectura_final.png
@@ -63,7 +63,9 @@ python servidor.py                          # http://127.0.0.1:5000
 # o, como en despliegue:
 gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app
 
-# UI (otra terminal)
+# UI en modo integrado (sin API_URL): la app levanta sola la API Flask en un hilo, en 127.0.0.1
+streamlit run ui/streamlit_app.py
+# o UI contra una API externa (otra terminal)
 API_URL=http://127.0.0.1:5000 streamlit run ui/streamlit_app.py
 
 # Pruebas
@@ -86,16 +88,16 @@ curl -s localhost:5000/image -F file=@foto.jpg
 
 | Variable | Dónde | Por defecto | Uso |
 |---|---|---|---|
-| `API_URL` | UI | `http://127.0.0.1:5000` | URL de la API Flask |
+| `API_URL` | UI | vacío | Sin valor: modo integrado (la app levanta la API Flask en el mismo proceso, ver Despliegue). Con valor: la UI usa esa API externa |
 | `ALLOW_API_URL_OVERRIDE` | UI | vacío | Solo desarrollo local: con valor `1` y sin `API_TOKEN` muestra un campo para cambiar la URL. En la UI pública no existe ese campo |
-| `API_TOKEN` | UI y API | vacío | Si la API lo define, exige el encabezado `X-API-Token`; la UI lo envía |
+| `API_TOKEN` | UI y API | vacío | Si la API lo define, exige el encabezado `X-API-Token`; la UI lo envía. En modo integrado se ignora: la app genera un token aleatorio por proceso para su API embebida |
 | `RATE_LIMIT_PER_MIN` | API | 60 | Peticiones por minuto. Con token válido se cuenta por huésped (encabezado `X-Session-Id`, que la UI genera por sesión); sin token, por IP (`CF-Connecting-IP`). `/metrics` tiene su propio contador y `/health` no cuenta |
 | `LOG_LEVEL` | API | `INFO` | Nivel de logs JSON |
 | `VISION_BACKBONE` | API | `efficientnetb0` | `resnet50`, `mobilenetv2` o `efficientnetb0` |
 | `ARTIFACTS_DIR` | API | `artefactos/` | Carpeta de modelos |
 | `HOST`, `PORT` | `servidor.py` | `127.0.0.1`, `5000` | Dirección de escucha |
 
-En Streamlit Community Cloud, `API_URL` y `API_TOKEN` se definen como Secrets. La URL de la API sale solo de la configuración del servidor, y el token solo se envía a esa URL (el cliente no sigue redirecciones).
+En Streamlit Community Cloud en modo integrado no se define ningún Secret. Para usar una API externa, `API_URL` y `API_TOKEN` se definen como Secrets. La URL de la API sale solo de la configuración del servidor, y el token solo se envía a esa URL (el cliente no sigue redirecciones).
 
 ## API
 
@@ -153,9 +155,21 @@ Se reproducen los casos de integración del Avance 2 (`app/evidencias/regresion_
 
 Como la cabeza de visión final se entrena con todas las imágenes, estas pruebas validan la política del agente, no la generalización del modelo. La generalización se mide con la partición Wikimedia y la validación dejando una toma fuera.
 
-## Despliegue (no ejecutado)
+## Despliegue
 
-Plan: la UI en Streamlit Community Cloud y la API Flask en la Mac de JP expuesta con Cloudflare Tunnel. El despliegue no se ha hecho; requiere pasos de JP.
+### Modo integrado (despliegue elegido): todo en Streamlit Community Cloud
+
+Sin costo y sin depender de un equipo encendido. Si no hay `API_URL`, `ui/streamlit_app.py` levanta la misma API REST Flask (`create_app`) en un hilo de segundo plano, escuchando solo en `127.0.0.1` en un puerto libre, una vez por proceso. La interfaz la sigue consumiendo por HTTP con el mismo cliente (`ui/cliente_api.py`), así que las rutas, la validación, el límite de peticiones, las métricas y `/health` son los reales; la API solo está co-alojada. La API embebida exige un token aleatorio generado por proceso (`X-API-Token`), aunque solo escuche en loopback. La barra lateral y la pestaña «Estado del servicio» indican el modo («API REST integrada en la app» o «API REST externa»). TensorFlow se importa hasta la primera foto.
+
+1. Streamlit Community Cloud: nueva app desde este repo, rama `proyecto-final`, archivo principal `proyecto_final/app/ui/streamlit_app.py`. En «Advanced settings» elegir **Python 3.12** (o 3.11): `tensorflow-cpu==2.16.2` y `numpy==1.26.4` no tienen ruedas para 3.13 o superior. Las dependencias salen de `proyecto_final/app/ui/requirements.txt`.
+2. No definir `API_URL` ni `API_TOKEN` en Secrets. Si la app ya existía con esos Secrets, borrarlos y reiniciar la app. Si ya existía con otra versión de Python, hay que borrarla y volver a desplegarla con la versión correcta.
+3. Verificar con la UI: «Conectado al asistente» y «API REST integrada en la app» en la barra lateral; mandar un texto y una foto.
+
+Límites a vigilar: la documentación de Streamlit indica 2.7 GB de memoria máxima por app (cifra de febrero de 2024, sujeta a cambios sin aviso). Medido en la Mac, el proceso ocupa unos 190 MB con la API y el modelo de texto, y unos 300 MB después de la primera foto (macOS; en Linux puede ser mayor).
+
+### Alternativa: API externa en la Mac con Cloudflare Tunnel (no usada)
+
+La UI sigue funcionando con una API externa si se define `API_URL`.
 
 1. API en la Mac:
    ```bash
@@ -175,7 +189,9 @@ Plan: la UI en Streamlit Community Cloud y la API Flask en la Mac de JP expuesta
 
 Limitación: si la Mac o el túnel están apagados, la UI muestra el aviso de servicio no disponible.
 
-## Despliegue en la nube (Hugging Face Spaces, Docker)
+### Alternativa: Hugging Face Spaces con Docker (no usada)
+
+Se preparó pero no se usa: el despliegue elegido es el modo integrado. La carpeta `deploy/` se conserva por si hace falta una API independiente.
 
 Archivos en `proyecto_final/deploy/`: `Dockerfile` (imagen con gunicorn, Flask y TensorFlow en CPU, puerto 7860), `preparar_contexto.sh` (arma la carpeta de construccion), `publicar_space.sh` y `publicar_space.py` (crean el Space con `huggingface_hub`, guardan el secreto `API_TOKEN` leido de un archivo y suben el codigo), `verificar_nube.sh` (prueba de humo publica) y `README_space.md` (cabecera del Space). La API en la nube se niega a arrancar sin `API_TOKEN` de al menos 32 caracteres (`app/arrancar_nube.sh`).
 
