@@ -225,7 +225,7 @@ Construccion local: `deploy/preparar_contexto.sh /tmp/ctx && docker build -t cas
 
 | # | Producto | Estado | Evidencia o pendiente |
 |---|---|---|---|
-| 1 | PDF técnico de 15 a 20 páginas | Listo | `documento/Proyecto_Final_Jose_Pablo_Herrera_Fernandez.pdf` (texto fuente `documento/documento_tecnico.md`; se reconstruye con `documento/construir_pdf.py`). Queda la nota de uso de IA |
+| 1 | PDF técnico de 15 a 20 páginas | Listo | `documento/Proyecto_Final_Jose_Pablo_Herrera_Fernandez.pdf` (texto fuente `documento/documento_tecnico.md`; se reconstruye con `documento/construir_pdf.py`) |
 | 2 | Repositorio en GitHub | Listo | Este repo, rama `proyecto-final` |
 | 3 | Video demo de 5 a 10 min | En Drive | Grabación de pantalla con guion; el enlace lo entrega JP |
 | 4 | URL pública | Parcial | https://hospedaje-asistente-ia.streamlit.app; el despliegue elegido es el modo integrado (API REST dentro de la app, PR #10); falta verificar en la nube la versión con el modo integrado |
