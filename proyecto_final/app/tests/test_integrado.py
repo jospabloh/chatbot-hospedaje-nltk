@@ -145,3 +145,52 @@ def test_vision_perezosa_carga_el_modelo_una_sola_vez_en_la_primera_foto(monkeyp
     assert loads == [] and not lazy.loaded
     assert lazy.predict(object()) == "prediccion" and lazy.predict(object()) == "prediccion"
     assert len(loads) == 1 and lazy.loaded
+
+
+def test_vision_perezosa_que_falla_degrada_igual_que_sin_modelo(monkeypatch, png_bytes):
+    """If the first load fails (e.g. the ImageNet weights cannot be downloaded) the API answers 503, /health says
+    "degradado" and the load is not retried on every photo, the same as when the eager load fails at start-up."""
+    import io
+
+    from casaguacate import vision
+    from casaguacate.api import create_app
+    from casaguacate.servicios import LazyVision
+    attempts = []
+
+    def failing_load(cls, directory=None):
+        attempts.append(directory)
+        raise OSError("sin red para descargar los pesos")
+
+    monkeypatch.setattr(vision.ImageClassifier, "load", classmethod(failing_load))
+    services = Services(intents=FakeIntents(dict(DEFAULT_TABLE)), vision=LazyVision())
+    client = create_app(services, {"RATE_LIMIT_PER_MIN": 0}).test_client()
+    assert client.get("/health").get_json()["estado"] == "ok"            # nothing loaded yet: the head is there
+
+    first = client.post("/image", data={"file": (io.BytesIO(png_bytes), "a.png")}, content_type="multipart/form-data")
+    assert first.status_code == 503 and first.get_json()["error"]["codigo"] == "modelo_no_disponible"
+    agent = client.post("/agent", data={"texto": "no abre la puerta", "file": (io.BytesIO(png_bytes), "a.png")},
+                        content_type="multipart/form-data")
+    assert agent.status_code == 503 and agent.get_json()["error"]["codigo"] == "modelo_no_disponible"
+    second = client.post("/image", data={"file": (io.BytesIO(png_bytes), "a.png")}, content_type="multipart/form-data")
+    assert second.status_code == 503 and len(attempts) == 1             # not retried on every photo
+    health = client.get("/health").get_json()
+    assert health["estado"] == "degradado" and health["modelos"]["vision"] is False
+
+
+def test_vision_perezosa_que_falla_dentro_del_agente_devuelve_503(monkeypatch, png_bytes):
+    """First photo arrives through /agent (not /image): the failure inside agent.run also becomes a 503."""
+    import io
+
+    from casaguacate import vision
+    from casaguacate.api import create_app
+    from casaguacate.servicios import LazyVision
+
+    def failing_load(cls, directory=None):
+        raise OSError("sin red")
+
+    monkeypatch.setattr(vision.ImageClassifier, "load", classmethod(failing_load))
+    services = Services(intents=FakeIntents(dict(DEFAULT_TABLE)), vision=LazyVision())
+    client = create_app(services, {"RATE_LIMIT_PER_MIN": 0}).test_client()
+    response = client.post("/agent", data={"texto": "no abre la puerta", "file": (io.BytesIO(png_bytes), "a.png")},
+                           content_type="multipart/form-data")
+    assert response.status_code == 503 and response.get_json()["error"]["codigo"] == "modelo_no_disponible"

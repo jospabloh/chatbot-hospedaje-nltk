@@ -7,7 +7,7 @@ import threading
 from pathlib import Path
 
 from . import config
-from .agente import Services
+from .agente import Services, VisionUnavailable
 from .texto import IntentClassifier, ToneClassifier
 
 log = logging.getLogger("casaguacate.api")
@@ -29,6 +29,7 @@ class LazyVision:
         if not (self.directory / f"vision_head_{self.backbone}.joblib").exists():
             raise FileNotFoundError(f"missing vision head for {self.backbone}")
         self._classifier = None
+        self._error: str | None = None   # type of the exception if the first load failed (then it is not retried)
         self._lock = threading.Lock()
 
     @property
@@ -36,13 +37,30 @@ class LazyVision:
         """True once TensorFlow and the backbone are in memory (used by tests and diagnostics)."""
         return self._classifier is not None
 
+    @property
+    def available(self) -> bool:
+        """False after a failed load; agente.vision_available reads it so /health reports "degradado" and
+        /image and /agent answer 503, as when the eager load fails at start-up."""
+        return self._error is None
+
     def predict(self, image):
-        """Classifies a PIL image, loading the real classifier the first time (thread-safe, loads once)."""
+        """Classifies a PIL image, loading the real classifier the first time (thread-safe, loads once).
+
+        If that load fails the model is marked unavailable, the failure is logged once and VisionUnavailable is
+        raised (the API answers 503); later photos get VisionUnavailable without retrying the load.
+        """
         if self._classifier is None:
             with self._lock:
+                if self._error is not None:
+                    raise VisionUnavailable(self._error)
                 if self._classifier is None:
-                    from .vision import ImageClassifier
-                    self._classifier = ImageClassifier.load(self.directory)
+                    try:
+                        from .vision import ImageClassifier
+                        self._classifier = ImageClassifier.load(self.directory)
+                    except Exception as exc:  # noqa: BLE001 - same degradation as the eager load in load_services
+                        self._error = type(exc).__name__
+                        log.warning('{"evento": "modelo_no_cargado", "modelo": "vision", "tipo": "%s"}', self._error)
+                        raise VisionUnavailable(self._error) from exc
         return self._classifier.predict(image)
 
 

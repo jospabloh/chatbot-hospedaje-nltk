@@ -23,13 +23,14 @@ from flask import Flask, g, jsonify, request
 from werkzeug.exceptions import HTTPException
 
 from . import config
-from .agente import HybridAgent, Services, answer_text
+from .agente import HybridAgent, Services, VisionUnavailable, answer_text, vision_available
 from .metricas import Metrics
 from .texto import detect_language
 from .validacion import ApiError, validate_image, validate_lang, validate_state, validate_text
 
 KNOWN_PATHS = {"/health", "/chat", "/image", "/agent", "/metrics", "/"}
 PUBLIC_PATHS = {"/health", "/"}
+VISION_UNAVAILABLE = "El clasificador visual no esta disponible en este momento."
 
 logger = logging.getLogger("casaguacate.api")
 
@@ -134,6 +135,11 @@ def create_app(services: Services | None = None, settings: dict | None = None) -
     def handle_api_error(exc: ApiError):
         return error_response(exc.status, exc.code, exc.message)
 
+    @app.errorhandler(VisionUnavailable)
+    def handle_vision_unavailable(exc: VisionUnavailable):
+        """A lazily loaded vision model failed on its first photo: same answer as when there is no model (503)."""
+        return error_response(503, "modelo_no_disponible", VISION_UNAVAILABLE)
+
     @app.errorhandler(HTTPException)
     def handle_http_error(exc: HTTPException):
         known = {404: ("ruta_no_encontrada", "La ruta solicitada no existe."),
@@ -172,7 +178,7 @@ def create_app(services: Services | None = None, settings: dict | None = None) -
 
     @app.get("/health")
     def health():
-        vision = services.vision
+        vision = services.vision if vision_available(services) else None   # a lazy model that failed counts as missing
         ok = services.intents is not None
         return jsonify({"estado": "ok" if ok and vision is not None else "degradado", "version": config.VERSION,
                         "modelos": {"intenciones": ok, "tono": services.tone is not None,
@@ -190,8 +196,8 @@ def create_app(services: Services | None = None, settings: dict | None = None) -
 
     @app.post("/image")
     def image():
-        if services.vision is None:
-            raise ApiError(503, "modelo_no_disponible", "El clasificador visual no esta disponible en este momento.")
+        if not vision_available(services):
+            raise ApiError(503, "modelo_no_disponible", VISION_UNAVAILABLE)
         if "file" not in request.files:
             raise ApiError(400, "archivo_requerido", "Falta el archivo en el campo 'file' (multipart/form-data).")
         img = validate_image(request.files["file"])
@@ -210,8 +216,8 @@ def create_app(services: Services | None = None, settings: dict | None = None) -
         img = uploaded_image() if not request.is_json else None
         if not text and img is None:
             raise ApiError(400, "entrada_vacia", "Envia al menos 'texto' o una foto en 'file'.")
-        if img is not None and services.vision is None:
-            raise ApiError(503, "modelo_no_disponible", "El clasificador visual no esta disponible en este momento.")
+        if img is not None and not vision_available(services):
+            raise ApiError(503, "modelo_no_disponible", VISION_UNAVAILABLE)
         result = agent.run(text, img, state)
         decision = result.as_dict()
         metrics.count("accion", result.action)
