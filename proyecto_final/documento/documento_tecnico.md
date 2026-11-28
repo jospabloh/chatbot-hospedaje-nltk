@@ -27,7 +27,7 @@ Curso: Desarrollo de aplicaciones con inteligencia artificial (CC.MBIA2602FLE)</
 
 Este documento describe el diseño, la implementación, la evaluación y el despliegue de un asistente de check-in para Cas'aguacate, un hospedaje pequeño ubicado en La Asunción de Belén, Heredia, Costa Rica. El sistema integra tres componentes de inteligencia artificial en una aplicación web: un chatbot de procesamiento de lenguaje natural (PLN) bilingüe (español e inglés) que clasifica 15 intenciones, un clasificador visual basado en EfficientNetB0 que reconoce fotografías de los accesos de la propiedad, y un agente híbrido que combina una capa reactiva de reglas de seguridad con una capa deliberativa que decide si responder, pedir una foto, aclarar o escalar el caso a la anfitriona. La interfaz está construida con Streamlit y consume por HTTP una API REST en Flask con validación de entradas, códigos de error estables, límite de peticiones, registros estructurados y un endpoint de métricas. Toda la solución se despliega en Streamlit Community Cloud: la API corre dentro del mismo contenedor de la aplicación y no se expone en una URL pública separada (sección 10.2).
 
-En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 (español) y 0.773 (inglés), con F1 macro por validación cruzada de 0.704 y 0.700 y AUC OvR macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza 0.974 sobre 39 imágenes de Wikimedia y 0.841 sobre 44 recortes reales del hotel, con la advertencia de que estas últimas tienen clases con uno a tres ejemplos. Pasan las 261 pruebas automatizadas y la prueba de humo de 9 comprobaciones. El documento analiza además desempeño, escalabilidad, mantenibilidad, ética, sesgos, limitaciones y mejoras futuras.
+En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 (español) y 0.773 (inglés), con F1 macro por validación cruzada de 0.704 y 0.700 y AUC OvR macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza 0.974 sobre 39 imágenes de Wikimedia y 0.841 sobre 44 recortes reales del hotel, con la advertencia de que estas últimas tienen clases con uno a tres ejemplos. Pasan las 264 pruebas automatizadas y la prueba de humo de 9 comprobaciones. El documento analiza además desempeño, escalabilidad, mantenibilidad, ética, sesgos, limitaciones y mejoras futuras.
 
 **Palabras clave:** agente inteligente, chatbot, visión por computadora, Grad-CAM, Flask, Streamlit, despliegue.
 
@@ -64,7 +64,7 @@ Construir y desplegar una aplicación web que atienda el check-in de Cas'aguacat
 
 ### 3.1 Datos
 
-El corpus de intenciones fue elaborado para el proyecto y contiene 711 frases en español y 375 en inglés, distribuidas en 15 intenciones (tarifas, ubicación, cerradura, portón y estacionamiento, acceso al fraccionamiento, servicios, reglas, horarios, llegada tarde, early o late check-out, disponibilidad, reportar un problema, contactar a la anfitriona, saludo y cortesía, y cancelación). La intención de cancelación se agregó en el Proyecto Final tras un hallazgo de pruebas; su respuesta es general, sin plazos ni montos, porque el repositorio no contiene una política de cancelación del negocio.
+El corpus de intenciones fue elaborado para el proyecto y contiene 711 frases en español y 375 en inglés, distribuidas en 15 intenciones (tarifas, ubicación, cerradura, portón y estacionamiento, acceso al fraccionamiento, servicios, reglas, horarios, llegada tarde, early o late check-out, disponibilidad, reportar un problema, contactar a la anfitriona, saludo y cortesía, y cancelación). La intención de cancelación se agregó en el Proyecto Final tras un hallazgo de pruebas; responde la política real que confirmó el dueño: la reserva directa no es reembolsable ni cancelable salvo causa mayor, que revisa la anfitriona, y en plataformas depende de la tarifa elegida.
 
 Para visión se usan dos fuentes. La primera es un conjunto de imágenes públicas de Wikimedia Commons (256 imágenes únicas tras eliminar casi duplicados con un hash perceptual, y 6 fuera de dominio), cuyos créditos están en el repositorio (`avance2/datos`). La segunda son las imágenes reales que envió el negocio: 33 páginas de un folleto del hotel, de las cuales se extrajeron 44 recortes útiles (25 de interiores, 15 de otro tipo, 3 de portón y 1 de cerradura), sin recortes de caseta ni de controles. No se publican porque muestran accesos de la propiedad; solo se guardan etiquetas y métricas.
 
@@ -209,7 +209,7 @@ El agente es híbrido, en el sentido de las arquitecturas por capas descritas po
 
 La **capa reactiva** son expresiones regulares sobre el texto normalizado, en español y en inglés, que se ejecutan antes de cualquier modelo y no pueden ser engañadas por una baja confianza del clasificador. Se evalúan con prioridad fija: primero urgencias (fuego, humo, fuga de gas, emergencias médicas, robo), que remiten al 911 y avisan a la anfitriona; después datos sensibles (números de tarjeta, CVV), que se rechazan sin procesar ni registrar; luego la petición explícita de hablar con una persona; luego la política de la anfitriona (early check-in y early o late check-out, que solo ella decide); y por último los temas fuera de alcance, como recomendar restaurantes. Además detecta tono molesto, que no bloquea la respuesta pero la convierte en `RESPONDER_Y_AVISAR`.
 
-La **capa deliberativa** se activa si ninguna regla aplica. Combina la intención del texto y su confianza, la clase de la foto y su confianza, y el estado de la conversación. Si el texto es ambiguo sobre un acceso y no hay foto, pide una foto (`PEDIR_FOTO`), pero nunca dos veces en el mismo problema. Si hay una foto confiable y el texto es ambiguo, decide la foto. Si el asistente no entendió, aclara una vez (`ACLARAR`), y si no entiende por segunda vez consecutiva escala. Las intenciones que el negocio reserva a la anfitriona (contactarla y los cambios de horario de entrada o salida) se escalan. Un reporte de problema primero pide una foto, una sola vez, y después se escala, porque las fallas las revisa la anfitriona. Las cancelaciones y los reembolsos se responden con un texto general y además se avisa a la anfitriona (`RESPONDER_Y_AVISAR`). El umbral de texto es 0.40, el de texto ambiguo con foto confiable es 0.60, el de imagen es 0.60 y el máximo de aclaraciones fallidas es 2.
+La **capa deliberativa** se activa si ninguna regla aplica. Combina la intención del texto y su confianza, la clase de la foto y su confianza, y el estado de la conversación. Si el texto es ambiguo sobre un acceso y no hay foto, pide una foto (`PEDIR_FOTO`), pero nunca dos veces en el mismo problema. Si hay una foto confiable y el texto es ambiguo, decide la foto. Si el asistente no entendió, aclara una vez (`ACLARAR`), y si no entiende por segunda vez consecutiva escala. Las intenciones que el negocio reserva a la anfitriona (contactarla y los cambios de horario de entrada o salida) se escalan. Un reporte de problema primero pide una foto, una sola vez, y después se escala, porque las fallas las revisa la anfitriona. Las cancelaciones y los reembolsos se responden con la política del negocio, sin prometer reembolsos, y además se avisa a la anfitriona (`RESPONDER_Y_AVISAR`). El umbral de texto es 0.40, el de texto ambiguo con foto confiable es 0.60, el de imagen es 0.60 y el máximo de aclaraciones fallidas es 2.
 
 La figura 5 resume el flujo de decisión; el diagrama de secuencia completo está en `app/docs/flujo_coordinacion.md`.
 
@@ -340,7 +340,7 @@ Fuera de Streamlit, la API Flask se sirve con gunicorn, con un solo proceso y cu
 |---|---|---|
 | Rutas y documentación | Cinco endpoints (`/health`, `/chat`, `/image`, `/agent`, `/metrics`) descritos en la tabla 5 y en el README | Sección 8.2; `README.md` |
 | Validación y errores | Límites de texto e imagen, formato real, códigos estables y `X-Request-ID` | Sección 8.2; pruebas de API y de validación |
-| Seguridad | Token `X-API-Token` y límite de peticiones por huésped | Sección 8.2; 261 pruebas aprobadas (`pruebas_pytest.txt`) |
+| Seguridad | Token `X-API-Token` y límite de peticiones por huésped | Sección 8.2; 264 pruebas aprobadas (`pruebas_pytest.txt`) |
 | Observabilidad | `/health`, `/metrics` y registros JSON sin el texto del huésped | Sección 10.4 |
 | Consumo desde la interfaz | La interfaz llama a la API por HTTP con el mismo cliente, embebida o externa | Sección 8.1; prueba de humo 9 de 9 contra la API integrada (`prueba_humo_integrada.txt`) |
 
@@ -359,7 +359,7 @@ curl -s localhost:5000/image -F file=@foto.jpg   # con API_TOKEN: -H "X-API-Toke
 
 El repositorio conserva las evidencias de cada etapa en `proyecto_final/app/evidencias/`:
 
-- `pruebas_pytest.txt`: salida de la suite, 261 pruebas aprobadas.
+- `pruebas_pytest.txt`: salida de la suite, 264 pruebas aprobadas.
 - `prueba_humo_local.txt`: 9 de 9 comprobaciones contra la API local. El resultado igual por la URL pública el 23 de noviembre es un antecedente citado del README, sin evidencia guardada.
 - `prueba_humo_integrada.txt`: 9 de 9 comprobaciones contra la API integrada, levantada con `start_embedded_api` (el mismo arranque que usa la interfaz sin `API_URL`) y ejecutada localmente en mi computadora, no en el contenedor de Streamlit Community Cloud. `latencia_integrada.txt` guarda las latencias de la sección 12.1.
 - `entrenamiento_vision.txt`: comparación de backbones y modelo de despliegue.
@@ -374,14 +374,14 @@ La API ofrece tres mecanismos de observabilidad. `/health` informa si está viva
 
 ### 11.1 Suite automatizada
 
-La suite de pytest consta de 261 pruebas que pasan en 16.96 segundos (`app/evidencias/pruebas_pytest.txt`). Se organizan por componente, y las pruebas con modelos reales llevan la marca `modelos` para poder omitirlas en entornos sin TensorFlow (`pytest -m "not modelos"`).
+La suite de pytest consta de 264 pruebas que pasan en 17.16 segundos (`app/evidencias/pruebas_pytest.txt`). Se organizan por componente, y las pruebas con modelos reales llevan la marca `modelos` para poder omitirlas en entornos sin TensorFlow (`pytest -m "not modelos"`).
 
 **Tabla 6.** Pruebas por módulo. Fuente: `app/evidencias/pruebas_pytest.txt`.
 
 | Módulo | Pruebas | Qué verifica |
 |---|---|---|
 | Reglas | 69 | Urgencias, datos sensibles, petición de una persona, política, fuera de alcance y tono, en ambos idiomas |
-| Agente | 42 | Cada acción y la política de decisión, estado de conversación, aclaraciones y escalamiento |
+| Agente | 45 | Cada acción y la política de decisión, estado de conversación, aclaraciones y escalamiento |
 | API | 36 | Endpoints, códigos de error, token, límite de peticiones, métricas y encabezados |
 | Validación | 22 | Longitud de texto, formato, tamaño y dimensiones de imagen, estado mal formado |
 | Interfaz | 27 | Cliente de la API, textos bilingües, manejo de errores y estado de sesión |
@@ -389,7 +389,7 @@ La suite de pytest consta de 261 pruebas que pasan en 16.96 segundos (`app/evide
 | Modo integrado | 12 | API embebida por HTTP real, token por proceso, límite de peticiones, interfaz sin `API_URL` y carga diferida de TensorFlow |
 | Modelos reales | 21 | Los modelos entrenados con casos conocidos |
 | Regresión Avance 2 | 5 | Comportamiento frente a los casos del Avance 2 |
-| **Total** | **261** | |
+| **Total** | **264** | |
 
 Cuando se corrigió un defecto, la prueba se escribió de modo que falle sin la corrección (por ejemplo, el aviso a la anfitriona en las cancelaciones). Las pruebas del Avance 1 dan el mismo resultado antes y después de la integración (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`), así que el chatbot original no se degradó.
 
@@ -416,7 +416,7 @@ El sistema está dimensionado para una propiedad y pocos huéspedes simultáneos
 
 ### 12.3 Mantenibilidad
 
-El código se organiza en módulos con una sola responsabilidad (configuración, texto, visión, reglas, agente, base de conocimiento, validación, métricas y API). Los umbrales y límites están en un solo archivo y se sobrescriben con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras). Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest) y las 261 pruebas y la suite de regresión protegen el comportamiento existente. La base de conocimiento tiene una sola fuente, así que actualizar una tarifa no requiere reentrenar; solo los cambios en las intenciones o en las clases de imagen lo exigen, con scripts reproducibles de semilla fija.
+El código se organiza en módulos con una sola responsabilidad (configuración, texto, visión, reglas, agente, base de conocimiento, validación, métricas y API). Los umbrales y límites están en un solo archivo y se sobrescriben con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras). Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest) y las 264 pruebas y la suite de regresión protegen el comportamiento existente. La base de conocimiento tiene una sola fuente, así que actualizar una tarifa no requiere reentrenar; solo los cambios en las intenciones o en las clases de imagen lo exigen, con scripts reproducibles de semilla fija.
 
 ## 13. Ética y sesgos
 
@@ -443,7 +443,7 @@ El proyecto se ubica en turismo y hospitalidad: consultas repetitivas de respues
 - **El aviso a la anfitriona no tiene canal de envío.** Se marca y registra (evento `aviso_anfitriona`), pero ningún servicio lo entrega; debe decirse así en la demostración.
 - **Pocas fotografías reales**, de un dominio distinto al de uso (sección 6.3), y **un corpus pequeño y de un solo autor** (5 frases por intención en la prueba en inglés): el 0.841 es indicativo y las métricas por clase son ruidosas.
 - **No hay conversaciones reales**: las métricas salen de frases redactadas y casos de prueba.
-- **Cancelaciones sin política.** La respuesta es general porque el repositorio no tiene una política de plazos ni montos.
+- **Cancelaciones en plataformas.** El asistente explica que la condición depende de la tarifa elegida, pero no consulta la reserva del huésped.
 - **El modelo de tono y el ensamble con MiniLM del Avance 2 no se despliegan** (F1 macro de tono de 0.603 y 0.557); el tono lo cubre un léxico.
 - **Una sola propiedad**, **métricas en memoria** y **ninguna prueba de carga**.
 - **Arranque en frío.** Tras la inactividad la aplicación se duerme y la primera visita tarda en despertarla; debe visitarse antes de la demostración.
@@ -458,7 +458,7 @@ Las mejoras se ordenan por impacto sobre el riesgo del huésped y por la facilid
 | # | Mejora | Problema que resuelve | Cómo se sabrá que funcionó | Esfuerzo |
 |---|---|---|---|---|
 | 1 | Canal real de aviso a la anfitriona (WhatsApp o correo) para `ESCALAR`, `ESCALAR_URGENTE` y `RESPONDER_Y_AVISAR` | Hoy el aviso se marca pero no se entrega | La anfitriona recibe cada aviso y se mide el tiempo entre el aviso y su respuesta | Medio |
-| 2 | Política real de cancelación y reembolso del negocio en la base de conocimiento | La respuesta actual es general, sin plazos ni montos | La respuesta cita la política y la anfitriona la valida | Bajo |
+| 2 | Consultar la tarifa de la reserva en la plataforma (reembolsable o no) | Hoy solo se explica que depende de la tarifa | La respuesta indica la condición de la reserva y la anfitriona la valida | Medio |
 | 3 | Más fotografías tomadas como huésped (teclado, cerradura, portón, caseta, controles, de día y de noche) y ajuste fino del backbone | Pocos ejemplos y dominio de folleto; clases sin datos | Exactitud y F1 macro sobre un conjunto de prueba propio de exteriores, no solo de interiores | Medio |
 | 4 | Preguntas frecuentes y conversaciones reales de un piloto para ampliar el corpus, con más frases en inglés | Corpus pequeño, de un autor y desbalanceado entre idiomas | F1 macro con validación cruzada y con conversaciones reales; cierre de la brecha entre idiomas | Medio |
 | 5 | Búsqueda sistemática de hiperparámetros (C, n-gramas, calibración) con validación cruzada anidada | Los valores provienen del Avance 2 y no se reoptimizaron | Mejora del F1 macro CV sobre 0.704 y 0.700 sin sobreajustar la prueba | Bajo |
@@ -470,7 +470,7 @@ Las mejoras se ordenan por impacto sobre el riesgo del huésped y por la facilid
 
 ## 17. Conclusiones
 
-El proyecto cumplió su objetivo: una aplicación web que atiende el check-in de Cas'aguacate integrando un chatbot bilingüe, un clasificador visual y un agente híbrido, con un flujo documentado, una API con manejo de errores, 261 pruebas que pasan, una interfaz pública y evidencias de pruebas y despliegue.
+El proyecto cumplió su objetivo: una aplicación web que atiende el check-in de Cas'aguacate integrando un chatbot bilingüe, un clasificador visual y un agente híbrido, con un flujo documentado, una API con manejo de errores, 264 pruebas que pasan, una interfaz pública y evidencias de pruebas y despliegue.
 
 Tres aprendizajes resumen el trabajo. El primero es que, en un servicio con consecuencias reales para una persona, lo más importante no es el modelo sino lo que ocurre cuando duda: la capa reactiva, el umbral de confianza, la clase «otro» y el escalamiento aportan más seguridad que cualquier punto adicional de exactitud. El segundo es que las métricas deben leerse con su contexto: el 0.841 con fotografías reales es honesto solo si se dice que hay 44 imágenes, 25 de interiores y clases con un ejemplo. El tercero es que el sesgo por idioma y por pocos datos no se resuelve con una técnica, sino midiendo, documentando y proponiendo cómo reunir mejores datos.
 

@@ -56,6 +56,8 @@ DEFAULT_TABLE = {
     "tienen alberca": ("servicios", 0.70),
     "como puedo cancelar mi reservacion": ("cancelacion", 0.85),
     "how can i cancel my booking": ("cancelacion", 0.78),
+    "fallecio mi papa y necesito cancelar la reserva": ("cancelacion", 0.80),
+    "my father passed away and i need to cancel": ("cancelacion", 0.80),
 }
 
 

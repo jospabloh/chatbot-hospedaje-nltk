@@ -214,14 +214,46 @@ def test_pagos_se_responden_aunque_el_corpus_no_tenga_intencion_de_pagos(agent):
 
 
 # Cancelacion: antes el bot contestaba "Perdon, no entendi" a "¿como puedo cancelar mi reservacion?" (app viva, 27-nov).
-# Un huesped que quiere cancelar y recibe una aclaracion vacia se va a la plataforma o escribe molesto: la pregunta es frecuente
-# y tiene que tener respuesta. El repo no trae politica de cancelacion, asi que la respuesta no puede inventar plazos ni montos.
-@pytest.mark.parametrize("text,lang,pointer", [("como puedo cancelar mi reservacion", "es", "plataforma de reserva"),
-                                               ("how can i cancel my booking", "en", "booking platform")])
-def test_cancelacion_se_responde_sin_inventar_condiciones(agent, text, lang, pointer):
+# Desde el 27-nov la respuesta es la politica real de Cas'aguacate (confirmada por el dueno): la reserva directa NO es
+# reembolsable ni cancelable, solo por causa mayor la anfitriona revisa el caso, y en plataformas depende de la tarifa elegida.
+# Estas pruebas fallan si la respuesta deja de decir cualquiera de las dos cosas, en cualquiera de los dos idiomas.
+POLITICA = {
+    "es": {"directa": "directamente con cas'aguacate no son reembolsables ni se pueden cancelar",
+           "plataforma": "depende de la tarifa que elegiste al reservar", "causa_mayor": "causa mayor",
+           "promesas": ("te reembolsamos", "recibirás tu reembolso", "te devolvemos", "garantiz")},
+    "en": {"directa": "made directly with cas'aguacate are non-refundable and cannot be cancelled",
+           "plataforma": "depends on the rate you chose when booking", "causa_mayor": "serious cause",
+           "promesas": ("we will refund", "you will get a refund", "you will be refunded", "guarantee")},
+}
+
+
+@pytest.mark.parametrize("text,lang", [("como puedo cancelar mi reservacion", "es"), ("how can i cancel my booking", "en")])
+def test_cancelacion_responde_la_politica_real_y_avisa_a_la_anfitriona(agent, text, lang):
     result = agent.run(text)
     assert result.action == "RESPONDER_Y_AVISAR" and result.final_intent == "cancelacion" and result.lang == lang
-    assert result.notify_host and result.state.escalada, "la anfitriona decide cancelaciones y reembolsos: debe recibir aviso"
-    assert pointer in result.reply and "Lore" in result.reply
+    assert result.notify_host and result.state.escalada, "la anfitriona decide las causas mayores: debe recibir aviso"
+    reply, policy = result.reply.lower(), POLITICA[lang]
+    assert policy["directa"] in reply, "debe decir que la reserva directa no es reembolsable ni cancelable"
+    assert policy["plataforma"] in reply and "airbnb" in reply and "booking" in reply, "en plataformas depende de la tarifa"
+    assert policy["causa_mayor"] in reply and "lore" in reply, "la causa mayor se escala a la anfitriona"
+    assert not any(p in reply for p in policy["promesas"]), "no debe prometer reembolsos"
     assert not re.search(r"\d", result.reply), "no debe dar plazos, porcentajes ni montos"
-    assert "no entend" not in result.reply.lower() and "did not quite get" not in result.reply
+    assert "no entend" not in reply and "did not quite get" not in reply
+
+
+@pytest.mark.parametrize("text,lang", [("fallecio mi papa y necesito cancelar la reserva", "es"),
+                                       ("my father passed away and i need to cancel", "en")])
+def test_cancelacion_por_causa_mayor_avisa_a_la_anfitriona_sin_prometer_reembolso(agent, text, lang):
+    result = agent.run(text)
+    assert result.action == "RESPONDER_Y_AVISAR" and result.notify_host and result.state.escalada
+    reply = result.reply.lower()
+    assert POLITICA[lang]["causa_mayor"] in reply and "lore" in reply
+    assert not any(p in reply for p in POLITICA[lang]["promesas"])
+
+
+def test_la_politica_de_cancelacion_esta_en_la_base_de_conocimiento_en_ambos_idiomas():
+    """The knowledge base itself (single source of the business data) carries the policy in both languages."""
+    from casaguacate import conocimiento as kb
+    for lang in ("es", "en"):
+        reply = kb.reply_for("cancelacion", "cancelar", lang).lower()
+        assert POLITICA[lang]["directa"] in reply and POLITICA[lang]["plataforma"] in reply

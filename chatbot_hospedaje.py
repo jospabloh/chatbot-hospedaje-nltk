@@ -265,11 +265,16 @@ def build_replies(lang: str) -> dict:
                             "(there is a smoking booth in the parking area); quiet hours from 10 p.m. to 8 a.m. "
                             "All guests must be registered before check-in. Breaking the rules carries a fine starting at USD 100."),
             "contact_host": f"I'm connecting you with {host}. 🙋‍♀️ I've let her know and she'll message you shortly. You can also write to {email}. [HANDOFF TO HUMAN]",
-            # Cancellation / refund / date change. Used by the proyecto_final agent (intent "cancelacion"). The repo has no
-            # cancellation policy, so this reply states NO deadlines or amounts: it points to the booking channel and the host.
-            "cancellation": (f"To cancel or change the dates of your reservation, please do it through the same channel you booked with "
-                             f"(the booking platform, or directly with {host}). Cancellation and refund conditions depend on your booking "
-                             f"and its policy, and I cannot confirm deadlines or amounts. If you prefer, type 'talk to {host}' or write to {email}."),
+            # Cancellation / refund / date change. Used by the proyecto_final agent (intent "cancelacion"). Real policy of
+            # Cas'aguacate, confirmed by the owner on 27-nov-2026: a direct booking is non-refundable and cannot be cancelled;
+            # only for a serious cause (e.g. a death in the family) the host reviews the case and may cancel with a refund.
+            # On platforms the condition depends on the rate the guest chose (refundable or non-refundable). It never promises
+            # a refund and gives no deadlines or amounts; the agent also notifies the host (RESPONDER_Y_AVISAR).
+            "cancellation": (f"Bookings made directly with Cas'aguacate are non-refundable and cannot be cancelled. Only for a serious "
+                             f"cause (for example, a death in the family) {host}, the host, reviews your case and may cancel it with a refund. "
+                             f"If you booked on a platform (Airbnb, Booking.com or another), the condition depends on the rate you chose when "
+                             f"booking, refundable or non-refundable: check it in your booking on that platform. "
+                             f"For a date change, {host} reviews your case; you can also write to {email}."),
             "thanks": "You're welcome! Anything else I can help with?",
             "goodbye": "See you soon! Enjoy your stay. 🥑",
         }
@@ -305,11 +310,16 @@ def build_replies(lang: str) -> dict:
                         "(hay un área para fumar en el parqueo); silencio de 22:00 a 8:00. Todos los huéspedes deben "
                         "registrarse antes del check-in. Incumplir las reglas tiene una multa desde USD 100."),
         "contact_host": f"Te comunico con {host}. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a {email}. [TRANSFERENCIA A HUMANO]",
-        # Cancelacion / reembolso / cambio de fechas. Lo usa el agente de proyecto_final (intencion "cancelacion"). El repo no tiene
-        # politica de cancelacion, asi que esta respuesta NO da plazos ni montos: remite al canal de reserva y a la anfitriona.
-        "cancellation": (f"Para cancelar o cambiar las fechas de tu reservación, hazlo por el mismo canal donde reservaste "
-                         f"(la plataforma de reserva, o directamente con {host}). Las condiciones de cancelación y reembolso dependen de tu "
-                         f"reserva y de su política, y yo no puedo confirmar plazos ni montos. Si prefieres, escribe 'hablar con {host}' o a {email}."),
+        # Cancelacion / reembolso / cambio de fechas. Lo usa el agente de proyecto_final (intencion "cancelacion"). Politica real de
+        # Cas'aguacate, confirmada por el dueno el 27-nov-2026: la reserva directa no es reembolsable ni cancelable; solo por causa
+        # mayor (por ejemplo, un fallecimiento) la anfitriona revisa el caso y puede cancelar con reembolso. En plataformas depende
+        # de la tarifa elegida (reembolsable o no reembolsable). Nunca promete reembolso ni da plazos o montos; el agente ademas
+        # avisa a la anfitriona (RESPONDER_Y_AVISAR).
+        "cancellation": (f"Las reservas hechas directamente con Cas'aguacate no son reembolsables ni se pueden cancelar. Solo por una "
+                         f"causa mayor (por ejemplo, el fallecimiento de un familiar) {host}, la anfitriona, revisa tu caso y puede "
+                         f"cancelarla con reembolso. Si reservaste en una plataforma (Airbnb, Booking.com u otra), la condición depende de "
+                         f"la tarifa que elegiste al reservar, reembolsable o no reembolsable: revísala en tu reserva de esa plataforma. "
+                         f"Para un cambio de fechas, {host} revisa tu caso; también puedes escribir a {email}."),
         "thanks": "¡Con gusto! ¿Algo más en lo que te ayude?",
         "goodbye": "¡Hasta pronto! Que disfrutes tu estancia. 🥑",
     }
