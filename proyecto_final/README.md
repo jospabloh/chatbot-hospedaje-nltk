@@ -140,7 +140,7 @@ Aclaración sobre los datos: solo se guarda la cabeza (unos 90 KB), los pesos de
 
 ### Pruebas
 
-`pytest`: 264 pruebas pasan (reglas 69, agente 45, API 36, validación 22, interfaz 27, horarios 27, modo integrado 12, modelos reales 21, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
+`pytest`: 265 pruebas pasan (reglas 69, agente 45, API 36, validación 22, interfaz 28, horarios 27, modo integrado 12, modelos reales 21, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
 
 Las pruebas con modelos reales llevan la marca `modelos`; para omitirlas: `pytest -m "not modelos"`.
 

@@ -27,7 +27,7 @@ Curso: Desarrollo de aplicaciones con inteligencia artificial (CC.MBIA2602FLE)</
 
 Este documento describe el diseño, la implementación, la evaluación y el despliegue de un asistente de check-in para Cas'aguacate, un hospedaje pequeño ubicado en La Asunción de Belén, Heredia, Costa Rica. El sistema integra tres componentes de inteligencia artificial en una aplicación web: un chatbot de procesamiento de lenguaje natural (PLN) bilingüe (español e inglés) que clasifica 15 intenciones, un clasificador visual basado en EfficientNetB0 que reconoce fotografías de los accesos de la propiedad, y un agente híbrido que combina una capa reactiva de reglas de seguridad con una capa deliberativa que decide si responder, pedir una foto, aclarar o escalar el caso a la anfitriona. La interfaz está construida con Streamlit y consume por HTTP una API REST en Flask con validación de entradas, códigos de error estables, límite de peticiones, registros estructurados y un endpoint de métricas. Toda la solución se despliega en Streamlit Community Cloud: la API corre dentro del mismo contenedor de la aplicación y no se expone en una URL pública separada (sección 10.2).
 
-En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 (español) y 0.773 (inglés), con F1 macro por validación cruzada de 0.704 y 0.700 y AUC OvR macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza 0.974 sobre 39 imágenes de Wikimedia y 0.841 sobre 44 recortes reales del hotel, con la advertencia de que estas últimas tienen clases con uno a tres ejemplos. Pasan las 264 pruebas automatizadas y la prueba de humo de 9 comprobaciones. El documento analiza además desempeño, escalabilidad, mantenibilidad, ética, sesgos, limitaciones y mejoras futuras.
+En la evaluación, el clasificador de intenciones obtiene una exactitud de 0.818 (español) y 0.773 (inglés), con F1 macro por validación cruzada de 0.704 y 0.700 y AUC OvR macro de 0.963 y 0.968. El clasificador visual de despliegue alcanza 0.974 sobre 39 imágenes de Wikimedia y 0.841 sobre 44 recortes reales del hotel, con la advertencia de que estas últimas tienen clases con uno a tres ejemplos. Pasan las 265 pruebas automatizadas y la prueba de humo de 9 comprobaciones. El documento analiza además desempeño, escalabilidad, mantenibilidad, ética, sesgos, limitaciones y mejoras futuras.
 
 **Palabras clave:** agente inteligente, chatbot, visión por computadora, Grad-CAM, Flask, Streamlit, despliegue.
 
@@ -340,7 +340,7 @@ Fuera de Streamlit, la API Flask se sirve con gunicorn, con un solo proceso y cu
 |---|---|---|
 | Rutas y documentación | Cinco endpoints (`/health`, `/chat`, `/image`, `/agent`, `/metrics`) descritos en la tabla 5 y en el README | Sección 8.2; `README.md` |
 | Validación y errores | Límites de texto e imagen, formato real, códigos estables y `X-Request-ID` | Sección 8.2; pruebas de API y de validación |
-| Seguridad | Token `X-API-Token` y límite de peticiones por huésped | Sección 8.2; 264 pruebas aprobadas (`pruebas_pytest.txt`) |
+| Seguridad | Token `X-API-Token` y límite de peticiones por huésped | Sección 8.2; 265 pruebas aprobadas (`pruebas_pytest.txt`) |
 | Observabilidad | `/health`, `/metrics` y registros JSON sin el texto del huésped | Sección 10.4 |
 | Consumo desde la interfaz | La interfaz llama a la API por HTTP con el mismo cliente, embebida o externa | Sección 8.1; prueba de humo 9 de 9 contra la API integrada (`prueba_humo_integrada.txt`) |
 
@@ -359,7 +359,7 @@ curl -s localhost:5000/image -F file=@foto.jpg   # con API_TOKEN: -H "X-API-Toke
 
 El repositorio conserva las evidencias de cada etapa en `proyecto_final/app/evidencias/`:
 
-- `pruebas_pytest.txt`: salida de la suite, 264 pruebas aprobadas.
+- `pruebas_pytest.txt`: salida de la suite, 265 pruebas aprobadas.
 - `prueba_humo_local.txt`: 9 de 9 comprobaciones contra la API local. El resultado igual por la URL pública el 23 de noviembre es un antecedente citado del README, sin evidencia guardada.
 - `prueba_humo_integrada.txt`: 9 de 9 comprobaciones contra la API integrada, levantada con `start_embedded_api` (el mismo arranque que usa la interfaz sin `API_URL`) y ejecutada localmente en mi computadora, no en el contenedor de Streamlit Community Cloud. `latencia_integrada.txt` guarda las latencias de la sección 12.1.
 - `entrenamiento_vision.txt`: comparación de backbones y modelo de despliegue.
@@ -374,7 +374,7 @@ La API ofrece tres mecanismos de observabilidad. `/health` informa si está viva
 
 ### 11.1 Suite automatizada
 
-La suite de pytest consta de 264 pruebas que pasan en 17.16 segundos (`app/evidencias/pruebas_pytest.txt`). Se organizan por componente, y las pruebas con modelos reales llevan la marca `modelos` para poder omitirlas en entornos sin TensorFlow (`pytest -m "not modelos"`).
+La suite de pytest consta de 265 pruebas que pasan en 17.56 segundos (`app/evidencias/pruebas_pytest.txt`). Se organizan por componente, y las pruebas con modelos reales llevan la marca `modelos` para poder omitirlas en entornos sin TensorFlow (`pytest -m "not modelos"`).
 
 **Tabla 6.** Pruebas por módulo. Fuente: `app/evidencias/pruebas_pytest.txt`.
 
@@ -384,12 +384,12 @@ La suite de pytest consta de 264 pruebas que pasan en 17.16 segundos (`app/evide
 | Agente | 45 | Cada acción y la política de decisión, estado de conversación, aclaraciones y escalamiento |
 | API | 36 | Endpoints, códigos de error, token, límite de peticiones, métricas y encabezados |
 | Validación | 22 | Longitud de texto, formato, tamaño y dimensiones de imagen, estado mal formado |
-| Interfaz | 27 | Cliente de la API, textos bilingües, manejo de errores y estado de sesión |
+| Interfaz | 28 | Cliente de la API, textos bilingües, manejo de errores, estado de sesión y límite de carga de fotos igual al de la API |
 | Horarios | 27 | Respuesta con check-in y check-out cuando se pregunta por ambos, y redacción de la regla de mascotas |
 | Modo integrado | 12 | API embebida por HTTP real, token por proceso, límite de peticiones, interfaz sin `API_URL` y carga diferida de TensorFlow |
 | Modelos reales | 21 | Los modelos entrenados con casos conocidos |
 | Regresión Avance 2 | 5 | Comportamiento frente a los casos del Avance 2 |
-| **Total** | **264** | |
+| **Total** | **265** | |
 
 Cuando se corrigió un defecto, la prueba se escribió de modo que falle sin la corrección (por ejemplo, el aviso a la anfitriona en las cancelaciones). Las pruebas del Avance 1 dan el mismo resultado antes y después de la integración (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`), así que el chatbot original no se degradó.
 
@@ -416,7 +416,7 @@ El sistema está dimensionado para una propiedad y pocos huéspedes simultáneos
 
 ### 12.3 Mantenibilidad
 
-El código se organiza en módulos con una sola responsabilidad (configuración, texto, visión, reglas, agente, base de conocimiento, validación, métricas y API). Los umbrales y límites están en un solo archivo y se sobrescriben con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras). Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest) y las 264 pruebas y la suite de regresión protegen el comportamiento existente. La base de conocimiento tiene una sola fuente, así que actualizar una tarifa no requiere reentrenar; solo los cambios en las intenciones o en las clases de imagen lo exigen, con scripts reproducibles de semilla fija.
+El código se organiza en módulos con una sola responsabilidad (configuración, texto, visión, reglas, agente, base de conocimiento, validación, métricas y API). Los umbrales y límites están en un solo archivo y se sobrescriben con variables de entorno (`API_TOKEN`, `RATE_LIMIT_PER_MIN`, `LOG_LEVEL`, `VISION_BACKBONE`, `ARTIFACTS_DIR`, `API_URL`, entre otras). Las dependencias están fijadas por versión, el proyecto se probó con Python 3.9 (evidencia de pytest) y las 265 pruebas y la suite de regresión protegen el comportamiento existente. La base de conocimiento tiene una sola fuente, así que actualizar una tarifa no requiere reentrenar; solo los cambios en las intenciones o en las clases de imagen lo exigen, con scripts reproducibles de semilla fija.
 
 ## 13. Ética y sesgos
 
@@ -470,7 +470,7 @@ Las mejoras se ordenan por impacto sobre el riesgo del huésped y por la facilid
 
 ## 17. Conclusiones
 
-El proyecto cumplió su objetivo: una aplicación web que atiende el check-in de Cas'aguacate integrando un chatbot bilingüe, un clasificador visual y un agente híbrido, con un flujo documentado, una API con manejo de errores, 264 pruebas que pasan, una interfaz pública y evidencias de pruebas y despliegue.
+El proyecto cumplió su objetivo: una aplicación web que atiende el check-in de Cas'aguacate integrando un chatbot bilingüe, un clasificador visual y un agente híbrido, con un flujo documentado, una API con manejo de errores, 265 pruebas que pasan, una interfaz pública y evidencias de pruebas y despliegue.
 
 Tres aprendizajes resumen el trabajo. El primero es que, en un servicio con consecuencias reales para una persona, lo más importante no es el modelo sino lo que ocurre cuando duda: la capa reactiva, el umbral de confianza, la clase «otro» y el escalamiento aportan más seguridad que cualquier punto adicional de exactitud. El segundo es que las métricas deben leerse con su contexto: el 0.841 con fotografías reales es honesto solo si se dice que hay 44 imágenes, 25 de interiores y clases con un ejemplo. El tercero es que el sesgo por idioma y por pocos datos no se resuelve con una técnica, sino midiendo, documentando y proponiendo cómo reunir mejores datos.
 
