@@ -14,8 +14,9 @@ Curso: Desarrollo de aplicaciones con inteligencia artificial (CC.MBIA2602FLE)</
 
 <p class="datos"><strong>Fecha de entrega:</strong> 4 de diciembre de 2026</p>
 
-<p class="datos"><strong>Repositorio:</strong> github.com/jospabloh/chatbot-hospedaje-nltk (rama <code>proyecto-final</code>)<br>
-<strong>Interfaz pública:</strong> hospedaje-asistente-ia.streamlit.app</p>
+<p class="datos"><strong>Video de demostración (5:08):</strong> <a href="https://drive.google.com/file/d/1pmVFaW2hfenZY7asG_XtA7g_qLiIjJLa/view">https://drive.google.com/file/d/1pmVFaW2hfenZY7asG_XtA7g_qLiIjJLa/view</a><br>
+<strong>Aplicación:</strong> <a href="https://hospedaje-asistente-ia.streamlit.app">https://hospedaje-asistente-ia.streamlit.app</a><br>
+<strong>Código:</strong> <a href="https://github.com/jospabloh/chatbot-hospedaje-nltk">https://github.com/jospabloh/chatbot-hospedaje-nltk</a> (rama <code>proyecto-final</code>)</p>
 
 <p class="aviso-portada">Demostración académica. No es el canal oficial de Cas'aguacate.</p>
 
