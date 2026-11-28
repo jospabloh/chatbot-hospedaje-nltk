@@ -140,7 +140,7 @@ Aclaración sobre los datos: solo se guarda la cabeza (unos 90 KB), los pesos de
 
 ### Pruebas
 
-`pytest`: 218 pruebas pasan (reglas 69, agente 42, API 36, validación 22, interfaz 27, modelos reales 17, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
+`pytest`: 261 pruebas pasan (reglas 69, agente 42, API 36, validación 22, interfaz 27, horarios 27, modo integrado 12, modelos reales 21, regresión Avance 2 5). Salida completa en `app/evidencias/pruebas_pytest.txt`. La prueba de humo contra la API en vivo pasó 9 de 9 (`app/evidencias/prueba_humo_local.txt`). Las pruebas del Avance 1 dan el mismo resultado antes y después (`pruebas_avance1_antes.txt` y `pruebas_avance1_despues.txt`).
 
 Las pruebas con modelos reales llevan la marca `modelos`; para omitirlas: `pytest -m "not modelos"`.
 
@@ -230,6 +230,6 @@ Construccion local: `deploy/preparar_contexto.sh /tmp/ctx && docker build -t cas
 | 3 | Video demo de 5 a 10 min | En Drive | Grabación de pantalla con guion; el enlace lo entrega JP |
 | 4 | URL pública | Parcial | https://hospedaje-asistente-ia.streamlit.app; el despliegue elegido es el modo integrado (API REST dentro de la app, PR #10); falta verificar en la nube la versión con el modo integrado |
 | 5 | Diagrama de arquitectura final | Listo | `app/docs/arquitectura_final.png`, `app/docs/flujo_coordinacion.md` |
-| 6 | Evidencia de pruebas y despliegue | Parcial | Pruebas en `app/evidencias/`; falta la prueba de humo contra la API en la nube |
+| 6 | Evidencia de pruebas y despliegue | Parcial | Pruebas en `app/evidencias/`, incluida la prueba de humo contra la API integrada en local (`prueba_humo_integrada.txt`); falta la verificación en la nube |
 | 7 | Métricas de clasificación y chatbot | Listo | Secciones Resultados, `app/artefactos/*.json`, `app/evidencias/metricas_evaluacion_texto.json`, `matriz_confusion_vision.png` y `gradcam_efficientnetb0.png` |
 | 8 | Plan de mejoras futuras | Listo | Sección 16 del PDF (tabla de 10 mejoras) |

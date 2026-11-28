@@ -1,0 +1,19 @@
+Prueba de humo contra la API REST integrada (ui/api_integrada.start_embedded_api, el mismo arranque que usa
+streamlit_app.py sin API_URL), ejecutada localmente en la Mac, no en el contenedor de Streamlit Community Cloud.
+Fecha: 2026-11-27 21:55:13 -0600 | commit a5e2008 | Python 3.9.6 | Darwin arm64
+API en 127.0.0.1:<puerto libre> con token aleatorio por proceso (no se imprime)
+Arranque de la API embebida: 1876 ms (vision perezosa: TensorFlow se carga en la primera foto)
+
+OK    GET /health (9 ms) -> {'estado': 'ok', 'modelos': {'intenciones': True, 'tono': False, 'vision': 'efficientnetb0'}, 'uptime_s': 0.1, 'version': '1.0.0'}
+OK    POST /chat (13 ms) -> tarifas
+OK    POST /image (5051 ms) -> interior (0.999) con efficientnetb0
+OK    POST /agent texto (EN) (7 ms) -> RESPONDER (en)
+OK    POST /agent texto + foto (107 ms) -> ESCALAR, traza: ['Agente', 'Capa reactiva', 'Chatbot NLP', 'Clasificador visual', 'Capa deliberativa']
+OK    POST /agent urgencia (2 ms) -> ESCALAR_URGENTE
+OK    Validacion: texto demasiado largo (2 ms) -> 400 texto_demasiado_largo
+OK    Validacion: foto corrupta (40 ms) -> 415 imagen_corrupta
+OK    GET /metrics (3 ms) -> {"peticiones_total": 8, "errores_5xx_total": 0}
+
+9 de 9 comprobaciones correctas
+
+Codigo de salida: 0
