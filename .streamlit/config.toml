@@ -1,0 +1,9 @@
+# Configuracion de Streamlit para la app publica (Streamlit Community Cloud).
+# Community Cloud corre `streamlit run` desde la raiz del repo y, cuando el archivo de entrada
+# (proyecto_final/app/ui/streamlit_app.py) esta en un subdirectorio, lee la configuracion de aqui.
+# Localmente, correr `streamlit run proyecto_final/app/ui/streamlit_app.py` desde la raiz del repo.
+
+[server]
+# Limite del cargador de fotos, en MB. Debe coincidir con config.MAX_IMAGE_BYTES de la API
+# (proyecto_final/app/casaguacate/config.py); lo verifica tests/test_ui.py.
+maxUploadSize = 5

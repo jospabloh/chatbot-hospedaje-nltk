@@ -102,6 +102,36 @@ def test_agent_envia_foto_y_estado_como_multipart():
     assert url.endswith("/agent") and kwargs["files"]["file"][0] == "a.png" and '"turnos": 1' in kwargs["data"]["estado"]
 
 
+# ---------------------------------------------------------------- Streamlit config
+REPO_ROOT = Path(__file__).resolve().parents[3]
+STREAMLIT_CONFIG = REPO_ROOT / ".streamlit" / "config.toml"
+
+
+def load_toml(path):
+    """Para que sirve: lee un archivo TOML con el lector disponible (tomllib en 3.11+, tomli o toml en 3.9).
+    Donde se usa: test_limite_de_carga_de_streamlit_coincide_con_la_api."""
+    try:
+        import tomllib
+    except ImportError:
+        try:
+            import tomli as tomllib
+        except ImportError:
+            import toml
+            return toml.loads(path.read_text(encoding="utf-8"))
+    return tomllib.loads(path.read_text(encoding="utf-8"))
+
+
+def test_limite_de_carga_de_streamlit_coincide_con_la_api():
+    """El cargador de fotos no debe anunciar 200 MB si la API rechaza mas de 5 MB.
+    Streamlit Community Cloud solo lee .streamlit/config.toml en la raiz del repo cuando la entrada esta en un subdirectorio."""
+    from casaguacate import config
+
+    assert STREAMLIT_CONFIG.is_file(), f"Falta {STREAMLIT_CONFIG}"
+    limite_mb = load_toml(STREAMLIT_CONFIG)["server"]["maxUploadSize"]
+    assert limite_mb == 5
+    assert limite_mb * 1024 * 1024 == config.MAX_IMAGE_BYTES
+
+
 # ---------------------------------------------------------------- Streamlit app
 streamlit_testing = pytest.importorskip("streamlit.testing.v1")
 
