@@ -1,0 +1,103 @@
+Latencias de la API REST integrada medidas localmente en la Mac (cliente HTTP en loopback, ida y vuelta),
+no en el contenedor de Streamlit Community Cloud. Fecha: 2026-11-27 21:55:13 -0600 | commit a5e2008 | Python 3.9.6
+Percentiles por interpolacion lineal sobre las muestras.
+Nota: la primera foto ya se habia enviado en la prueba de humo (misma instancia), asi que TensorFlow ya estaba cargado.
+
+POST /chat: n=30 p50=4.9 ms p95=5.6 ms media=4.9 ms max=6.4 ms
+POST /image llamada de calentamiento (excluida): 108 ms
+POST /image: n=20 p50=102.7 ms p95=111.6 ms media=105.5 ms max=139.5 ms
+
+/metrics del servidor al terminar (incluye las peticiones de la prueba de humo, misma instancia):
+{
+ "errores_4xx_total": 2,
+ "errores_5xx_total": 0,
+ "eventos": {
+  "accion:ESCALAR": 1,
+  "accion:ESCALAR_URGENTE": 1,
+  "accion:RESPONDER": 1,
+  "avisar_anfitriona:si": 2,
+  "idioma:en": 1,
+  "idioma:es": 2
+ },
+ "peticiones_total": 60,
+ "por_ruta": {
+  "/agent": {
+   "errores_cliente_4xx": 1,
+   "errores_servidor_5xx": 0,
+   "latencia_ms": {
+    "max": 105.4,
+    "media": 27.5,
+    "muestras": 4,
+    "p50": 2.3,
+    "p95": 90.2
+   },
+   "peticiones": 4,
+   "por_codigo": {
+    "200": 3,
+    "400": 1
+   }
+  },
+  "/chat": {
+   "errores_cliente_4xx": 0,
+   "errores_servidor_5xx": 0,
+   "latencia_ms": {
+    "max": 10.9,
+    "media": 3.5,
+    "muestras": 31,
+    "p50": 3.3,
+    "p95": 3.7
+   },
+   "peticiones": 31,
+   "por_codigo": {
+    "200": 31
+   }
+  },
+  "/health": {
+   "errores_cliente_4xx": 0,
+   "errores_servidor_5xx": 0,
+   "latencia_ms": {
+    "max": 0.2,
+    "media": 0.2,
+    "muestras": 1,
+    "p50": 0.2,
+    "p95": 0.2
+   },
+   "peticiones": 1,
+   "por_codigo": {
+    "200": 1
+   }
+  },
+  "/image": {
+   "errores_cliente_4xx": 1,
+   "errores_servidor_5xx": 0,
+   "latencia_ms": {
+    "max": 5049.1,
+    "media": 315.6,
+    "muestras": 23,
+    "p50": 100.7,
+    "p95": 133.1
+   },
+   "peticiones": 23,
+   "por_codigo": {
+    "200": 22,
+    "415": 1
+   }
+  },
+  "/metrics": {
+   "errores_cliente_4xx": 0,
+   "errores_servidor_5xx": 0,
+   "latencia_ms": {
+    "max": 0.9,
+    "media": 0.9,
+    "muestras": 1,
+    "p50": 0.9,
+    "p95": 0.9
+   },
+   "peticiones": 1,
+   "por_codigo": {
+    "200": 1
+   }
+  }
+ },
+ "uptime_s": 7.8
+}

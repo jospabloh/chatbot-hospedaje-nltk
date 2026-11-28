@@ -1,0 +1,71 @@
+{
+ "modelo": "efficientnetb0",
+ "confusion": {
+  "accuracy_wikimedia": 0.9744,
+  "n_wikimedia": 39,
+  "matriz_wikimedia": [
+   [
+    8,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    8,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    6,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0,
+    7,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    9
+   ]
+  ],
+  "clases_wikimedia": [
+   "cerradura",
+   "porton",
+   "caseta",
+   "controles",
+   "interior"
+  ]
+ },
+ "gradcam": [
+  {
+   "imagen": "Recorte real: recamara y sala",
+   "clase": "interior",
+   "confianza": 0.995,
+   "mapa": "5x5"
+  },
+  {
+   "imagen": "Recorte real: arbol de aguacate",
+   "clase": "otro",
+   "confianza": 0.989,
+   "mapa": "5x5"
+  },
+  {
+   "imagen": "Wikimedia (prueba): porton",
+   "clase": "porton",
+   "confianza": 0.995,
+   "mapa": "5x5"
+  }
+ ]
+}

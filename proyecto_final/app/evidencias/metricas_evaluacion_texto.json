@@ -1,0 +1,866 @@
+{
+ "semilla": 42,
+ "particion": "80/20 estratificada, misma que entrenar_texto.py",
+ "es": {
+  "n_prueba": 143,
+  "clases": [
+   "acceso_fraccionamiento",
+   "cancelacion",
+   "cerradura",
+   "contactar_anfitrion",
+   "disponibilidad",
+   "early_late_checkout",
+   "horarios",
+   "llegada_tarde",
+   "porton_estacionamiento",
+   "reglas",
+   "reportar_problema",
+   "saludo_cortesia",
+   "servicios",
+   "tarifas",
+   "ubicacion"
+  ],
+  "auc_ovr_macro": 0.9625,
+  "auc_ovr_ponderado": 0.966,
+  "precision_promedio_macro": 0.8286,
+  "auc_por_intencion": {
+   "acceso_fraccionamiento": 0.979,
+   "cancelacion": 1.0,
+   "cerradura": 1.0,
+   "contactar_anfitrion": 0.9805,
+   "disponibilidad": 0.9428,
+   "early_late_checkout": 0.9857,
+   "horarios": 0.9892,
+   "llegada_tarde": 0.9917,
+   "porton_estacionamiento": 0.9917,
+   "reglas": 0.7944,
+   "reportar_problema": 0.9962,
+   "saludo_cortesia": 0.9925,
+   "servicios": 0.9792,
+   "tarifas": 0.9748,
+   "ubicacion": 0.8391
+  },
+  "por_intencion": {
+   "acceso_fraccionamiento": {
+    "precision": 0.636,
+    "recall": 1.0,
+    "f1": 0.778,
+    "soporte": 7
+   },
+   "cancelacion": {
+    "precision": 0.875,
+    "recall": 1.0,
+    "f1": 0.933,
+    "soporte": 7
+   },
+   "cerradura": {
+    "precision": 0.867,
+    "recall": 1.0,
+    "f1": 0.929,
+    "soporte": 13
+   },
+   "contactar_anfitrion": {
+    "precision": 0.889,
+    "recall": 0.8,
+    "f1": 0.842,
+    "soporte": 10
+   },
+   "disponibilidad": {
+    "precision": 1.0,
+    "recall": 0.833,
+    "f1": 0.909,
+    "soporte": 6
+   },
+   "early_late_checkout": {
+    "precision": 0.8,
+    "recall": 0.8,
+    "f1": 0.8,
+    "soporte": 10
+   },
+   "horarios": {
+    "precision": 0.75,
+    "recall": 0.667,
+    "f1": 0.706,
+    "soporte": 9
+   },
+   "llegada_tarde": {
+    "precision": 0.889,
+    "recall": 0.8,
+    "f1": 0.842,
+    "soporte": 10
+   },
+   "porton_estacionamiento": {
+    "precision": 0.8,
+    "recall": 0.727,
+    "f1": 0.762,
+    "soporte": 11
+   },
+   "reglas": {
+    "precision": 0.5,
+    "recall": 0.167,
+    "f1": 0.25,
+    "soporte": 6
+   },
+   "reportar_problema": {
+    "precision": 0.909,
+    "recall": 1.0,
+    "f1": 0.952,
+    "soporte": 10
+   },
+   "saludo_cortesia": {
+    "precision": 1.0,
+    "recall": 0.9,
+    "f1": 0.947,
+    "soporte": 10
+   },
+   "servicios": {
+    "precision": 0.7,
+    "recall": 0.933,
+    "f1": 0.8,
+    "soporte": 15
+   },
+   "tarifas": {
+    "precision": 0.667,
+    "recall": 0.571,
+    "f1": 0.615,
+    "soporte": 7
+   },
+   "ubicacion": {
+    "precision": 0.9,
+    "recall": 0.75,
+    "f1": 0.818,
+    "soporte": 12
+   }
+  },
+  "confusiones_principales": [
+   {
+    "real": "reglas",
+    "predicha": "early_late_checkout",
+    "casos": 2
+   },
+   {
+    "real": "tarifas",
+    "predicha": "servicios",
+    "casos": 2
+   },
+   {
+    "real": "ubicacion",
+    "predicha": "acceso_fraccionamiento",
+    "casos": 2
+   },
+   {
+    "real": "contactar_anfitrion",
+    "predicha": "cancelacion",
+    "casos": 1
+   },
+   {
+    "real": "contactar_anfitrion",
+    "predicha": "tarifas",
+    "casos": 1
+   },
+   {
+    "real": "disponibilidad",
+    "predicha": "servicios",
+    "casos": 1
+   },
+   {
+    "real": "early_late_checkout",
+    "predicha": "acceso_fraccionamiento",
+    "casos": 1
+   },
+   {
+    "real": "early_late_checkout",
+    "predicha": "tarifas",
+    "casos": 1
+   }
+  ],
+  "matriz_confusion": [
+   [
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    7,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    13,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    1,
+    0,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    6,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    8,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0,
+    0,
+    0,
+    1,
+    0,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    1,
+    0,
+    1,
+    1,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    10,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    9,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    14,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    4,
+    0
+   ],
+   [
+    2,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    9
+   ]
+  ]
+ },
+ "en": {
+  "n_prueba": 75,
+  "clases": [
+   "acceso_fraccionamiento",
+   "cancelacion",
+   "cerradura",
+   "contactar_anfitrion",
+   "disponibilidad",
+   "early_late_checkout",
+   "horarios",
+   "llegada_tarde",
+   "porton_estacionamiento",
+   "reglas",
+   "reportar_problema",
+   "saludo_cortesia",
+   "servicios",
+   "tarifas",
+   "ubicacion"
+  ],
+  "auc_ovr_macro": 0.9682,
+  "auc_ovr_ponderado": 0.9682,
+  "precision_promedio_macro": 0.8126,
+  "auc_por_intencion": {
+   "acceso_fraccionamiento": 0.9914,
+   "cancelacion": 0.9914,
+   "cerradura": 0.9943,
+   "contactar_anfitrion": 0.9,
+   "disponibilidad": 0.9514,
+   "early_late_checkout": 0.9971,
+   "horarios": 0.9886,
+   "llegada_tarde": 0.9943,
+   "porton_estacionamiento": 0.9343,
+   "reglas": 0.9629,
+   "reportar_problema": 0.9086,
+   "saludo_cortesia": 1.0,
+   "servicios": 0.9314,
+   "tarifas": 0.9971,
+   "ubicacion": 0.98
+  },
+  "por_intencion": {
+   "acceso_fraccionamiento": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "soporte": 5
+   },
+   "cancelacion": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "soporte": 5
+   },
+   "cerradura": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "soporte": 5
+   },
+   "contactar_anfitrion": {
+    "precision": 0.8,
+    "recall": 0.8,
+    "f1": 0.8,
+    "soporte": 5
+   },
+   "disponibilidad": {
+    "precision": 0.571,
+    "recall": 0.8,
+    "f1": 0.667,
+    "soporte": 5
+   },
+   "early_late_checkout": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "soporte": 5
+   },
+   "horarios": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "soporte": 5
+   },
+   "llegada_tarde": {
+    "precision": 0.714,
+    "recall": 1.0,
+    "f1": 0.833,
+    "soporte": 5
+   },
+   "porton_estacionamiento": {
+    "precision": 0.8,
+    "recall": 0.8,
+    "f1": 0.8,
+    "soporte": 5
+   },
+   "reglas": {
+    "precision": 0.6,
+    "recall": 0.6,
+    "f1": 0.6,
+    "soporte": 5
+   },
+   "reportar_problema": {
+    "precision": 0.444,
+    "recall": 0.8,
+    "f1": 0.571,
+    "soporte": 5
+   },
+   "saludo_cortesia": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "soporte": 5
+   },
+   "servicios": {
+    "precision": 0.333,
+    "recall": 0.2,
+    "f1": 0.25,
+    "soporte": 5
+   },
+   "tarifas": {
+    "precision": 1.0,
+    "recall": 0.8,
+    "f1": 0.889,
+    "soporte": 5
+   },
+   "ubicacion": {
+    "precision": 0.8,
+    "recall": 0.8,
+    "f1": 0.8,
+    "soporte": 5
+   }
+  },
+  "confusiones_principales": [
+   {
+    "real": "servicios",
+    "predicha": "reportar_problema",
+    "casos": 3
+   },
+   {
+    "real": "acceso_fraccionamiento",
+    "predicha": "porton_estacionamiento",
+    "casos": 1
+   },
+   {
+    "real": "cancelacion",
+    "predicha": "reportar_problema",
+    "casos": 1
+   },
+   {
+    "real": "cerradura",
+    "predicha": "reportar_problema",
+    "casos": 1
+   },
+   {
+    "real": "contactar_anfitrion",
+    "predicha": "servicios",
+    "casos": 1
+   },
+   {
+    "real": "disponibilidad",
+    "predicha": "llegada_tarde",
+    "casos": 1
+   },
+   {
+    "real": "early_late_checkout",
+    "predicha": "llegada_tarde",
+    "casos": 1
+   },
+   {
+    "real": "horarios",
+    "predicha": "reglas",
+    "casos": 1
+   }
+  ],
+  "matriz_confusion": [
+   [
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    4,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    5,
+    0,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    3,
+    0,
+    1,
+    0,
+    0
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    4,
+    1
+   ],
+   [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    4
+   ]
+  ]
+ }
+}
