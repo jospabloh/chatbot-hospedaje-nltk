@@ -301,7 +301,7 @@ def build_replies(lang: str) -> dict:
                       "aire acondicionado, TV con streaming, mini refri, cocina compartida, comedor, sala de TV, terrazas, "
                       "área de parrilla y parqueo privado. Bajo solicitud: desayuno, transporte al aeropuerto, lavandería "
                       "y guarda de maletas. No tenemos piscina."),
-        "house_rules": ("Reglas: no se aceptan mascotas ni visitas; no se permiten fiestas ni eventos; prohibido fumar o vapear "
+        "house_rules": ("Reglas: no se permiten mascotas ni visitantes; no se permiten fiestas ni eventos; prohibido fumar o vapear "
                         "(hay un área para fumar en el parqueo); silencio de 22:00 a 8:00. Todos los huéspedes deben "
                         "registrarse antes del check-in. Incumplir las reglas tiene una multa desde USD 100."),
         "contact_host": f"Te comunico con {host}. 🙋‍♀️ Le dejé aviso y te escribirá en breve. También puedes escribir a {email}. [TRANSFERENCIA A HUMANO]",
@@ -418,7 +418,7 @@ CONVERSATIONS = {
 # Business-data checks: what the bot must and must not say about Cas'aguacate.
 # (question, language, texts that must appear, texts that must NOT appear)
 BUSINESS_CHECKS = [
-    ("¿Aceptan mascotas?", "es", ["no se aceptan mascotas"], ["Mascotas pequeñas", "con aviso"]),
+    ("¿Aceptan mascotas?", "es", ["no se permiten mascotas"], ["Mascotas pequeñas", "con aviso"]),
     ("Can I bring my dog?", "en", ["pets and visitors are not allowed"], ["Small pets", "prior notice"]),
     ("¿Tienen alberca?", "es", ["No tenemos piscina"], ["alberca,"]),
     ("Do you have a pool?", "en", ["There is no swimming pool"], ["pool,"]),

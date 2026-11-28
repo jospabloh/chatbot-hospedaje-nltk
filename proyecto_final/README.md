@@ -25,7 +25,7 @@ proyecto_final/
     casaguacate/   nucleo (config, texto, vision, reglas, agente, api, validacion, metricas, servicios)
     artefactos/    modelos ligeros (.joblib) y metricas (.json)
     scripts/       entrenamiento, prueba de humo, figura de arquitectura
-    ui/            streamlit_app.py, cliente_api.py, requirements.txt
+    ui/            streamlit_app.py, cliente_api.py, api_integrada.py (API embebida), requirements.txt
     tests/         pytest
     evidencias/    resultados guardados
     docs/          flujo_coordinacion.md, arquitectura_final.png
@@ -63,7 +63,9 @@ python servidor.py                          # http://127.0.0.1:5000
 # o, como en despliegue:
 gunicorn -w 1 --threads 4 -b 127.0.0.1:5000 servidor:app
 
-# UI (otra terminal)
+# UI en modo integrado (sin API_URL): la app levanta sola la API Flask en un hilo, en 127.0.0.1
+streamlit run ui/streamlit_app.py
+# o UI contra una API externa (otra terminal)
 API_URL=http://127.0.0.1:5000 streamlit run ui/streamlit_app.py
 
 # Pruebas
@@ -86,16 +88,16 @@ curl -s localhost:5000/image -F file=@foto.jpg
 
 | Variable | Dónde | Por defecto | Uso |
 |---|---|---|---|
-| `API_URL` | UI | `http://127.0.0.1:5000` | URL de la API Flask |
+| `API_URL` | UI | vacío | Sin valor: modo integrado (la app levanta la API Flask en el mismo proceso, ver Despliegue). Con valor: la UI usa esa API externa |
 | `ALLOW_API_URL_OVERRIDE` | UI | vacío | Solo desarrollo local: con valor `1` y sin `API_TOKEN` muestra un campo para cambiar la URL. En la UI pública no existe ese campo |
-| `API_TOKEN` | UI y API | vacío | Si la API lo define, exige el encabezado `X-API-Token`; la UI lo envía |
+| `API_TOKEN` | UI y API | vacío | Si la API lo define, exige el encabezado `X-API-Token`; la UI lo envía. En modo integrado se ignora: la app genera un token aleatorio por proceso para su API embebida |
 | `RATE_LIMIT_PER_MIN` | API | 60 | Peticiones por minuto. Con token válido se cuenta por huésped (encabezado `X-Session-Id`, que la UI genera por sesión); sin token, por IP (`CF-Connecting-IP`). `/metrics` tiene su propio contador y `/health` no cuenta |
 | `LOG_LEVEL` | API | `INFO` | Nivel de logs JSON |
 | `VISION_BACKBONE` | API | `efficientnetb0` | `resnet50`, `mobilenetv2` o `efficientnetb0` |
 | `ARTIFACTS_DIR` | API | `artefactos/` | Carpeta de modelos |
 | `HOST`, `PORT` | `servidor.py` | `127.0.0.1`, `5000` | Dirección de escucha |
 
-En Streamlit Community Cloud, `API_URL` y `API_TOKEN` se definen como Secrets. La URL de la API sale solo de la configuración del servidor, y el token solo se envía a esa URL (el cliente no sigue redirecciones).
+En Streamlit Community Cloud en modo integrado no se define ningún Secret. Para usar una API externa, `API_URL` y `API_TOKEN` se definen como Secrets. La URL de la API sale solo de la configuración del servidor, y el token solo se envía a esa URL (el cliente no sigue redirecciones).
 
 ## API
 
@@ -155,7 +157,19 @@ Como la cabeza de visión final se entrena con todas las imágenes, estas prueba
 
 ## Despliegue
 
-Dos piezas. La UI está publicada en Streamlit Community Cloud (https://hospedaje-asistente-ia.streamlit.app, rama `proyecto-final`, archivo `proyecto_final/app/ui/streamlit_app.py`, dependencias `proyecto_final/app/ui/requirements.txt`) y lleva un aviso fijo de demostración académica. La API Flask tuvo una primera etapa en una computadora local con Cloudflare Tunnel (el 23-nov se publicó con un túnel rápido y su prueba de humo pública dio 9 de 9; no hay evidencia guardada de esa ejecución, y la URL de un túnel rápido cambia en cada reinicio). Para una URL estable, el PR #8 agrega un Dockerfile y scripts para desplegarla en un Space de Hugging Face (puerto 7860, secreto `API_TOKEN`; el Space gratuito se duerme por inactividad y se despierta antes de la demo).
+### Modo integrado (despliegue elegido): todo en Streamlit Community Cloud
+
+Sin costo y sin depender de un equipo encendido. Si no hay `API_URL`, `ui/streamlit_app.py` levanta la misma API REST Flask (`create_app`) en un hilo de segundo plano, escuchando solo en `127.0.0.1` en un puerto libre, una vez por proceso. La interfaz la sigue consumiendo por HTTP con el mismo cliente (`ui/cliente_api.py`), así que las rutas, la validación, el límite de peticiones, las métricas y `/health` son los reales; la API solo está co-alojada. La API embebida exige un token aleatorio generado por proceso (`X-API-Token`), aunque solo escuche en loopback. La barra lateral y la pestaña «Estado del servicio» indican el modo («API REST integrada en la app» o «API REST externa»). TensorFlow se importa hasta la primera foto.
+
+1. Streamlit Community Cloud: nueva app desde este repo, rama `proyecto-final`, archivo principal `proyecto_final/app/ui/streamlit_app.py`. En «Advanced settings» elegir **Python 3.12** (o 3.11): `tensorflow-cpu==2.16.2` y `numpy==1.26.4` no tienen ruedas para 3.13 o superior. Las dependencias salen de `proyecto_final/app/ui/requirements.txt`.
+2. No definir `API_URL` ni `API_TOKEN` en Secrets. Si la app ya existía con esos Secrets, borrarlos y reiniciar la app. Si ya existía con otra versión de Python, hay que borrarla y volver a desplegarla con la versión correcta.
+3. Verificar con la UI: «Conectado al asistente» y «API REST integrada en la app» en la barra lateral; mandar un texto y una foto.
+
+Límites a vigilar: la documentación de Streamlit indica 2.7 GB de memoria máxima por app (cifra de febrero de 2024, sujeta a cambios sin aviso). Medido en la Mac, el proceso ocupa unos 190 MB con la API y el modelo de texto, y unos 300 MB después de la primera foto (macOS; en Linux puede ser mayor).
+
+### Alternativa: API externa en la Mac con Cloudflare Tunnel (no usada)
+
+La UI sigue funcionando con una API externa si se define `API_URL`.
 
 1. API (local o en contenedor):
    ```bash
@@ -172,6 +186,24 @@ Dos piezas. La UI está publicada en Streamlit Community Cloud (https://hospedaj
    ```
 
 Limitación: si la API está dormida o apagada, la UI muestra el aviso de servicio no disponible.
+
+### Alternativa: Hugging Face Spaces con Docker (no usada)
+
+Se preparó pero no se usa: el despliegue elegido es el modo integrado. La carpeta `deploy/` se conserva por si hace falta una API independiente.
+
+Archivos en `proyecto_final/deploy/`: `Dockerfile` (imagen con gunicorn, Flask y TensorFlow en CPU, puerto 7860), `preparar_contexto.sh` (arma la carpeta de construccion), `publicar_space.sh` y `publicar_space.py` (crean el Space con `huggingface_hub`, guardan el secreto `API_TOKEN` leido de un archivo y suben el codigo), `verificar_nube.sh` (prueba de humo publica) y `README_space.md` (cabecera del Space). La API en la nube se niega a arrancar sin `API_TOKEN` de al menos 32 caracteres (`app/arrancar_nube.sh`).
+
+Publicar (una vez, y cada vez que cambie el codigo):
+1. Iniciar sesion sin dejar el token en el historial: `hf auth login` (pega el token con permiso de escritura en el prompt; se guarda en `~/.cache/huggingface/token`). Si `hf` no esta instalado, `publicar_space.sh` crea un venv con `huggingface_hub` en `~/haru-work/pf-hf-venv` y ahi esta `bin/hf`.
+2. `proyecto_final/deploy/publicar_space.sh` (el usuario de Hugging Face sale de la sesion; el `API_TOKEN` se lee de `~/haru-work/pf-deploy/.env` y no se imprime). La URL queda `https://<usuario>-casaguacate-api.hf.space`.
+3. `proyecto_final/deploy/verificar_nube.sh https://<usuario>-casaguacate-api.hf.space` guarda `app/evidencias/prueba_humo_nube.txt`.
+4. Poner esa URL en el Secret `API_URL` de Streamlit Cloud.
+
+Antes de la demo: un Space gratuito se duerme por inactividad y tarda unos minutos en despertar. Abrir `https://<usuario>-casaguacate-api.hf.space/health` (o correr `verificar_nube.sh`, que espera hasta 4 minutos) y confirmar 200 antes de empezar.
+
+Al terminar la calificacion: revocar el token en https://huggingface.co/settings/tokens, correr `hf auth logout` y pausar o borrar el Space.
+
+Construccion local: `deploy/preparar_contexto.sh /tmp/ctx && docker build -t casaguacate-api /tmp/ctx`.
 
 ## Limitaciones conocidas
 
@@ -193,10 +225,10 @@ Limitación: si la API está dormida o apagada, la UI muestra el aviso de servic
 
 | # | Producto | Estado | Evidencia o pendiente |
 |---|---|---|---|
-| 1 | PDF técnico de 15 a 20 páginas | Listo | `documento/Proyecto_Final_Jose_Pablo_Herrera_Fernandez.pdf` (texto fuente `documento/documento_tecnico.md`; se reconstruye con `documento/construir_pdf.py`). Quedan marcadores de datos de la nube y la nota de uso de IA |
+| 1 | PDF técnico de 15 a 20 páginas | Listo | `documento/Proyecto_Final_Jose_Pablo_Herrera_Fernandez.pdf` (texto fuente `documento/documento_tecnico.md`; se reconstruye con `documento/construir_pdf.py`). Queda la nota de uso de IA |
 | 2 | Repositorio en GitHub | Listo | Este repo, rama `proyecto-final` |
 | 3 | Video demo de 5 a 10 min | En Drive | Grabación de pantalla con guion; el enlace lo entrega JP |
-| 4 | URL pública | Parcial | UI en https://hospedaje-asistente-ia.streamlit.app; API en la nube en el PR #8 (Hugging Face Spaces) |
+| 4 | URL pública | Parcial | https://hospedaje-asistente-ia.streamlit.app; el despliegue elegido es el modo integrado (API REST dentro de la app, PR #10); falta verificar en la nube la versión con el modo integrado |
 | 5 | Diagrama de arquitectura final | Listo | `app/docs/arquitectura_final.png`, `app/docs/flujo_coordinacion.md` |
 | 6 | Evidencia de pruebas y despliegue | Parcial | Pruebas en `app/evidencias/`; falta la prueba de humo contra la API en la nube |
 | 7 | Métricas de clasificación y chatbot | Listo | Secciones Resultados, `app/artefactos/*.json`, `app/evidencias/metricas_evaluacion_texto.json`, `matriz_confusion_vision.png` y `gradcam_efficientnetb0.png` |

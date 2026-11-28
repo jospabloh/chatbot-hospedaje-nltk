@@ -74,6 +74,24 @@ def _clean(reply: str) -> str:
     return reply.replace(" [HANDOFF TO HUMAN]", "").replace(" [TRANSFERENCIA A HUMANO]", "")
 
 
+# Palabras (texto normalizado, sin acentos) con las que el huesped habla de la salida o de la entrada.
+CHECKOUT_WORDS = ("check out", "checkout", "salida", "salir", "leave", "departure")
+CHECKIN_WORDS = ("check in", "checkin", "entrada", "entrar", "llegada", "llegar", "arrival", "arrive")
+
+
+def horarios_key(text: str) -> str:
+    """Elige que respuesta de `base.REPLIES` corresponde a una pregunta de horarios.
+
+    Solo se usa la respuesta de "checkout" cuando el huesped pregunta SOLO por la salida. Si pregunta por la
+    entrada, por las dos o no dice cual, se usa "checkin_arrival", que ya trae check-in 15:00 y check-out 11:00.
+    (Antes bastaba una palabra de salida para devolver solo el check-out y se perdia la hora de entrada.)
+    """
+    t = normalize(text)
+    asks_out = any(w in t for w in CHECKOUT_WORDS)
+    asks_in = any(w in t for w in CHECKIN_WORDS)
+    return "checkout" if asks_out and not asks_in else "checkin_arrival"
+
+
 def reply_for(intent: str, text: str, lang: str) -> str | None:
     """Reply text for a resolved intent; None when the policy is to hand over to the host."""
     if intent == "saludo_cortesia":
@@ -86,9 +104,7 @@ def reply_for(intent: str, text: str, lang: str) -> str | None:
     if intent == "disponibilidad":
         return base.availability_reply(text, lang)
     if intent == "horarios":
-        t = normalize(text)
-        key = "checkout" if any(w in t for w in ("check out", "checkout", "salida", "salir", "leave", "departure")) else "checkin_arrival"
-        return base.REPLIES[lang][key]
+        return base.REPLIES[lang][horarios_key(text)]
     if intent == "tarifas" and set(normalize(text).split()) & PAYMENT_WORDS:
         return base.REPLIES[lang]["payment"]  # the corpus has no "payments" intent: it lives under rates
     key = INTENT_TO_REPLY.get(intent)

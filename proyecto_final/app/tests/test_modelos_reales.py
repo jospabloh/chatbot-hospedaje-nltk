@@ -117,3 +117,13 @@ def test_la_cancelacion_se_reconoce_con_el_modelo_real(real_services, text):
                                               ("¿hay estacionamiento?", "es", "porton_estacionamiento")])
 def test_agregar_cancelacion_no_rompe_otras_intenciones(real_services, text, lang, intent):
     assert real_services.intents.predict(text, lang).label == intent
+
+
+# Regresion 27-nov: con el modelo real, las preguntas de horarios deben responder check-in 15:00 y check-out 11:00.
+@pytest.mark.parametrize("text", ["¿A qué hora es el check-in?", "¿A qué hora es la entrada y la salida?",
+                                  "¿A qué hora es el check-in y el check-out?", "what time is check-in?"])
+def test_horarios_con_el_modelo_real_dan_check_in_y_check_out(real_services, text):
+    from casaguacate.agente import HybridAgent
+    result = HybridAgent(real_services).run(text)
+    assert result.final_intent == "horarios", result.trace
+    assert "15:00" in result.reply and "11:00" in result.reply, result.reply

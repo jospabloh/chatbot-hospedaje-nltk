@@ -27,6 +27,18 @@ class Services:
     tone: object = None        # .predict(text) -> TextPrediction
 
 
+class VisionUnavailable(RuntimeError):
+    """Raised by a lazily loaded vision model (servicios.LazyVision) whose load failed. The API turns it into the same
+    503 "modelo_no_disponible" it gives when there is no vision model at all."""
+
+
+def vision_available(services: Services) -> bool:
+    """True when a vision model exists and has not failed to load. A model may expose `available` (LazyVision does);
+    eager models do not, and count as available. Used by the agent and by the API (/health, /image, /agent)."""
+    vision = services.vision
+    return vision is not None and bool(getattr(vision, "available", True))
+
+
 @dataclass
 class ConversationState:
     idioma: str = "es"
@@ -146,7 +158,7 @@ class HybridAgent:
             text_pred = self.services.intents.predict(text, lang)
             self._step(trace, "Chatbot NLP", "clasificar intencion", text_pred.as_dict(), t)
         image_pred = None
-        if image is not None and self.services.vision is not None:
+        if image is not None and vision_available(self.services):
             t = time.perf_counter()
             image_pred = self.services.vision.predict(image)
             self._step(trace, "Clasificador visual", "clasificar foto", image_pred.as_dict(), t)
